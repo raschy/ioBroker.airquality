@@ -1,0 +1,7 @@
+{
+    "airquality adapter settings": "Настройки адаптера для качества воздуха",
+    "stations": "станции",
+    "stations_to_be_monitored": "станции, подлежащие мониторингу",
+    "station_nonvalid_text": "недопустимый текст станции",
+    "wrong_item_in_stations": "неправильный товар на станциях"
+}

@@ -1,0 +1,30 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"stations": {
+			"type": "chips",
+			"label": "stations",
+			"help": "stations_to_be_monitored",
+			"sm": 6,
+			"md": 6,
+			"lg": 8,
+			"xs": 2,
+			"newLine": false,
+			"validator": "data.stations.every(station => /^DE[A-Z]{2}[0-9]{3}$/.test(station))",
+			"validatorErrorText": "station_nonvalid_text",
+			"validatorNoSaveOnError": true
+		},
+		"_stationsError": {
+			"newLine": true,
+			"type": "staticText",
+			"text": "wrong_item_in_stations",
+			"style": {
+				"color": "red",
+				"fontSize": 24
+			},
+			"hidden": "!data.stations || data.stations.length === 0 || data.stations.every(station => /^DE[A-Z]{2}[0-9]{3}$/.test(station))",
+			"sm": 10
+		}
+	}
+}
