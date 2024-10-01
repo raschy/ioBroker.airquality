@@ -56,9 +56,11 @@ class Airquality extends utils.Adapter {
 			console.log('No Stations');
 			// if no station is selected in config
 			const home: Home = await this.getLocation();
-			const nearestStationIdx: number = await this.findNearestStation(home, this.stationList);
-			console.log(`nearestStationIdx: ${nearestStationIdx}`);
-			await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
+			if (home) {
+				const nearestStationIdx: number = await this.findNearestStation(home, this.stationList);
+				console.log(`nearestStationIdx: ${nearestStationIdx}`);
+				await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
+			}
 			//
 		} else {
 			console.log('Start');
