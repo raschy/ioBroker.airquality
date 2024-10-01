@@ -58,7 +58,6 @@ class Airquality extends utils.Adapter {
       if (home) {
         const nearestStationIdx = await this.findNearestStation(home, this.stationList);
         console.log(`nearestStationIdx: ${nearestStationIdx}`);
-        await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
       }
     } else {
       console.log("Start");
