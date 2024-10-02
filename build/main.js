@@ -23,9 +23,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var import_api_calls = require("./lib/api_calls");
-var import_filelogger = require("./lib/filelogger");
 var import_helper_time = require("./lib/helper_time");
-const fileHandle = { path: "./logs/airquality", file: "logs.txt" };
 class Airquality extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -58,6 +56,7 @@ class Airquality extends utils.Adapter {
       if (home.lat > 0) {
         const nearestStationIdx = await this.findNearestStation(home, this.stationList);
         console.log(`nearestStationIdx: ${nearestStationIdx}`);
+        await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
       }
     } else {
       console.log("Start");
@@ -142,7 +141,6 @@ class Airquality extends utils.Adapter {
    */
   async parseData(payload) {
     this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
-    (0, import_filelogger.writeLog)(fileHandle, JSON.stringify(payload));
     if (Object.keys(payload).length === 0) {
       this.log.warn("No data received");
       return;
@@ -347,6 +345,7 @@ class Airquality extends utils.Adapter {
       }
       callback();
     } catch (e) {
+      this.log.debug(`[onUnload] e ${e}`);
       callback();
     }
   }

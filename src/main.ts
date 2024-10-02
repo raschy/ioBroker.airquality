@@ -1,3 +1,4 @@
+'use strict';
 /*
  * Created with @iobroker/create-adapter v2.6.5
  */
@@ -6,9 +7,9 @@
 // you need to create an adapter
 import * as utils from '@iobroker/adapter-core';
 import { getComponents, getMeasurements, getStations } from './lib/api_calls';
-import { writeLog } from './lib/filelogger';
+// #import { writeLog } from './lib/filelogger';
 import { correctHour } from './lib/helper_time';
-const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
+// #const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
 
 // Load your modules here, e.g.:
 // import * as fs from "fs";
@@ -161,7 +162,7 @@ class Airquality extends utils.Adapter {
 	 */
 	async parseData(payload: any): Promise<any> {
 		this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
-		writeLog(fileHandle, JSON.stringify(payload));
+		//writeLog(fileHandle, JSON.stringify(payload));
 		if (Object.keys(payload).length === 0) {
 			this.log.warn('No data received');
 			return;
@@ -383,7 +384,9 @@ class Airquality extends utils.Adapter {
 				this.clearInterval(this.updateInterval);
 			}
 			callback();
+			/*eslint no-unused-vars: ["error", { "caughtErrors": "none" }]*/
 		} catch (e) {
+			this.log.debug(`[onUnload] e ${e}`); //eslint no-unused-vars
 			callback();
 		}
 	}
