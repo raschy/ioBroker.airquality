@@ -6,13 +6,11 @@
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
 import * as utils from '@iobroker/adapter-core';
-import { getComponents, getMeasurements, getStations } from './lib/api_calls';
-// #import { writeLog } from './lib/filelogger';
-import { correctHour } from './lib/helper_time';
-// #const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
-
 // Load your modules here, e.g.:
-// import * as fs from "fs";
+import { getComponents, getMeasurements, getStations } from './lib/api_calls';
+import { correctHour } from './lib/helper_time';
+// #import { writeLog } from './lib/filelogger';
+// #const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
 
 class Airquality extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -22,9 +20,6 @@ class Airquality extends utils.Adapter {
 			useFormatDate: true,
 		});
 		this.on('ready', this.onReady.bind(this));
-		// this.on('stateChange', this.onStateChange.bind(this));
-		// this.on('objectChange', this.onObjectChange.bind(this));
-		// this.on('message', this.onMessage.bind(this));
 		this.on('unload', this.onUnload.bind(this));
 	}
 	public updateInterval: ioBroker.Interval | undefined = undefined;
@@ -48,18 +43,18 @@ class Airquality extends utils.Adapter {
 		const executionInterval: number = 15; // => minutes
 		//
 		this.stationList = await getStations();
-		console.log(this.stationList[931].city); //> 'Lingen'
+		//console.log(this.stationList[931].city); //> 'Lingen'
 		//
 		this.components = await getComponents();
-		console.log(this.components[6].desc); //> 'Blei im Feinstaub'
+		//console.log(this.components[6].desc); //> 'Blei im Feinstaub'
 		//
 		if (this.config.stations.length === 0) {
-			console.log('No Stations');
+			this.log.info('[onReady] No stations specified');
 			// if no station is selected in config
 			const home: Home = await this.getLocation();
 			if (home.lat > 0) {
 				const nearestStationIdx: number = await this.findNearestStation(home, this.stationList);
-				console.log(`nearestStationIdx: ${nearestStationIdx}`);
+				this.log.info(`[onReady] nearestStationIdx: ${nearestStationIdx}`);
 				await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
 			}
 			//
@@ -69,28 +64,28 @@ class Airquality extends utils.Adapter {
 			this.updateInterval = this.setInterval(async () => {
 				console.log(this.config.stations);
 				await this.loop();
-				console.log(`Moep: ${this.updateInterval}`);
 			}, executionInterval * 60000);
 		}
 	}
 
+	/**
+	 * This loop is executed cyclically
+	 */
 	async loop(): Promise<any> {
-		console.log('### LOOP ###');
 		const selectedStations = await this.checkStationInput();
 		//
 		try {
 			for (const station of selectedStations) {
 				const measurement = await getMeasurements(station);
 				await this.parseData(measurement);
-				console.log('==========');
 			}
 			await this.setState('info.lastUpdate', { val: Date.now(), ack: true });
 		} catch (error: unknown) {
 			this.setState('info.connection', { val: false, ack: true });
 			if (error instanceof Error) {
-				this.log.error('[loop] Fehler: ' + error.message);
+				this.log.error('[loop] Error: ' + error.message);
 			} else {
-				this.log.error('[loop] Unbekannter Fehler: ' + error);
+				this.log.error('[loop] Unknown error: ' + error);
 			}
 		}
 	}
@@ -229,19 +224,12 @@ class Airquality extends utils.Adapter {
 		}
 		this.log.debug(`[parseData] Measured values from ${nArray} sensors determined`);
 	}
-	//	########################
-	testQueryParameters(): void {
-		const d = new Date();
-		console.log(d);
-		for (let h: number = 0; h < 24; h++) {
-			//const yDate: Date = buildDate(h);
-			console.log(h, new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, d.getMinutes(), d.getSeconds()));
-			//console.log(h, yDate);
-		}
-	}
-	//	########################
 
 	//
+	/**
+	 * Checks if station in config available
+	 * @returns selectedStations
+	 */
 	async checkStationInput(): Promise<any> {
 		const selectedStations = this.config.stations;
 		console.log('Selected Stations: ' + selectedStations);
@@ -262,7 +250,6 @@ class Airquality extends utils.Adapter {
 			return { lat: -1, lon: -1 };
 		} else {
 			this.log.debug(`[getLocation] using Latitude: ${this.latitude} and Longitude: ${this.longitude}`);
-			if (isNaN(this.latitude)) console.log('Latitude Moep');
 			return { lat: this.latitude, lon: this.longitude };
 		}
 	}
@@ -279,8 +266,6 @@ class Airquality extends utils.Adapter {
 		this.log.debug(`[findNearestStation]: Latitude: ${localHome.lat} Longitude: ${localHome.lon}`);
 		//
 		for (const key of Object.keys(coordinates)) {
-			//console.log(`${key}: ${JSON.stringify(coordinates[key as keyof typeof coordinates])}`);
-			//console.log(`${key}: ${coordinates[key].lat} # ${coordinates[key].lon}`);
 			const distance = this.getDistanceFromLatLonInKm(
 				localHome.lat,
 				localHome.lon,
@@ -288,7 +273,6 @@ class Airquality extends utils.Adapter {
 				parseFloat(coordinates[key].lon),
 			);
 			this.log.silly(`Distance: ${key} ${distance}`);
-			//console.log(`Distance: ${key} ${distance}`);
 			if (distance < minDistance) {
 				minDistance = distance;
 				nearestStation = parseInt(key);
@@ -329,6 +313,7 @@ class Airquality extends utils.Adapter {
 	 * Create a folder für station
 	 * @param {string} station
 	 * @param {string} description
+	 * @param {string} location
 	 */
 	async createObject(station: string, description: string, location: string): Promise<void> {
 		const dp_Folder = this.removeInvalidCharacters(station);
@@ -336,7 +321,19 @@ class Airquality extends utils.Adapter {
 		await this.setObjectNotExists(dp_Folder, {
 			type: 'folder',
 			common: {
-				name: 'Measurements from station',
+				name: {
+					en: 'Measurements from station',
+					de: 'Messungen von Station',
+					ru: 'Измерения на станции',
+					pt: 'Medições da estação',
+					nl: 'Metingen vanaf het station',
+					fr: 'Mesures de la station',
+					it: 'Misure dalla stazione',
+					es: 'Medidas desde la estación',
+					pl: 'Pomiary ze stacji',
+					uk: 'Вимірювання з станції',
+					'zh-cn': '从车站测量',
+				},
 				desc: description + '> ' + location,
 				role: 'info',
 			},
@@ -344,33 +341,41 @@ class Airquality extends utils.Adapter {
 		});
 		this.log.debug(`[createObject] Station "${station}" City "${description}"`);
 	}
-	//
-	//__________________________
-	// removes illegal characters
+
+	/**
+	 * calculates the distance between two coordinates using the Haversine formula
+	 * @param lat1 Latitude of the place of residence
+	 * @param lon1 Longitude of the place of residence
+	 * @param lat2 Latitude of the station
+	 * @param lon2 Longitude of the station
+	 * @returns Distance to the station
+	 */
+	getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
+		const R = 6371; // Radius of the earth in kilometres
+		const dLat = deg2rad(lat2 - lat1);
+		const dLon = deg2rad(lon2 - lon1);
+		const a =
+			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		const d = R * c; // Distance in km
+		return d;
+		// Convert to radians
+		function deg2rad(deg: number): number {
+			return deg * (Math.PI / 180);
+		}
+	}
+
+	/**
+	 * removes illegal characters
+	 * @param inputString Designated name for an object/data point
+	 * @returns Cleaned name for an object/data point
+	 */
 	removeInvalidCharacters(inputString: string): string {
 		const regexPattern = '[^a-zA-Z0-9]+';
 		const regex = new RegExp(regexPattern, 'gu');
 		return inputString.replace(regex, '_');
 	}
-	//__________________________
-	// calculates the distance between two coordinates using the Haversine formula
-	getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
-		const R = 6371; // Radius of the earth in kilometres
-		const dLat = this.deg2rad(lat2 - lat1);
-		const dLon = this.deg2rad(lon2 - lon1);
-		const a =
-			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-			Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		const d = R * c; // Entfernung in km
-		return d;
-	}
-	//__________________________
-	// Convert to radians
-	deg2rad(deg: number): number {
-		return deg * (Math.PI / 180);
-	}
-	//
 
 	/**
 	 * Is called when adapter shuts down - callback has to be called under any circumstances!

@@ -47,15 +47,13 @@ class Airquality extends utils.Adapter {
     this.log.info("config stations: " + this.config.stations);
     const executionInterval = 15;
     this.stationList = await (0, import_api_calls.getStations)();
-    console.log(this.stationList[931].city);
     this.components = await (0, import_api_calls.getComponents)();
-    console.log(this.components[6].desc);
     if (this.config.stations.length === 0) {
-      console.log("No Stations");
+      this.log.info("[onReady] No stations specified");
       const home = await this.getLocation();
       if (home.lat > 0) {
         const nearestStationIdx = await this.findNearestStation(home, this.stationList);
-        console.log(`nearestStationIdx: ${nearestStationIdx}`);
+        this.log.info(`[onReady] nearestStationIdx: ${nearestStationIdx}`);
         await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
       }
     } else {
@@ -64,26 +62,26 @@ class Airquality extends utils.Adapter {
       this.updateInterval = this.setInterval(async () => {
         console.log(this.config.stations);
         await this.loop();
-        console.log(`Moep: ${this.updateInterval}`);
       }, executionInterval * 6e4);
     }
   }
+  /**
+   * This loop is executed cyclically
+   */
   async loop() {
-    console.log("### LOOP ###");
     const selectedStations = await this.checkStationInput();
     try {
       for (const station of selectedStations) {
         const measurement = await (0, import_api_calls.getMeasurements)(station);
         await this.parseData(measurement);
-        console.log("==========");
       }
       await this.setState("info.lastUpdate", { val: Date.now(), ack: true });
     } catch (error) {
       this.setState("info.connection", { val: false, ack: true });
       if (error instanceof Error) {
-        this.log.error("[loop] Fehler: " + error.message);
+        this.log.error("[loop] Error: " + error.message);
       } else {
-        this.log.error("[loop] Unbekannter Fehler: " + error);
+        this.log.error("[loop] Unknown error: " + error);
       }
     }
   }
@@ -202,16 +200,11 @@ class Airquality extends utils.Adapter {
     }
     this.log.debug(`[parseData] Measured values from ${nArray} sensors determined`);
   }
-  //	########################
-  testQueryParameters() {
-    const d = /* @__PURE__ */ new Date();
-    console.log(d);
-    for (let h = 0; h < 24; h++) {
-      console.log(h, new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, d.getMinutes(), d.getSeconds()));
-    }
-  }
-  //	########################
   //
+  /**
+   * Checks if station in config available
+   * @returns selectedStations
+   */
   async checkStationInput() {
     const selectedStations = this.config.stations;
     console.log("Selected Stations: " + selectedStations);
@@ -232,8 +225,6 @@ class Airquality extends utils.Adapter {
       return { lat: -1, lon: -1 };
     } else {
       this.log.debug(`[getLocation] using Latitude: ${this.latitude} and Longitude: ${this.longitude}`);
-      if (isNaN(this.latitude))
-        console.log("Latitude Moep");
       return { lat: this.latitude, lon: this.longitude };
     }
   }
@@ -295,6 +286,7 @@ class Airquality extends utils.Adapter {
    * Create a folder für station
    * @param {string} station
    * @param {string} description
+   * @param {string} location
    */
   async createObject(station, description, location) {
     const dp_Folder = this.removeInvalidCharacters(station);
@@ -302,7 +294,19 @@ class Airquality extends utils.Adapter {
     await this.setObjectNotExists(dp_Folder, {
       type: "folder",
       common: {
-        name: "Measurements from station",
+        name: {
+          en: "Measurements from station",
+          de: "Messungen von Station",
+          ru: "\u0418\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u044F \u043D\u0430 \u0441\u0442\u0430\u043D\u0446\u0438\u0438",
+          pt: "Medi\xE7\xF5es da esta\xE7\xE3o",
+          nl: "Metingen vanaf het station",
+          fr: "Mesures de la station",
+          it: "Misure dalla stazione",
+          es: "Medidas desde la estaci\xF3n",
+          pl: "Pomiary ze stacji",
+          uk: "\u0412\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F \u0437 \u0441\u0442\u0430\u043D\u0446\u0456\u0457",
+          "zh-cn": "\u4ECE\u8F66\u7AD9\u6D4B\u91CF"
+        },
         desc: description + "> " + location,
         role: "info"
       },
@@ -310,31 +314,36 @@ class Airquality extends utils.Adapter {
     });
     this.log.debug(`[createObject] Station "${station}" City "${description}"`);
   }
-  //
-  //__________________________
-  // removes illegal characters
+  /**
+   * calculates the distance between two coordinates using the Haversine formula
+   * @param lat1 Latitude of the place of residence
+   * @param lon1 Longitude of the place of residence
+   * @param lat2 Latitude of the station
+   * @param lon2 Longitude of the station
+   * @returns Distance to the station
+   */
+  getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c;
+    return d;
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    }
+  }
+  /**
+   * removes illegal characters
+   * @param inputString Designated name for an object/data point
+   * @returns Cleaned name for an object/data point
+   */
   removeInvalidCharacters(inputString) {
     const regexPattern = "[^a-zA-Z0-9]+";
     const regex = new RegExp(regexPattern, "gu");
     return inputString.replace(regex, "_");
   }
-  //__________________________
-  // calculates the distance between two coordinates using the Haversine formula
-  getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    const R = 6371;
-    const dLat = this.deg2rad(lat2 - lat1);
-    const dLon = this.deg2rad(lon2 - lon1);
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = R * c;
-    return d;
-  }
-  //__________________________
-  // Convert to radians
-  deg2rad(deg) {
-    return deg * (Math.PI / 180);
-  }
-  //
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
    */
