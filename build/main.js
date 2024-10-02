@@ -55,7 +55,7 @@ class Airquality extends utils.Adapter {
     if (this.config.stations.length === 0) {
       console.log("No Stations");
       const home = await this.getLocation();
-      if (home) {
+      if (home.lat > 0) {
         const nearestStationIdx = await this.findNearestStation(home, this.stationList);
         console.log(`nearestStationIdx: ${nearestStationIdx}`);
       }
@@ -227,11 +227,11 @@ class Airquality extends utils.Adapter {
    */
   async getLocation() {
     this.log.debug("[getLocation] try to use the location from the system configuration");
-    if (this.latitude == void 0 || this.longitude == void 0) {
+    if (this.latitude == void 0 || this.latitude == 0 || this.longitude == void 0 || this.longitude == 0) {
       this.log.warn(
         'longitude/latitude not set in system-config - please check instance configuration of "System settings"'
       );
-      return {};
+      return { lat: -1, lon: -1 };
     } else {
       this.log.debug(`[getLocation] using Latitude: ${this.latitude} and Longitude: ${this.longitude}`);
       if (isNaN(this.latitude))
