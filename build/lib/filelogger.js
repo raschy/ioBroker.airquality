@@ -37,7 +37,7 @@ async function appendDataToFile(fileObj, data) {
     await import_fs.promises.mkdir(fileObj.path, { recursive: true });
     const filename = fileObj.path + dynFilename(fileObj);
     await import_fs.promises.appendFile(filename, data);
-    console.log(`Daten wurden erfolgreich an die Datei ${filename} angeh\xE4ngt.`);
+    console.log(`Daten wurden erfolgreich an die Datei ${fileObj.path}/${filename} angeh\xE4ngt.`);
   } catch (error) {
     if (error.code === "EACCES") {
       console.log("Zugriffsfehler: Sie haben keine Berechtigung zum Anh\xE4ngen von Daten an die Datei.");

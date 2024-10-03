@@ -32,7 +32,7 @@ async function appendDataToFile(fileObj: Logger, data: string): Promise<void> {
 		const filename = fileObj.path + dynFilename(fileObj); //fileObj.file;
 		//console.log(`Filename: ${filename}`);
 		await fs.appendFile(filename, data);
-		console.log(`Daten wurden erfolgreich an die Datei ${filename} angehängt.`);
+		console.log(`Daten wurden erfolgreich an die Datei ${fileObj.path}/${filename} angehängt.`);
 	} catch (error: any) {
 		if (error.code === 'EACCES') {
 			console.log('Zugriffsfehler: Sie haben keine Berechtigung zum Anhängen von Daten an die Datei.');

@@ -8,9 +8,9 @@
 import * as utils from '@iobroker/adapter-core';
 // Load your modules here, e.g.:
 import { getComponents, getMeasurements, getStations } from './lib/api_calls';
+import { writeLog } from './lib/filelogger';
 import { correctHour } from './lib/helper_time';
-// #import { writeLog } from './lib/filelogger';
-// #const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
+const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
 
 class Airquality extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -157,7 +157,7 @@ class Airquality extends utils.Adapter {
 	 */
 	async parseData(payload: any): Promise<any> {
 		this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
-		//writeLog(fileHandle, JSON.stringify(payload));
+		writeLog(fileHandle, JSON.stringify(payload));
 		if (Object.keys(payload).length === 0) {
 			this.log.warn('No data received');
 			return;
