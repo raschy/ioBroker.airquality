@@ -25,7 +25,7 @@ var utils = __toESM(require("@iobroker/adapter-core"));
 var import_api_calls = require("./lib/api_calls");
 var import_filelogger = require("./lib/filelogger");
 var import_helper_time = require("./lib/helper_time");
-const fileHandle = { path: "./logs/airquality", file: "logs.txt" };
+const fileHandle = { path: "logs/airquality", file: "logs.txt" };
 class Airquality extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -39,7 +39,10 @@ class Airquality extends utils.Adapter {
   updateInterval = void 0;
   stationList = {};
   components = {};
-  summerOffset = 0;
+  //public summerOffset: number = 0;
+  instanceDir = utils.getAbsoluteInstanceDataDir(this);
+  //public fileHandle = { path: './logs/airquality', file: 'logs.txt' };
+  //console.log('InstanceDir: ', instanceDir);
   /**
    * Is called when databases are connected and adapter received configuration.
    */
@@ -47,6 +50,10 @@ class Airquality extends utils.Adapter {
     this.log.info("Latitude: " + this.latitude);
     this.log.info("Longitude: " + this.longitude);
     this.log.info("config stations: " + this.config.stations);
+    const dataDir = utils.getAbsoluteDefaultDataDir();
+    this.log.info("DataDir: " + dataDir);
+    fileHandle.path = dataDir + fileHandle.path;
+    this.log.info("New Path: " + fileHandle.path);
     const executionInterval = 15;
     this.stationList = await (0, import_api_calls.getStations)();
     this.components = await (0, import_api_calls.getComponents)();

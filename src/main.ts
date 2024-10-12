@@ -10,7 +10,8 @@ import * as utils from '@iobroker/adapter-core';
 import { getComponents, getMeasurements, getStations } from './lib/api_calls';
 import { writeLog } from './lib/filelogger';
 import { correctHour } from './lib/helper_time';
-const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
+//const instanceDir = utils.getAbsoluteInstanceDataDir(this);
+const fileHandle = { path: 'logs/airquality', file: 'logs.txt' };
 
 class Airquality extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -25,7 +26,10 @@ class Airquality extends utils.Adapter {
 	public updateInterval: ioBroker.Interval | undefined = undefined;
 	public stationList: Stations = {};
 	public components: Components = {};
-	public summerOffset: number = 0;
+	//public summerOffset: number = 0;
+	public instanceDir: string = utils.getAbsoluteInstanceDataDir(this);
+	//public fileHandle = { path: './logs/airquality', file: 'logs.txt' };
+	//console.log('InstanceDir: ', instanceDir);
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
@@ -38,6 +42,11 @@ class Airquality extends utils.Adapter {
 		this.log.info('Latitude: ' + this.latitude);
 		this.log.info('Longitude: ' + this.longitude);
 		this.log.info('config stations: ' + this.config.stations);
+		//
+		const dataDir: string = utils.getAbsoluteDefaultDataDir();
+		this.log.info('DataDir: ' + dataDir);
+		fileHandle.path = dataDir + fileHandle.path;
+		this.log.info('NewPath: ' + fileHandle.path);
 		//
 		// -----------------  Timeout variables -----------------
 		const executionInterval: number = 15; // => minutes

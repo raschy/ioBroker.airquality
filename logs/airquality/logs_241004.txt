@@ -1,0 +1,138 @@
+04.10.2024 00:14:35	date_from=2024-10-03&time_from=22&date_to=2024-10-03&time_to=22&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:14:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:29:35	date_from=2024-10-03&time_from=22&date_to=2024-10-03&time_to=22&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:29:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:44:35	date_from=2024-10-03&time_from=22&date_to=2024-10-03&time_to=22&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:44:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:59:35	date_from=2024-10-03&time_from=22&date_to=2024-10-03&time_to=22&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 00:59:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:14:35	date_from=2024-10-03&time_from=23&date_to=2024-10-03&time_to=23&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:14:56	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:29:35	date_from=2024-10-03&time_from=23&date_to=2024-10-03&time_to=23&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:29:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:44:35	date_from=2024-10-03&time_from=23&date_to=2024-10-03&time_to=23&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:44:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:59:35	date_from=2024-10-03&time_from=23&date_to=2024-10-03&time_to=23&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 01:59:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:14:35	date_from=2024-10-04&time_from=24&date_to=2024-10-04&time_to=24&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:14:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:29:35	date_from=2024-10-04&time_from=24&date_to=2024-10-04&time_to=24&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:29:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:44:35	date_from=2024-10-04&time_from=24&date_to=2024-10-04&time_to=24&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:44:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:59:35	date_from=2024-10-04&time_from=24&date_to=2024-10-04&time_to=24&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 02:59:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:14:35	date_from=2024-10-04&time_from=1&date_to=2024-10-04&time_to=1&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:14:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:29:35	date_from=2024-10-04&time_from=1&date_to=2024-10-04&time_to=1&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:29:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:44:35	date_from=2024-10-04&time_from=1&date_to=2024-10-04&time_to=1&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:44:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:59:35	date_from=2024-10-04&time_from=1&date_to=2024-10-04&time_to=1&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 03:59:35	{}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:14:35	date_from=2024-10-04&time_from=2&date_to=2024-10-04&time_to=2&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:14:35	{"158":{"2024-10-04 01:00:00":["2024-10-04 02:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,3,0,"0.3"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:29:35	date_from=2024-10-04&time_from=2&date_to=2024-10-04&time_to=2&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:29:35	{"158":{"2024-10-04 01:00:00":["2024-10-04 02:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,3,0,"0.3"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:44:35	date_from=2024-10-04&time_from=2&date_to=2024-10-04&time_to=2&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:44:35	{"158":{"2024-10-04 01:00:00":["2024-10-04 02:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,3,0,"0.3"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:59:35	date_from=2024-10-04&time_from=2&date_to=2024-10-04&time_to=2&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 04:59:35	{"158":{"2024-10-04 01:00:00":["2024-10-04 02:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,3,0,"0.3"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:14:35	date_from=2024-10-04&time_from=3&date_to=2024-10-04&time_to=3&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:14:35	{"158":{"2024-10-04 02:00:00":["2024-10-04 03:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:29:35	date_from=2024-10-04&time_from=3&date_to=2024-10-04&time_to=3&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:29:35	{"158":{"2024-10-04 02:00:00":["2024-10-04 03:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:44:35	date_from=2024-10-04&time_from=3&date_to=2024-10-04&time_to=3&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:44:35	{"158":{"2024-10-04 02:00:00":["2024-10-04 03:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:59:35	date_from=2024-10-04&time_from=3&date_to=2024-10-04&time_to=3&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 05:59:35	{"158":{"2024-10-04 02:00:00":["2024-10-04 03:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:14:35	date_from=2024-10-04&time_from=4&date_to=2024-10-04&time_to=4&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:14:35	{"158":{"2024-10-04 03:00:00":["2024-10-04 04:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:29:35	date_from=2024-10-04&time_from=4&date_to=2024-10-04&time_to=4&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:29:35	{"158":{"2024-10-04 03:00:00":["2024-10-04 04:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:44:35	date_from=2024-10-04&time_from=4&date_to=2024-10-04&time_to=4&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:44:35	{"158":{"2024-10-04 03:00:00":["2024-10-04 04:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:59:35	date_from=2024-10-04&time_from=4&date_to=2024-10-04&time_to=4&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 06:59:35	{"158":{"2024-10-04 03:00:00":["2024-10-04 04:00:00",0,0,[3,46,0,"0.767"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:14:35	date_from=2024-10-04&time_from=5&date_to=2024-10-04&time_to=5&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:14:35	{"158":{"2024-10-04 04:00:00":["2024-10-04 05:00:00",0,0,[3,46,0,"0.767"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:29:35	date_from=2024-10-04&time_from=5&date_to=2024-10-04&time_to=5&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:29:35	{"158":{"2024-10-04 04:00:00":["2024-10-04 05:00:00",0,0,[3,46,0,"0.767"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:44:35	date_from=2024-10-04&time_from=5&date_to=2024-10-04&time_to=5&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:44:35	{"158":{"2024-10-04 04:00:00":["2024-10-04 05:00:00",0,0,[3,46,0,"0.767"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:59:35	date_from=2024-10-04&time_from=5&date_to=2024-10-04&time_to=5&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 07:59:35	{"158":{"2024-10-04 04:00:00":["2024-10-04 05:00:00",0,0,[3,46,0,"0.767"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:14:35	date_from=2024-10-04&time_from=6&date_to=2024-10-04&time_to=6&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:14:35	{"158":{"2024-10-04 05:00:00":["2024-10-04 06:00:00",0,0,[3,47,0,"0.783"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:29:35	date_from=2024-10-04&time_from=6&date_to=2024-10-04&time_to=6&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:29:35	{"158":{"2024-10-04 05:00:00":["2024-10-04 06:00:00",0,0,[3,47,0,"0.783"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:44:35	date_from=2024-10-04&time_from=6&date_to=2024-10-04&time_to=6&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:44:36	{"158":{"2024-10-04 05:00:00":["2024-10-04 06:00:00",0,0,[3,47,0,"0.783"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:59:35	date_from=2024-10-04&time_from=6&date_to=2024-10-04&time_to=6&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 08:59:36	{"158":{"2024-10-04 05:00:00":["2024-10-04 06:00:00",0,0,[3,47,0,"0.783"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:14:35	date_from=2024-10-04&time_from=7&date_to=2024-10-04&time_to=7&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:14:35	{"158":{"2024-10-04 06:00:00":["2024-10-04 07:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:29:35	date_from=2024-10-04&time_from=7&date_to=2024-10-04&time_to=7&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:29:35	{"158":{"2024-10-04 06:00:00":["2024-10-04 07:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:44:35	date_from=2024-10-04&time_from=7&date_to=2024-10-04&time_to=7&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:44:35	{"158":{"2024-10-04 06:00:00":["2024-10-04 07:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:59:35	date_from=2024-10-04&time_from=7&date_to=2024-10-04&time_to=7&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 09:59:35	{"158":{"2024-10-04 06:00:00":["2024-10-04 07:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:14:35	date_from=2024-10-04&time_from=8&date_to=2024-10-04&time_to=8&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:14:35	{"158":{"2024-10-04 07:00:00":["2024-10-04 08:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:29:35	date_from=2024-10-04&time_from=8&date_to=2024-10-04&time_to=8&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:29:35	{"158":{"2024-10-04 07:00:00":["2024-10-04 08:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:44:35	date_from=2024-10-04&time_from=8&date_to=2024-10-04&time_to=8&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:44:35	{"158":{"2024-10-04 07:00:00":["2024-10-04 08:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:59:35	date_from=2024-10-04&time_from=8&date_to=2024-10-04&time_to=8&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 10:59:35	{"158":{"2024-10-04 07:00:00":["2024-10-04 08:00:00",0,0,[3,44,0,"0.733"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:14:35	date_from=2024-10-04&time_from=9&date_to=2024-10-04&time_to=9&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:14:37	{"158":{"2024-10-04 08:00:00":["2024-10-04 09:00:00",0,0,[3,41,0,"0.683"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:29:35	date_from=2024-10-04&time_from=9&date_to=2024-10-04&time_to=9&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:29:35	{"158":{"2024-10-04 08:00:00":["2024-10-04 09:00:00",0,0,[3,41,0,"0.683"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:44:35	date_from=2024-10-04&time_from=9&date_to=2024-10-04&time_to=9&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:44:35	{"158":{"2024-10-04 08:00:00":["2024-10-04 09:00:00",0,0,[3,41,0,"0.683"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:59:35	date_from=2024-10-04&time_from=9&date_to=2024-10-04&time_to=9&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 11:59:36	{"158":{"2024-10-04 08:00:00":["2024-10-04 09:00:00",0,0,[3,41,0,"0.683"],[5,3,0,"0.15"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:14:35	date_from=2024-10-04&time_from=10&date_to=2024-10-04&time_to=10&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:14:35	{"158":{"2024-10-04 09:00:00":["2024-10-04 10:00:00",0,0,[3,44,0,"0.733"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:29:35	date_from=2024-10-04&time_from=10&date_to=2024-10-04&time_to=10&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:29:35	{"158":{"2024-10-04 09:00:00":["2024-10-04 10:00:00",0,0,[3,44,0,"0.733"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:44:35	date_from=2024-10-04&time_from=10&date_to=2024-10-04&time_to=10&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:44:36	{"158":{"2024-10-04 09:00:00":["2024-10-04 10:00:00",0,0,[3,44,0,"0.733"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:59:35	date_from=2024-10-04&time_from=10&date_to=2024-10-04&time_to=10&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 12:59:35	{"158":{"2024-10-04 09:00:00":["2024-10-04 10:00:00",0,0,[3,44,0,"0.733"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:14:35	date_from=2024-10-04&time_from=11&date_to=2024-10-04&time_to=11&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:14:36	{"158":{"2024-10-04 10:00:00":["2024-10-04 11:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:29:35	date_from=2024-10-04&time_from=11&date_to=2024-10-04&time_to=11&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:29:35	{"158":{"2024-10-04 10:00:00":["2024-10-04 11:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:44:35	date_from=2024-10-04&time_from=11&date_to=2024-10-04&time_to=11&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:44:35	{"158":{"2024-10-04 10:00:00":["2024-10-04 11:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:59:35	date_from=2024-10-04&time_from=11&date_to=2024-10-04&time_to=11&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 13:59:36	{"158":{"2024-10-04 10:00:00":["2024-10-04 11:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:14:35	date_from=2024-10-04&time_from=12&date_to=2024-10-04&time_to=12&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:14:35	{"158":{"2024-10-04 11:00:00":["2024-10-04 12:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:29:35	date_from=2024-10-04&time_from=12&date_to=2024-10-04&time_to=12&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:29:35	{"158":{"2024-10-04 11:00:00":["2024-10-04 12:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:44:35	date_from=2024-10-04&time_from=12&date_to=2024-10-04&time_to=12&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:44:35	{"158":{"2024-10-04 11:00:00":["2024-10-04 12:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:59:35	date_from=2024-10-04&time_from=12&date_to=2024-10-04&time_to=12&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 14:59:35	{"158":{"2024-10-04 11:00:00":["2024-10-04 12:00:00",0,0,[3,51,0,"0.85"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:14:35	date_from=2024-10-04&time_from=13&date_to=2024-10-04&time_to=13&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:14:35	{"158":{"2024-10-04 12:00:00":["2024-10-04 13:00:00",0,0,[3,48,0,"0.8"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:29:35	date_from=2024-10-04&time_from=13&date_to=2024-10-04&time_to=13&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:29:35	{"158":{"2024-10-04 12:00:00":["2024-10-04 13:00:00",0,0,[3,48,0,"0.8"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:44:35	date_from=2024-10-04&time_from=13&date_to=2024-10-04&time_to=13&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:44:35	{"158":{"2024-10-04 12:00:00":["2024-10-04 13:00:00",0,0,[3,48,0,"0.8"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:59:35	date_from=2024-10-04&time_from=13&date_to=2024-10-04&time_to=13&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 15:59:35	{"158":{"2024-10-04 12:00:00":["2024-10-04 13:00:00",0,0,[3,48,0,"0.8"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 16:16:06	date_from=2024-10-04&time_from=14&date_to=2024-10-04&time_to=14&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 16:16:06	{"158":{"2024-10-04 13:00:00":["2024-10-04 14:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 16:17:55	date_from=2024-10-04&time_from=14&date_to=2024-10-04&time_to=14&station=DEBE051&lang=de
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 16:17:55	{"158":{"2024-10-04 13:00:00":["2024-10-04 14:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+./logs/airquality//./logs/airquality/logs_241004.txt04.10.2024 16:18:48	date_from=2024-10-04&time_from=14&date_to=2024-10-04&time_to=14&station=DEBE051&lang=de
+04.10.2024 16:18:48	{"158":{"2024-10-04 13:00:00":["2024-10-04 14:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+04.10.2024 16:27:13	date_from=2024-10-04&time_from=14&date_to=2024-10-04&time_to=14&station=DEBE051&lang=de
+04.10.2024 16:27:14	{"158":{"2024-10-04 13:00:00":["2024-10-04 14:00:00",0,0,[3,45,0,"0.75"],[5,2,0,"0.1"],[1,6,0,"0.3"],[9,4,0,"0.4"]]}}
+04.10.2024 16:30:07	date_from=2024-10-04&time_from=14&date_to=2024-10-04&time_to=14&station=DEBE051&lang=de
+04.10.2024 16:31:08	date_from=2024-10-04&time_from=14&date_to=2024-10-04&time_to=14&station=DEBE051&lang=de

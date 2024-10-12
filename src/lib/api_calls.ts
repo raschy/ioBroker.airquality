@@ -1,8 +1,8 @@
 'use strict';
 
-import { writeLog } from './filelogger';
+//import { writeLog } from './filelogger';
 import { formatDate, getDateUTC } from './helper_time';
-const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
+//const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
 const baseUrl: string = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
 
 // Read in all active measuring stations
@@ -129,6 +129,6 @@ async function prepareQueryParameters(stationCode: string): Promise<string> {
 	//
 	const preparedQueryParameter = parameters.join('&');
 	console.log(`Parameter: ${preparedQueryParameter}`);
-	writeLog(fileHandle, preparedQueryParameter);
+	//writeLog(fileHandle, preparedQueryParameter);
 	return preparedQueryParameter;
 }
