@@ -1,8 +1,5 @@
 'use strict';
 
-//import { writeLog } from './filelogger';
-import { formatDate, getDateUTC } from './helper_time';
-//const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
 const baseUrl: string = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
 
 // Read in all active measuring stations
@@ -129,6 +126,32 @@ async function prepareQueryParameters(stationCode: string): Promise<string> {
 	//
 	const preparedQueryParameter = parameters.join('&');
 	console.log(`Parameter: ${preparedQueryParameter}`);
-	//writeLog(fileHandle, preparedQueryParameter);
 	return preparedQueryParameter;
+}
+//
+/**
+ * getDateUTC
+ * @returns {Date} aktual date in UTC
+ */
+function getDateUTC(): Date {
+	const d = new Date();
+	return new Date(
+		d.getUTCFullYear(),
+		d.getUTCMonth(),
+		d.getUTCDate(),
+		d.getUTCHours(),
+		d.getUTCMinutes(),
+		d.getUTCSeconds(),
+	);
+}
+/**
+ * formatDate
+ * @param {Date} d Input Date
+ * @returns {string} foratted data-string
+ */
+function formatDate(d: Date): string {
+	const year = d.getFullYear();
+	const month = (d.getMonth() + 1).toString().padStart(2, '0');
+	const day = d.getDate().toString().padStart(2, '0');
+	return `${year}-${month}-${day}`;
 }

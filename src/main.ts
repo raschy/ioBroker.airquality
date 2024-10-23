@@ -8,8 +8,8 @@
 import * as utils from '@iobroker/adapter-core';
 // Load your modules here, e.g.:
 import { getComponents, getMeasurements, getStations } from './lib/api_calls';
-import { writeLog } from './lib/filelogger';
-import { correctHour } from './lib/helper_time';
+//#import { writeLog } from './lib/filelogger';
+//#import { correctHour } from './lib/helper_time';
 //const instanceDir = utils.getAbsoluteInstanceDataDir(this);
 const fileHandle = { path: 'logs/airquality', file: 'logs.txt' };
 
@@ -166,7 +166,6 @@ class Airquality extends utils.Adapter {
 	 */
 	async parseData(payload: any): Promise<any> {
 		this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
-		writeLog(fileHandle, JSON.stringify(payload));
 		if (Object.keys(payload).length === 0) {
 			this.log.warn('No data received');
 			return;
@@ -190,7 +189,7 @@ class Airquality extends utils.Adapter {
 		console.log('bisTime: ', bisTime);
 		//
 		let innerData;
-		let nArray = 0;
+		let numberOfElements = 0;
 		for (const element in innerObject) {
 			innerData = innerObject[element];
 			console.log('inner: ', innerData);
@@ -198,7 +197,7 @@ class Airquality extends utils.Adapter {
 			for (const element in innerData) {
 				//console.log('Element: ', element);
 				if (Array.isArray(innerData[element])) {
-					nArray++;
+					numberOfElements++;
 					console.log(innerData[element]);
 					const typeMeasurement = innerData[element][0];
 					console.log(`typeMeasurement=${typeMeasurement} ==> ${this.components[typeMeasurement].name}`);
@@ -213,7 +212,7 @@ class Airquality extends utils.Adapter {
 				}
 			}
 		}
-		if (nArray > 0) {
+		if (numberOfElements > 0) {
 			this.persistData(
 				this.stationList[stationId].code,
 				'Letzte Messung',
@@ -226,12 +225,24 @@ class Airquality extends utils.Adapter {
 				this.stationList[stationId].code,
 				'Anzahl Messtypen',
 				'Zahl der zuletzt gemessenen Typen',
-				nArray,
+				numberOfElements,
 				'',
 				'number',
 			);
 		}
-		this.log.debug(`[parseData] Measured values from ${nArray} sensors determined`);
+		this.log.debug(`[parseData] Measured values from ${numberOfElements} sensors determined`);
+		//__________________________
+		// correct datestring from datestring by adding 1 hour
+		function correctHour(s: string, offset: number): string {
+			const dateString = s.split(' ')[0].split('-');
+			const sDate = dateString[2] + '.' + dateString[1] + '.' + dateString[0];
+			//
+			const timeString = s.split(' ')[1].split(':');
+			const hour = parseInt(timeString[0]) + offset; //Korrektur
+			const sHour = hour.toString().padStart(2, '0');
+			const sTime = sHour + ':' + timeString[1] + ' Uhr';
+			return `${sDate} ${sTime}`;
+		}
 	}
 
 	//
@@ -326,7 +337,8 @@ class Airquality extends utils.Adapter {
 	 */
 	async createObject(station: string, description: string, location: string): Promise<void> {
 		const dp_Folder = this.removeInvalidCharacters(station);
-		this.log.debug(`[createObject] Folder: ${dp_Folder}`);
+		if (await this.objectExists(dp_Folder)) return;
+		//
 		await this.setObjectNotExists(dp_Folder, {
 			type: 'folder',
 			common: {

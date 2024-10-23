@@ -23,8 +23,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var import_api_calls = require("./lib/api_calls");
-var import_filelogger = require("./lib/filelogger");
-var import_helper_time = require("./lib/helper_time");
 const fileHandle = { path: "logs/airquality", file: "logs.txt" };
 class Airquality extends utils.Adapter {
   constructor(options = {}) {
@@ -53,7 +51,7 @@ class Airquality extends utils.Adapter {
     const dataDir = utils.getAbsoluteDefaultDataDir();
     this.log.info("DataDir: " + dataDir);
     fileHandle.path = dataDir + fileHandle.path;
-    this.log.info("New Path: " + fileHandle.path);
+    this.log.info("NewPath: " + fileHandle.path);
     const executionInterval = 15;
     this.stationList = await (0, import_api_calls.getStations)();
     this.components = await (0, import_api_calls.getComponents)();
@@ -148,7 +146,6 @@ class Airquality extends utils.Adapter {
    */
   async parseData(payload) {
     this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
-    (0, import_filelogger.writeLog)(fileHandle, JSON.stringify(payload));
     if (Object.keys(payload).length === 0) {
       this.log.warn("No data received");
       return;
@@ -165,16 +162,16 @@ class Airquality extends utils.Adapter {
     const innerObject = payload[stationId];
     const dateTimeStart = Object.keys(innerObject)[0];
     const dateTimeEnd = innerObject[dateTimeStart][0];
-    const bisTime = (0, import_helper_time.correctHour)(dateTimeEnd, summerOffset * -1 - 1);
+    const bisTime = correctHour(dateTimeEnd, summerOffset * -1 - 1);
     console.log("bisTime: ", bisTime);
     let innerData;
-    let nArray = 0;
+    let numberOfElements = 0;
     for (const element in innerObject) {
       innerData = innerObject[element];
       console.log("inner: ", innerData);
       for (const element2 in innerData) {
         if (Array.isArray(innerData[element2])) {
-          nArray++;
+          numberOfElements++;
           console.log(innerData[element2]);
           const typeMeasurement = innerData[element2][0];
           console.log(`typeMeasurement=${typeMeasurement} ==> ${this.components[typeMeasurement].name}`);
@@ -190,7 +187,7 @@ class Airquality extends utils.Adapter {
         }
       }
     }
-    if (nArray > 0) {
+    if (numberOfElements > 0) {
       this.persistData(
         this.stationList[stationId].code,
         "Letzte Messung",
@@ -203,12 +200,21 @@ class Airquality extends utils.Adapter {
         this.stationList[stationId].code,
         "Anzahl Messtypen",
         "Zahl der zuletzt gemessenen Typen",
-        nArray,
+        numberOfElements,
         "",
         "number"
       );
     }
-    this.log.debug(`[parseData] Measured values from ${nArray} sensors determined`);
+    this.log.debug(`[parseData] Measured values from ${numberOfElements} sensors determined`);
+    function correctHour(s, offset) {
+      const dateString = s.split(" ")[0].split("-");
+      const sDate = dateString[2] + "." + dateString[1] + "." + dateString[0];
+      const timeString = s.split(" ")[1].split(":");
+      const hour = parseInt(timeString[0]) + offset;
+      const sHour = hour.toString().padStart(2, "0");
+      const sTime = sHour + ":" + timeString[1] + " Uhr";
+      return `${sDate} ${sTime}`;
+    }
   }
   //
   /**
@@ -300,7 +306,8 @@ class Airquality extends utils.Adapter {
    */
   async createObject(station, description, location) {
     const dp_Folder = this.removeInvalidCharacters(station);
-    this.log.debug(`[createObject] Folder: ${dp_Folder}`);
+    if (await this.objectExists(dp_Folder))
+      return;
     await this.setObjectNotExists(dp_Folder, {
       type: "folder",
       common: {

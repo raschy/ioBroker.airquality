@@ -6,10 +6,11 @@
 			"type": "chips",
 			"label": "stations",
 			"help": "stations_to_be_monitored",
-			"sm": 6,
+			"xs": 12,
+			"sm": 12,
 			"md": 6,
-			"lg": 8,
-			"xs": 2,
+			"lg": 4,
+			"xl": 4,
 			"newLine": false,
 			"validator": "data.stations.every(station => /^DE[A-Z]{2}[0-9]{3}$/.test(station))",
 			"validatorErrorText": "station_nonvalid_text",
@@ -24,7 +25,11 @@
 				"fontSize": 24
 			},
 			"hidden": "!data.stations || data.stations.length === 0 || data.stations.every(station => /^DE[A-Z]{2}[0-9]{3}$/.test(station))",
-			"sm": 10
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
 		}
 	}
 }

@@ -23,9 +23,6 @@ __export(api_calls_exports, {
   getStations: () => getStations
 });
 module.exports = __toCommonJS(api_calls_exports);
-var import_filelogger = require("./filelogger");
-var import_helper_time = require("./helper_time");
-const fileHandle = { path: "./logs/airquality", file: "logs.txt" };
 const baseUrl = "https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/";
 async function getStations() {
   const url = baseUrl + "stations/json?lang=de";
@@ -104,16 +101,16 @@ async function getMeasurements(stationCode) {
 }
 async function prepareQueryParameters(stationCode) {
   const parameters = [];
-  const workDate = (0, import_helper_time.getDateUTC)();
+  const workDate = getDateUTC();
   console.log(`WorkDate:(1) ${workDate}`);
   const _hour = workDate.getHours();
   const _hourFrom = _hour < 1 ? 24 : _hour;
   console.log(`hourFrom:(2) ${_hourFrom}`);
-  const dateFrom = "date_from=" + (0, import_helper_time.formatDate)(workDate);
+  const dateFrom = "date_from=" + formatDate(workDate);
   parameters.push(dateFrom);
   const timeFrom = "time_from=" + String(_hourFrom);
   parameters.push(timeFrom);
-  const dateTo = "date_to=" + (0, import_helper_time.formatDate)(workDate);
+  const dateTo = "date_to=" + formatDate(workDate);
   parameters.push(dateTo);
   const timeTo = "time_to=" + String(_hourFrom);
   parameters.push(timeTo);
@@ -121,8 +118,24 @@ async function prepareQueryParameters(stationCode) {
   parameters.push("lang=de");
   const preparedQueryParameter = parameters.join("&");
   console.log(`Parameter: ${preparedQueryParameter}`);
-  (0, import_filelogger.writeLog)(fileHandle, preparedQueryParameter);
   return preparedQueryParameter;
+}
+function getDateUTC() {
+  const d = /* @__PURE__ */ new Date();
+  return new Date(
+    d.getUTCFullYear(),
+    d.getUTCMonth(),
+    d.getUTCDate(),
+    d.getUTCHours(),
+    d.getUTCMinutes(),
+    d.getUTCSeconds()
+  );
+}
+function formatDate(d) {
+  const year = d.getFullYear();
+  const month = (d.getMonth() + 1).toString().padStart(2, "0");
+  const day = d.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
