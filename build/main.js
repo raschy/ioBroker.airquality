@@ -23,7 +23,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var import_api_calls = require("./lib/api_calls");
-const fileHandle = { path: "logs/airquality", file: "logs.txt" };
 class Airquality extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -39,8 +38,6 @@ class Airquality extends utils.Adapter {
   components = {};
   //public summerOffset: number = 0;
   instanceDir = utils.getAbsoluteInstanceDataDir(this);
-  //public fileHandle = { path: './logs/airquality', file: 'logs.txt' };
-  //console.log('InstanceDir: ', instanceDir);
   /**
    * Is called when databases are connected and adapter received configuration.
    */
@@ -48,10 +45,6 @@ class Airquality extends utils.Adapter {
     this.log.info("Latitude: " + this.latitude);
     this.log.info("Longitude: " + this.longitude);
     this.log.info("config stations: " + this.config.stations);
-    const dataDir = utils.getAbsoluteDefaultDataDir();
-    this.log.info("DataDir: " + dataDir);
-    fileHandle.path = dataDir + fileHandle.path;
-    this.log.info("NewPath: " + fileHandle.path);
     const executionInterval = 15;
     this.stationList = await (0, import_api_calls.getStations)();
     this.components = await (0, import_api_calls.getComponents)();
@@ -64,10 +57,8 @@ class Airquality extends utils.Adapter {
         await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
       }
     } else {
-      console.log("Start");
       await this.loop();
       this.updateInterval = this.setInterval(async () => {
-        console.log(this.config.stations);
         await this.loop();
       }, executionInterval * 6e4);
     }
@@ -76,7 +67,7 @@ class Airquality extends utils.Adapter {
    * This loop is executed cyclically
    */
   async loop() {
-    const selectedStations = await this.checkStationInput();
+    const selectedStations = this.config.stations;
     try {
       for (const station of selectedStations) {
         const measurement = await (0, import_api_calls.getMeasurements)(station);
@@ -152,7 +143,6 @@ class Airquality extends utils.Adapter {
     }
     const localDate = /* @__PURE__ */ new Date();
     const summerOffset = localDate.getTimezoneOffset() / 60;
-    console.log(`LocalDate: Offset ${summerOffset}`);
     const stationId = parseInt(Object.keys(payload)[0]);
     await this.createObject(
       this.stationList[stationId].code,
@@ -163,18 +153,14 @@ class Airquality extends utils.Adapter {
     const dateTimeStart = Object.keys(innerObject)[0];
     const dateTimeEnd = innerObject[dateTimeStart][0];
     const bisTime = correctHour(dateTimeEnd, summerOffset * -1 - 1);
-    console.log("bisTime: ", bisTime);
     let innerData;
     let numberOfElements = 0;
     for (const element in innerObject) {
       innerData = innerObject[element];
-      console.log("inner: ", innerData);
       for (const element2 in innerData) {
         if (Array.isArray(innerData[element2])) {
           numberOfElements++;
-          console.log(innerData[element2]);
           const typeMeasurement = innerData[element2][0];
-          console.log(`typeMeasurement=${typeMeasurement} ==> ${this.components[typeMeasurement].name}`);
           await this.persistData(
             this.stationList[stationId].code,
             this.components[typeMeasurement].name,

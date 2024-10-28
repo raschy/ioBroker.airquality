@@ -5,13 +5,9 @@
 
 // The adapter-core module gives you access to the core ioBroker functions
 // you need to create an adapter
-import * as utils from '@iobroker/adapter-core';
 // Load your modules here, e.g.:
+import * as utils from '@iobroker/adapter-core';
 import { getComponents, getMeasurements, getStations } from './lib/api_calls';
-//#import { writeLog } from './lib/filelogger';
-//#import { correctHour } from './lib/helper_time';
-//const instanceDir = utils.getAbsoluteInstanceDataDir(this);
-const fileHandle = { path: 'logs/airquality', file: 'logs.txt' };
 
 class Airquality extends utils.Adapter {
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -28,8 +24,6 @@ class Airquality extends utils.Adapter {
 	public components: Components = {};
 	//public summerOffset: number = 0;
 	public instanceDir: string = utils.getAbsoluteInstanceDataDir(this);
-	//public fileHandle = { path: './logs/airquality', file: 'logs.txt' };
-	//console.log('InstanceDir: ', instanceDir);
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
@@ -42,11 +36,6 @@ class Airquality extends utils.Adapter {
 		this.log.info('Latitude: ' + this.latitude);
 		this.log.info('Longitude: ' + this.longitude);
 		this.log.info('config stations: ' + this.config.stations);
-		//
-		const dataDir: string = utils.getAbsoluteDefaultDataDir();
-		this.log.info('DataDir: ' + dataDir);
-		fileHandle.path = dataDir + fileHandle.path;
-		this.log.info('NewPath: ' + fileHandle.path);
 		//
 		// -----------------  Timeout variables -----------------
 		const executionInterval: number = 15; // => minutes
@@ -68,10 +57,8 @@ class Airquality extends utils.Adapter {
 			}
 			//
 		} else {
-			console.log('Start');
 			await this.loop();
 			this.updateInterval = this.setInterval(async () => {
-				console.log(this.config.stations);
 				await this.loop();
 			}, executionInterval * 60000);
 		}
@@ -81,7 +68,8 @@ class Airquality extends utils.Adapter {
 	 * This loop is executed cyclically
 	 */
 	async loop(): Promise<any> {
-		const selectedStations = await this.checkStationInput();
+		//const selectedStations = await this.checkStationInput();
+		const selectedStations = this.config.stations;
 		//
 		try {
 			for (const station of selectedStations) {
@@ -151,7 +139,6 @@ class Airquality extends utils.Adapter {
 			});
 		}
 		//
-		//console.log('Write:', dp_Sensor);
 		await this.setState(dp_Sensor, { val: value, ack: true, q: 0x00 });
 		//
 		function isNumber(n: any): boolean {
@@ -173,7 +160,6 @@ class Airquality extends utils.Adapter {
 		//
 		const localDate = new Date();
 		const summerOffset = localDate.getTimezoneOffset() / 60;
-		console.log(`LocalDate: Offset ${summerOffset}`);
 		//
 		const stationId: number = parseInt(Object.keys(payload)[0]);
 		await this.createObject(
@@ -186,21 +172,16 @@ class Airquality extends utils.Adapter {
 		const dateTimeStart = Object.keys(innerObject)[0];
 		const dateTimeEnd: string = innerObject[dateTimeStart][0];
 		const bisTime: string = correctHour(dateTimeEnd, summerOffset * -1 - 1);
-		console.log('bisTime: ', bisTime);
 		//
 		let innerData;
 		let numberOfElements = 0;
 		for (const element in innerObject) {
 			innerData = innerObject[element];
-			console.log('inner: ', innerData);
 
 			for (const element in innerData) {
-				//console.log('Element: ', element);
 				if (Array.isArray(innerData[element])) {
 					numberOfElements++;
-					console.log(innerData[element]);
 					const typeMeasurement = innerData[element][0];
-					console.log(`typeMeasurement=${typeMeasurement} ==> ${this.components[typeMeasurement].name}`);
 					await this.persistData(
 						this.stationList[stationId].code,
 						this.components[typeMeasurement].name,
@@ -307,7 +288,6 @@ class Airquality extends utils.Adapter {
 	 * @param {string} localStation code of mesurement station
 	 */
 	async writeStationToConfig(localStation: string): Promise<void> {
-		//console.log(`[writeStationToConfig] ${localStation}`);
 		const _station: Array<string> = [];
 		return; // only for testing
 		this.getForeignObject('system.adapter.' + this.namespace, (err, obj) => {

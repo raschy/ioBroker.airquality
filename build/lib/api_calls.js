@@ -26,7 +26,6 @@ module.exports = __toCommonJS(api_calls_exports);
 const baseUrl = "https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/";
 async function getStations() {
   const url = baseUrl + "stations/json?lang=de";
-  console.log(`[getStations] URL=${url}`);
   const _stations = {};
   return fetch(url, {
     method: "GET",
@@ -57,7 +56,6 @@ async function getStations() {
 }
 async function getComponents() {
   const url = baseUrl + "components/json?lang=de&index=id";
-  console.log(`[getComponents] URL=${url}`);
   const _components = {};
   return fetch(url, {
     method: "GET",
@@ -82,7 +80,6 @@ async function getMeasurements(stationCode) {
   const urlSpec = "airquality/json?";
   const urlStation = await prepareQueryParameters(stationCode);
   const url = [baseUrl, urlSpec, urlStation].join("");
-  console.log(`[getMeasurements] URL=${url}`);
   let _measurements = {};
   return fetch(url, {
     method: "GET",
@@ -102,10 +99,8 @@ async function getMeasurements(stationCode) {
 async function prepareQueryParameters(stationCode) {
   const parameters = [];
   const workDate = getDateUTC();
-  console.log(`WorkDate:(1) ${workDate}`);
   const _hour = workDate.getHours();
   const _hourFrom = _hour < 1 ? 24 : _hour;
-  console.log(`hourFrom:(2) ${_hourFrom}`);
   const dateFrom = "date_from=" + formatDate(workDate);
   parameters.push(dateFrom);
   const timeFrom = "time_from=" + String(_hourFrom);
