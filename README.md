@@ -35,7 +35,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 	### **WORK IN PROGRESS**
 -->
 
-### **WORK IN PROGRESS**
+**WORK IN PROGRESS**
 
 -   (raschy) initial release
 
