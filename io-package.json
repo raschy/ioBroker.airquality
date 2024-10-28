@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "airquality",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "news": {
+      "0.0.3": {
+        "en": "Auto detection for location activated",
+        "de": "Autoerkennung für Standort aktiviert",
+        "ru": "Автоматическое обнаружение места включения",
+        "pt": "Detecção automática para localização activada",
+        "nl": "Autodetectie voor geactiveerde locatie",
+        "fr": "Détection automatique pour l'emplacement activé",
+        "it": "Rilevamento automatico per la posizione attivata",
+        "es": "Detección automática para la ubicación activada",
+        "pl": "Automatyczne wykrywanie aktywowanej lokalizacji",
+        "uk": "Автоматичне виявлення місця розташування активованого",
+        "zh-cn": "启动位置自动检测"
+      },
       "0.0.2": {
         "en": "initial release",
         "de": "erstausstrahlung",
