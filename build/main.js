@@ -36,8 +36,6 @@ class Airquality extends utils.Adapter {
   updateInterval = void 0;
   stationList = {};
   components = {};
-  //public summerOffset: number = 0;
-  instanceDir = utils.getAbsoluteInstanceDataDir(this);
   /**
    * Is called when databases are connected and adapter received configuration.
    */
@@ -152,7 +150,7 @@ class Airquality extends utils.Adapter {
     const innerObject = payload[stationId];
     const dateTimeStart = Object.keys(innerObject)[0];
     const dateTimeEnd = innerObject[dateTimeStart][0];
-    const bisTime = correctHour(dateTimeEnd, summerOffset * -1 - 1);
+    const timeEndAdjusted = correctHour(dateTimeEnd, summerOffset * -1 - 1);
     let innerData;
     let numberOfElements = 0;
     for (const element in innerObject) {
@@ -178,7 +176,7 @@ class Airquality extends utils.Adapter {
         this.stationList[stationId].code,
         "Letzte Messung",
         "Zeitspanne der letzten Messung",
-        bisTime,
+        timeEndAdjusted,
         "",
         "string"
       );
@@ -264,7 +262,6 @@ class Airquality extends utils.Adapter {
    */
   async writeStationToConfig(localStation) {
     const _station = [];
-    return;
     this.getForeignObject("system.adapter." + this.namespace, (err, obj) => {
       if (err) {
         this.log.error(`[writeStationToConfig] ${err}`);
@@ -319,11 +316,11 @@ class Airquality extends utils.Adapter {
   }
   /**
    * calculates the distance between two coordinates using the Haversine formula
-   * @param lat1 Latitude of the place of residence
-   * @param lon1 Longitude of the place of residence
-   * @param lat2 Latitude of the station
-   * @param lon2 Longitude of the station
-   * @returns Distance to the station
+   * @param {number} lat1 Latitude of the place of residence
+   * @param {number} lon1 Longitude of the place of residence
+   * @param {number} lat2 Latitude of the station
+   * @param {number} lon2 Longitude of the station
+   * @returns {number} Distance to the station
    */
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371;

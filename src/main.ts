@@ -22,8 +22,6 @@ class Airquality extends utils.Adapter {
 	public updateInterval: ioBroker.Interval | undefined = undefined;
 	public stationList: Stations = {};
 	public components: Components = {};
-	//public summerOffset: number = 0;
-	public instanceDir: string = utils.getAbsoluteInstanceDataDir(this);
 
 	/**
 	 * Is called when databases are connected and adapter received configuration.
@@ -171,7 +169,7 @@ class Airquality extends utils.Adapter {
 		const innerObject = payload[stationId];
 		const dateTimeStart = Object.keys(innerObject)[0];
 		const dateTimeEnd: string = innerObject[dateTimeStart][0];
-		const bisTime: string = correctHour(dateTimeEnd, summerOffset * -1 - 1);
+		const timeEndAdjusted: string = correctHour(dateTimeEnd, summerOffset * -1 - 1);
 		//
 		let innerData;
 		let numberOfElements = 0;
@@ -198,7 +196,7 @@ class Airquality extends utils.Adapter {
 				this.stationList[stationId].code,
 				'Letzte Messung',
 				'Zeitspanne der letzten Messung',
-				bisTime,
+				timeEndAdjusted,
 				'',
 				'string',
 			);
@@ -213,7 +211,7 @@ class Airquality extends utils.Adapter {
 		}
 		this.log.debug(`[parseData] Measured values from ${numberOfElements} sensors determined`);
 		//__________________________
-		// correct datestring from datestring by adding 1 hour
+		// correct datestring from datestring by adding x hours
 		function correctHour(s: string, offset: number): string {
 			const dateString = s.split(' ')[0].split('-');
 			const sDate = dateString[2] + '.' + dateString[1] + '.' + dateString[0];
@@ -225,7 +223,6 @@ class Airquality extends utils.Adapter {
 			return `${sDate} ${sTime}`;
 		}
 	}
-
 	//
 	/**
 	 * Checks if station in config available
@@ -289,7 +286,6 @@ class Airquality extends utils.Adapter {
 	 */
 	async writeStationToConfig(localStation: string): Promise<void> {
 		const _station: Array<string> = [];
-		return; // only for testing
 		this.getForeignObject('system.adapter.' + this.namespace, (err, obj) => {
 			if (err) {
 				this.log.error(`[writeStationToConfig] ${err}`);
@@ -345,11 +341,11 @@ class Airquality extends utils.Adapter {
 
 	/**
 	 * calculates the distance between two coordinates using the Haversine formula
-	 * @param lat1 Latitude of the place of residence
-	 * @param lon1 Longitude of the place of residence
-	 * @param lat2 Latitude of the station
-	 * @param lon2 Longitude of the station
-	 * @returns Distance to the station
+	 * @param {number} lat1 Latitude of the place of residence
+	 * @param {number} lon1 Longitude of the place of residence
+	 * @param {number} lat2 Latitude of the station
+	 * @param {number} lon2 Longitude of the station
+	 * @returns {number} Distance to the station
 	 */
 	getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
 		const R = 6371; // Radius of the earth in kilometres
@@ -384,13 +380,10 @@ class Airquality extends utils.Adapter {
 	private onUnload(callback: () => void): void {
 		try {
 			// Here you must clear all timeouts or intervals that may still be active
-			// clearTimeout(timeout1);
-			// clearTimeout(timeout2);
 			if (this.updateInterval) {
 				this.clearInterval(this.updateInterval);
 			}
 			callback();
-			/*eslint no-unused-vars: ["error", { "caughtErrors": "none" }]*/
 		} catch (e) {
 			this.log.debug(`[onUnload] e ${e}`); //eslint no-unused-vars
 			callback();

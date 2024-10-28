@@ -112,7 +112,6 @@ async function prepareQueryParameters(stationCode) {
   parameters.push("station=" + stationCode);
   parameters.push("lang=de");
   const preparedQueryParameter = parameters.join("&");
-  console.log(`Parameter: ${preparedQueryParameter}`);
   return preparedQueryParameter;
 }
 function getDateUTC() {

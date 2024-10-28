@@ -34,6 +34,11 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (raschy) Auto detection for location activated
+
 ### 0.0.2 (2024-10-28)
 
 -   (raschy) initial release

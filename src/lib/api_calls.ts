@@ -2,7 +2,10 @@
 
 const baseUrl: string = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
 
-// Read in all active measuring stations
+/**
+ * Read in all active measuring stations
+ * @returns {Stations} _stations
+ */
 export async function getStations(): Promise<Stations> {
 	//url_Stations: 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/stations/json?lang=de';
 	const url: string = baseUrl + 'stations/json?lang=de';
@@ -35,7 +38,10 @@ export async function getStations(): Promise<Stations> {
 	});
 }
 
-// Read in all components
+/**
+ * Read in all components
+ * @returns {Components} _components
+ */
 export async function getComponents(): Promise<Components> {
 	//url_Components: 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/components/json?lang=de&index=id';
 	const url: string = baseUrl + 'components/json?lang=de&index=id';
@@ -61,7 +67,11 @@ export async function getComponents(): Promise<Components> {
 	});
 }
 
-// Read in all measurements
+/**
+ * Read in all measurements
+ * @param {string} stationCode
+ * @returns {*} _measurements
+ */
 export async function getMeasurements(stationCode: string): Promise<any> {
 	//url_Measurements: 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/airquality/json?date_from=2024-09-11&time_from=14&date_to=2024-09-11&time_to=14&station=DENW430&lang=de'
 	const urlSpec: string = 'airquality/json?';
@@ -113,10 +123,9 @@ async function prepareQueryParameters(stationCode: string): Promise<string> {
 	parameters.push('lang=de');
 	//
 	const preparedQueryParameter = parameters.join('&');
-	console.log(`Parameter: ${preparedQueryParameter}`);
+	//console.log(`Parameter: ${preparedQueryParameter}`);
 	return preparedQueryParameter;
 }
-//
 /**
  * getDateUTC
  * @returns {Date} aktual date in UTC
