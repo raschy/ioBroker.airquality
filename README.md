@@ -17,11 +17,14 @@ Fetch data from German UBA
 
 ### Getting started
 
-This adapter ...
+In this adapter, at least one environmental station from which measured values are to be collected must be entered in the configuration. The station names can be selected on the website of the Federal Environment Agency at https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten (then click on 'Nearest station') using the map displayed.
+The stations always begin with 'DE', followed by the federal state 'BW' and a three-digit serial number. This identifier, e.g. 'DEBW052', must then be entered in the configuration page of the adapter (confirm with Enter). Further stations can also be added here.
 
-## Usage
+If the coordinates are maintained in the main configuration of the ioBroker, the adapter attempts to find the nearest station itself when it is first started.
 
-My text ...
+## Hint
+
+It occasionally happens that measured values cannot be retrieved. This often happens at the top of the hour because data is presumably compressed and processed internally. But even at night (around midnight) it is often not possible to retrieve the data. A log entry 'No data received' is then written as a warning. This is not a defect in the adapter but is system-related.
 
 ### DISCLAIMER
 
@@ -34,6 +37,12 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+-   (raschy) Readme text expanded
+-   (raschy) Issue 1 [E254] and [W040] corrected
+
 ### 0.0.3 (2024-10-28)
 
 -   (raschy) Auto detection for location activated
