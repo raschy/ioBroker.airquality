@@ -1,137 +1,150 @@
 {
-	"common": {
-		"name": "airquality",
-		"version": "0.0.3",
-		"news": {
-			"0.0.3": {
-				"en": "Auto detection for location activated",
-				"de": "Autoerkennung für Standort aktiviert",
-				"ru": "Автоматическое обнаружение места включения",
-				"pt": "Detecção automática para localização activada",
-				"nl": "Autodetectie voor geactiveerde locatie",
-				"fr": "Détection automatique pour l'emplacement activé",
-				"it": "Rilevamento automatico per la posizione attivata",
-				"es": "Detección automática para la ubicación activada",
-				"pl": "Automatyczne wykrywanie aktywowanej lokalizacji",
-				"uk": "Автоматичне виявлення місця розташування активованого",
-				"zh-cn": "启动位置自动检测"
-			}
-		},
-		"titleLang": {
-			"en": "Airquality",
-			"de": "Luftqualität",
-			"ru": "Качество воздуха",
-			"pt": "Qualidade do ar",
-			"nl": "Luchtkwaliteit",
-			"fr": "Qualité de l'air",
-			"it": "Qualità dell'aria",
-			"es": "Calidad del aire",
-			"pl": "Jakość powietrza",
-			"uk": "Якість повітря",
-			"zh-cn": "空气质量"
-		},
-		"desc": {
-			"en": "Fetch data from German UBA",
-			"de": "Daten vom deutschen UBA abrufen",
-			"ru": "Получить данные из немецкого UBA",
-			"pt": "Buscar dados do UBA alemão",
-			"nl": "Haal gegevens op van de Duitse UBA",
-			"fr": "Récupérer des données depuis l'UBA allemande",
-			"it": "Recupera i dati dall'UBA tedesca",
-			"es": "Obtener datos de la UBA alemana",
-			"pl": "Pobierz dane z niemieckiego UBA",
-			"uk": "Отримати дані з німецького UBA",
-			"zh-cn": "从德国UBA获取数据"
-		},
-		"authors": [
-			"raschy <raschy@gmx.de>"
-		],
-		"keywords": [
-			"UBA",
-			"particles",
-			"NOx",
-			"CO2",
-			"O3"
-		],
-		"licenseInformation": {
-			"type": "free",
-			"license": "MIT"
-		},
-		"platform": "Javascript/Node.js",
-		"icon": "airquality.png",
-		"enabled": true,
-		"extIcon": "https://raw.githubusercontent.com/raschy/ioBroker.airquality/main/admin/airquality.png",
-		"readme": "https://github.com/raschy/ioBroker.airquality/blob/main/README.md",
-		"loglevel": "info",
-		"tier": 3,
-		"mode": "daemon",
-		"type": "weather",
-		"compact": true,
-		"connectionType": "cloud",
-		"dataSource": "poll",
-		"adminUI": {
-			"config": "json"
-		},
-		"dependencies": [
-			{
-				"js-controller": ">=5.0.19"
-			}
-		],
-		"globalDependencies": [
-			{
-				"admin": ">=5.1.13"
-			}
-		]
-	},
-	"native": {
-		"stations": ""
-	},
-	"objects": [],
-	"instanceObjects": [
-		{
-			"_id": "info",
-			"type": "channel",
-			"common": {
-				"name": {
-					"en": "Information",
-					"de": "Informationen",
-					"ru": "Информация",
-					"pt": "Informação",
-					"nl": "Informatie",
-					"fr": "Informations",
-					"it": "Informazioni",
-					"es": "Información",
-					"pl": "Informacje",
-					"uk": "Інформація",
-					"zh-cn": "资料"
-				}
-			},
-			"native": {}
-		},
-		{
-			"_id": "info.lastUpdate",
-			"type": "state",
-			"common": {
-				"role": "date.end",
-				"name": {
-					"en": "Last update",
-					"de": "Letzte Aktualisierung",
-					"ru": "Последнее обновление",
-					"pt": "Última atualização",
-					"nl": "Laatste update",
-					"fr": "Dernière mise à jour",
-					"it": "Ultimo aggiornamento",
-					"es": "Última actualización",
-					"pl": "Ostatnia aktualizacja",
-					"uk": "Останнє оновлення",
-					"zh-cn": "上次更新"
-				},
-				"type": "number",
-				"read": true,
-				"write": false,
-				"def": 0
-			},
-			"native": {}
-		}
-	]
+  "common": {
+    "name": "airquality",
+    "version": "0.0.4",
+    "news": {
+      "0.0.4": {
+        "en": "Readme text expanded\nIssue 1 [E254] and [W040] corrected",
+        "de": "Text erweitert\nLieferung 1 [E254] und [W040] korrigiert",
+        "ru": "Текст чтения расширен\nВопрос 1 [E254] и [W040] исправить",
+        "pt": "Texto de leitura expandido\nEdição 1 [E254] e [W040] corrigido",
+        "nl": "Leestekst uitgebreid\nNummer 1 [E254] en [W040] gecorrigeerd",
+        "fr": "Lire le texte élargi\nNuméro 1 [E254] et [W040] corrigés",
+        "it": "Testo Readme ampliato\nFascicolo 1 [E254] e [W040] corretto",
+        "es": "Texto del texto ampliado\nNúmero 1 [E254] y [W040] corregido",
+        "pl": "Tekst readme rozszerzony\nWydanie 1 [E254] i [W040] poprawione",
+        "uk": "Розширений текст\nВипуск 1 [E254] і [W040] виправлено",
+        "zh-cn": "扩充文本\n问题1[E254]和[W040]更正"
+      },
+      "0.0.3": {
+        "en": "Auto detection for location activated",
+        "de": "Autoerkennung für Standort aktiviert",
+        "ru": "Автоматическое обнаружение места включения",
+        "pt": "Detecção automática para localização activada",
+        "nl": "Autodetectie voor geactiveerde locatie",
+        "fr": "Détection automatique pour l'emplacement activé",
+        "it": "Rilevamento automatico per la posizione attivata",
+        "es": "Detección automática para la ubicación activada",
+        "pl": "Automatyczne wykrywanie aktywowanej lokalizacji",
+        "uk": "Автоматичне виявлення місця розташування активованого",
+        "zh-cn": "启动位置自动检测"
+      }
+    },
+    "titleLang": {
+      "en": "Airquality",
+      "de": "Luftqualität",
+      "ru": "Качество воздуха",
+      "pt": "Qualidade do ar",
+      "nl": "Luchtkwaliteit",
+      "fr": "Qualité de l'air",
+      "it": "Qualità dell'aria",
+      "es": "Calidad del aire",
+      "pl": "Jakość powietrza",
+      "uk": "Якість повітря",
+      "zh-cn": "空气质量"
+    },
+    "desc": {
+      "en": "Fetch data from German UBA",
+      "de": "Daten vom deutschen UBA abrufen",
+      "ru": "Получить данные из немецкого UBA",
+      "pt": "Buscar dados do UBA alemão",
+      "nl": "Haal gegevens op van de Duitse UBA",
+      "fr": "Récupérer des données depuis l'UBA allemande",
+      "it": "Recupera i dati dall'UBA tedesca",
+      "es": "Obtener datos de la UBA alemana",
+      "pl": "Pobierz dane z niemieckiego UBA",
+      "uk": "Отримати дані з німецького UBA",
+      "zh-cn": "从德国UBA获取数据"
+    },
+    "authors": [
+      "raschy <raschy@gmx.de>"
+    ],
+    "keywords": [
+      "UBA",
+      "particles",
+      "NOx",
+      "CO2",
+      "O3"
+    ],
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "airquality.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/raschy/ioBroker.airquality/main/admin/airquality.png",
+    "readme": "https://github.com/raschy/ioBroker.airquality/blob/main/README.md",
+    "loglevel": "info",
+    "tier": 3,
+    "mode": "daemon",
+    "type": "weather",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.19"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=5.1.13"
+      }
+    ]
+  },
+  "native": {
+    "stations": ""
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Information",
+          "de": "Informationen",
+          "ru": "Информация",
+          "pt": "Informação",
+          "nl": "Informatie",
+          "fr": "Informations",
+          "it": "Informazioni",
+          "es": "Información",
+          "pl": "Informacje",
+          "uk": "Інформація",
+          "zh-cn": "资料"
+        }
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.lastUpdate",
+      "type": "state",
+      "common": {
+        "role": "date.end",
+        "name": {
+          "en": "Last update",
+          "de": "Letzte Aktualisierung",
+          "ru": "Последнее обновление",
+          "pt": "Última atualização",
+          "nl": "Laatste update",
+          "fr": "Dernière mise à jour",
+          "it": "Ultimo aggiornamento",
+          "es": "Última actualización",
+          "pl": "Ostatnia aktualizacja",
+          "uk": "Останнє оновлення",
+          "zh-cn": "上次更新"
+        },
+        "type": "number",
+        "read": true,
+        "write": false,
+        "def": 0
+      },
+      "native": {}
+    }
+  ]
 }
