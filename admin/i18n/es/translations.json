@@ -1,0 +1,7 @@
+{
+    "airquality adapter settings": "Ajustes del adaptador para la calidad del aire",
+    "stations": "estaciones",
+    "stations_to_be_monitored": "estaciones a monitorear",
+    "station_nonvalid_text": "texto no válido de la estación",
+    "wrong_item_in_stations": "artículo equivocado en las estaciones"
+}

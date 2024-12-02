@@ -1,0 +1,7 @@
+{
+    "airquality adapter settings": "Paramètres de l'adaptateur pour la qualité de l'air",
+    "stations": "gares",
+    "stations_to_be_monitored": "stations à surveiller",
+    "station_nonvalid_text": "texte non valide de la station",
+    "wrong_item_in_stations": "mauvais article dans les stations"
+}
