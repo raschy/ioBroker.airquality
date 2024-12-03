@@ -63,7 +63,7 @@
 			"UBA",
 			"particles",
 			"NOx",
-			"CO2",
+			"CO",
 			"O3"
 		],
 		"licenseInformation": {
@@ -79,7 +79,7 @@
 		"tier": 3,
 		"mode": "schedule",
 		"allowInit": true,
-		"schedule": "*/6 * * * *",
+		"schedule": "9 * * * *",
 		"type": "weather",
 		"compact": true,
 		"connectionType": "cloud",
