@@ -37,8 +37,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.0 (2024-12-03)
 
 -   (raschy) CO data retrieval added
 -   (raschy) Conversion as scheduled adapter
