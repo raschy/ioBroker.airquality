@@ -40,9 +40,9 @@ class Airquality extends utils.Adapter {
    * Is called when databases are connected and adapter received configuration.
    */
   async onReady() {
-    this.log.debug("Latitude: " + this.latitude);
-    this.log.debug("Longitude: " + this.longitude);
-    this.log.debug("config stations: " + this.config.stations);
+    this.log.debug(`Latitude: ${this.latitude}`);
+    this.log.debug(`Longitude: ${this.longitude}`);
+    this.log.debug(`config stations: ${this.config.stations}`);
     this.stationList = await (0, import_api_calls.getStations)();
     this.components = await (0, import_api_calls.getComponents)();
     if (this.config.stations.length === 0) {
@@ -64,13 +64,13 @@ class Airquality extends utils.Adapter {
         await this.parseData(await (0, import_api_calls.getMeasurements)(station));
         await this.parseDataSingle(await (0, import_api_calls.getMeasurementsComp)(station, 2));
       }
-      await this.setState("info.lastUpdate", { val: Date.now(), ack: true });
+      this.setState("info.lastUpdate", { val: Date.now(), ack: true });
     } catch (error) {
       this.setState("info.connection", { val: false, ack: true });
       if (error instanceof Error) {
-        this.log.error("[loop] Error: " + error.message);
+        this.log.error(`[loop] Error: ${error.message}`);
       } else {
-        this.log.error("[loop] Unknown error: " + error);
+        this.log.error(`[loop] Unknown error: ${error}`);
       }
     } finally {
       this.log.debug(`[onReady] finished - stopping instance`);
@@ -79,15 +79,16 @@ class Airquality extends utils.Adapter {
   }
   /**
    * Persist the measurements
-   * @param {string} station
-   * @param {string} sensor
-   * @param {string} description
-   * @param {number} value
-   * @param {string} unit
-   * @param {string} role
+   *
+   * @param station
+   * @param sensor
+   * @param description
+   * @param value
+   * @param unit
+   * @param role
    */
   async persistData(station, sensor, description, value, unit, role) {
-    const dp_Sensor = this.removeInvalidCharacters(station) + "." + this.removeInvalidCharacters(sensor);
+    const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
     this.log.silly(
       `[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${description}" with value: "${value}" and unit "${unit}" as role "${role}`
     );
@@ -125,7 +126,8 @@ class Airquality extends utils.Adapter {
   }
   /**
    * Retrieves the desired data from the payload and prepares data for storage
-   * @param {*} payload Object from Response
+   *
+   * @param {} payload Object from Response
    * @returns
    */
   async parseDataSingle(payload) {
@@ -182,7 +184,8 @@ class Airquality extends utils.Adapter {
   //
   /**
    * Retrieves the desired data from the payload and prepares data for storage
-   * @param {*} payload Object from Response
+   *
+   * @param {} payload Object from Response
    * @returns
    */
   async parseData(payload) {
@@ -246,18 +249,20 @@ class Airquality extends utils.Adapter {
   //
   /**
    * Checks if station in config available
+   *
    * @returns selectedStations
    */
   async checkStationInput() {
     const selectedStations = this.config.stations;
-    console.log("Selected Stations: " + selectedStations);
+    console.log(`Selected Stations: ${selectedStations}`);
     console.log(Array.isArray(selectedStations));
     return selectedStations;
   }
   //
   /**
    * Use the specified coordinates from the configuration
-   * @returns {object} Koordinates(lat, lon)
+   *
+   * @returns Koordinates(lat, lon)
    */
   async getLocation() {
     this.log.debug("[getLocation] try to use the location from the system configuration");
@@ -266,17 +271,17 @@ class Airquality extends utils.Adapter {
         'longitude/latitude not set in system-config - please check instance configuration of "System settings"'
       );
       return { lat: -1, lon: -1 };
-    } else {
-      this.log.debug(`[getLocation] using Latitude: ${this.latitude} and Longitude: ${this.longitude}`);
-      return { lat: this.latitude, lon: this.longitude };
     }
+    this.log.debug(`[getLocation] using Latitude: ${this.latitude} and Longitude: ${this.longitude}`);
+    return { lat: this.latitude, lon: this.longitude };
   }
   //
   /**
    * search for the nearest station using coordinates
-   * @param {object} localHome
-   * @param {object} coordinates
-   * @returns {number} stationId
+   *
+   * @param localHome
+   * @param coordinates
+   * @returns stationId
    */
   async findNearestStation(localHome, coordinates) {
     let minDistance = Number.MAX_VALUE;
@@ -301,11 +306,12 @@ class Airquality extends utils.Adapter {
   //
   /**
    * write code of Station in UI-config
-   * @param {string} localStation code of mesurement station
+   *
+   * @param localStation code of mesurement station
    */
   async writeStationToConfig(localStation) {
     const _station = [];
-    this.getForeignObject("system.adapter." + this.namespace, (err, obj) => {
+    this.getForeignObject(`system.adapter.${this.namespace}`, (err, obj) => {
       if (err) {
         this.log.error(`[writeStationToConfig] ${err}`);
       } else {
@@ -326,14 +332,16 @@ class Airquality extends utils.Adapter {
   //
   /**
    * Create a folder für station
-   * @param {string} station
-   * @param {string} description
-   * @param {string} location
+   *
+   * @param station
+   * @param description
+   * @param location
    */
   async createObject(station, description, location) {
     const dp_Folder = this.removeInvalidCharacters(station);
-    if (await this.objectExists(dp_Folder))
+    if (await this.objectExists(dp_Folder)) {
       return;
+    }
     await this.setObjectNotExists(dp_Folder, {
       type: "folder",
       common: {
@@ -350,7 +358,7 @@ class Airquality extends utils.Adapter {
           uk: "\u0412\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F \u0437 \u0441\u0442\u0430\u043D\u0446\u0456\u0457",
           "zh-cn": "\u4ECE\u8F66\u7AD9\u6D4B\u91CF"
         },
-        desc: description + "> " + location,
+        desc: `${description}> ${location}`,
         role: "info"
       },
       native: {}
@@ -359,11 +367,12 @@ class Airquality extends utils.Adapter {
   }
   /**
    * calculates the distance between two coordinates using the Haversine formula
-   * @param {number} lat1 Latitude of the place of residence
-   * @param {number} lon1 Longitude of the place of residence
-   * @param {number} lat2 Latitude of the station
-   * @param {number} lon2 Longitude of the station
-   * @returns {number} Distance to the station
+   *
+   * @param lat1 Latitude of the place of residence
+   * @param lon1 Longitude of the place of residence
+   * @param lat2 Latitude of the station
+   * @param lon2 Longitude of the station
+   * @returns Distance to the station
    */
   getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -379,6 +388,7 @@ class Airquality extends utils.Adapter {
   }
   /**
    * removes illegal characters
+   *
    * @param inputString Designated name for an object/data point
    * @returns Cleaned name for an object/data point
    */
@@ -389,21 +399,24 @@ class Airquality extends utils.Adapter {
   }
   /**
    * correct datestring from datestring by adding x hours
-   * @param {string} s
-   * @param {number} offset
-   * @returns {string}
+   *
+   * @param s
+   * @param offset
+   * @returns
    */
   correctHour(s, offset) {
     const dateString = s.split(" ")[0].split("-");
-    const sDate = dateString[2] + "." + dateString[1] + "." + dateString[0];
+    const sDate = `${dateString[2]}.${dateString[1]}.${dateString[0]}`;
     const timeString = s.split(" ")[1].split(":");
     const hour = parseInt(timeString[0]) + offset;
     const sHour = hour.toString().padStart(2, "0");
-    const sTime = sHour + ":" + timeString[1];
+    const sTime = `${sHour}:${timeString[1]}`;
     return `${sDate} ${sTime}`;
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
+   *
+   * @param callback
    */
   onUnload(callback) {
     try {

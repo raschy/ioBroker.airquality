@@ -26,7 +26,7 @@ __export(api_calls_exports, {
 module.exports = __toCommonJS(api_calls_exports);
 const baseUrl = "https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/";
 async function getStations() {
-  const urlStation = await prepareQueryParameters("");
+  const urlStation = prepareQueryParameters("");
   const url = [baseUrl, "stations/json?use=airquality&lang", urlStation].join("");
   const _stations = {};
   return fetch(url, {
@@ -37,8 +37,9 @@ async function getStations() {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
     }
   }).then(async (response) => {
-    if (!response.ok)
+    if (!response.ok) {
       throw new Error("[getStations] failed to retrieve data");
+    }
     const data = await response.json();
     for (const key in data.data) {
       const stationId = data.data[key][0];
@@ -59,7 +60,7 @@ async function getStations() {
   });
 }
 async function getComponents() {
-  const url = baseUrl + "components/json?lang=de&index=id";
+  const url = `${baseUrl}components/json?lang=de&index=id`;
   const _components = {};
   return fetch(url, {
     method: "GET",
@@ -69,8 +70,9 @@ async function getComponents() {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
     }
   }).then(async (response) => {
-    if (!response.ok)
+    if (!response.ok) {
       throw new Error("[getComponents] failed to retrieve data");
+    }
     const data = await response.json();
     for (const key in data) {
       if (!isNaN(parseInt(key))) {
@@ -82,7 +84,7 @@ async function getComponents() {
 }
 async function getMeasurements(stationCode) {
   const urlSpec = "airquality/json?";
-  const urlStation = await prepareQueryParameters(stationCode);
+  const urlStation = prepareQueryParameters(stationCode);
   const url = [baseUrl, urlSpec, urlStation].join("");
   let _measurements = {};
   return fetch(url, {
@@ -93,8 +95,9 @@ async function getMeasurements(stationCode) {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
     }
   }).then(async (response) => {
-    if (!response.ok)
+    if (!response.ok) {
       throw new Error("[getMeasurements] failed to retrieve data");
+    }
     const data = await response.json();
     _measurements = data.data;
     return _measurements;
@@ -102,7 +105,7 @@ async function getMeasurements(stationCode) {
 }
 async function getMeasurementsComp(stationCode, component) {
   const urlSpec = "measures/json?";
-  const urlStation = await prepareQueryParameters(stationCode);
+  const urlStation = prepareQueryParameters(stationCode);
   const url = [baseUrl, urlSpec, urlStation, "&component=", component].join("");
   let _measurements = {};
   return fetch(url, {
@@ -113,28 +116,29 @@ async function getMeasurementsComp(stationCode, component) {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
     }
   }).then(async (response) => {
-    if (!response.ok)
+    if (!response.ok) {
       throw new Error("[getMeasurements] failed to retrieve data");
+    }
     const data = await response.json();
     _measurements = data.data;
     return _measurements;
   });
 }
-async function prepareQueryParameters(stationCode) {
+function prepareQueryParameters(stationCode) {
   const parameters = [];
   const workDate = getDateUTC();
   const _hour = workDate.getHours();
   const _hourFrom = _hour < 1 ? 24 : _hour;
-  const dateFrom = "date_from=" + formatDate(workDate);
+  const dateFrom = `date_from=${formatDate(workDate)}`;
   parameters.push(dateFrom);
-  const timeFrom = "time_from=" + String(_hourFrom);
+  const timeFrom = `time_from=${String(_hourFrom)}`;
   parameters.push(timeFrom);
-  const dateTo = "date_to=" + formatDate(workDate);
+  const dateTo = `date_to=${formatDate(workDate)}`;
   parameters.push(dateTo);
-  const timeTo = "time_to=" + String(_hourFrom);
+  const timeTo = `time_to=${String(_hourFrom)}`;
   parameters.push(timeTo);
   if (stationCode != "") {
-    parameters.push("station=" + stationCode);
+    parameters.push(`station=${stationCode}`);
     parameters.push("lang=de");
   }
   const preparedQueryParameter = parameters.join("&");

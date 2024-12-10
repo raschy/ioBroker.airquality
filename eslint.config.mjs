@@ -8,32 +8,24 @@ export default [
 	{
 		// specify files to exclude from linting here
 		ignores: [
-			'src/*.test.ts',
-			'*.test.ts',
+			'.dev-server/',
+			'.vscode/',
 			'*.test.js',
 			'test/**/*.js',
-			'test/**/*.ts',
 			'*.config.mjs',
-			'build/',
+			'build',
 			'admin/build',
 			'admin/words.js',
 			'admin/admin.d.ts',
-			'**/adapter-config.d.ts',
-			'.dev-server/',
-			'.vscode/',
-			'node_modules/',
-			'.github/',
-			'.idea/',
-			'admin/'
-
+			'**/adapter-config.d.ts'
 		]
 	},
 
 	{
 		// you may disable some 'jsdoc' warnings - but using jsdoc is highly recommended
-		// as this improves maintainability. jsdoc warnings will not block build process.
+		// as this improves maintainability. jsdoc warnings will not block buiuld process.
 		rules: {
-			'jsdoc/require-jsdoc': 'off',
+			// 'jsdoc/require-jsdoc': 'off',
 		},
 	},
 
