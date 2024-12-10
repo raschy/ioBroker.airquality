@@ -13,6 +13,7 @@ interface Stations {
 		number: string;
 		street: string;
 		zipcode: string;
+		network: string;
 	};
 }
 

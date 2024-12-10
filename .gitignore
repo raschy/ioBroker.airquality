@@ -5,6 +5,7 @@
 
 *.code-workspace
 node_modules
+logs
 nbproject
 
 # npm package files

@@ -51,31 +51,35 @@ class Airquality extends utils.Adapter {
 				this.log.info(`[onReady] nearestStationIdx: ${nearestStationIdx}`);
 				await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
 			}
-			//
-		} else {
-			// start with delay
-			this.log.info('[onReady] may be loop');
-			await this.delay(Math.floor(Math.random() * 5000));
-			const selectedStations = this.config.stations;
-			this.log.info('[onReady] selectedStations');
-			//
-			try {
-				for (const station of selectedStations) {
-					this.log.debug(`[onReady] fetches Data from : ${station}`);
-					await this.parseData(await getMeasurements(station));
-					await this.parseDataSingle(await getMeasurementsComp(station, 2));
-				}
-				//
-				await this.setState('info.lastUpdate', { val: Date.now(), ack: true });
-			} catch (error: unknown) {
-				this.setState('info.connection', { val: false, ack: true });
-				if (error instanceof Error) {
-					this.log.error('[loop] Error: ' + error.message);
-				} else {
-					this.log.error('[loop] Unknown error: ' + error);
-				}
-			}
 		}
+		// start with delay
+		this.log.info('[onReady] may be loop');
+		await this.delay(Math.floor(Math.random() * 5000));
+		const selectedStations = this.config.stations;
+		this.log.info('[onReady] selectedStations');
+		//
+		try {
+			for (const station of selectedStations) {
+				this.log.debug(`[onReady] fetches Data from : ${station}`);
+				await this.parseData(await getMeasurements(station));
+				await this.parseDataSingle(await getMeasurementsComp(station, 2));
+			}
+			//
+			await this.setState('info.lastUpdate', { val: Date.now(), ack: true });
+		} catch (error: unknown) {
+			this.setState('info.connection', { val: false, ack: true });
+			if (error instanceof Error) {
+				this.log.error('[loop] Error: ' + error.message);
+			} else {
+				this.log.error('[loop] Unknown error: ' + error);
+			}
+		} finally {
+			this.log.debug(`[onReady] finished - stopping instance`);
+			this.terminate
+				? this.terminate('Everything done. Going to terminate till next schedule', 11)
+				: process.exit(0);
+		}
+		// End onReady
 	}
 
 	/**
