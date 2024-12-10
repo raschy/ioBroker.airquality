@@ -24,9 +24,7 @@ __export(api_calls_exports, {
   getStations: () => getStations
 });
 module.exports = __toCommonJS(api_calls_exports);
-var import_fs = require("fs");
 const baseUrl = "https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/";
-const fileHandle = { path: "./logs/airquality", file: "logs.txt" };
 async function getStations() {
   const urlStation = await prepareQueryParameters("");
   const url = [baseUrl, "stations/json?use=airquality&lang", urlStation].join("");
@@ -158,34 +156,6 @@ function formatDate(d) {
   const month = (d.getMonth() + 1).toString().padStart(2, "0");
   const day = d.getDate().toString().padStart(2, "0");
   return `${year}-${month}-${day}`;
-}
-async function writeLog(fileObj, logEntry) {
-  const now = /* @__PURE__ */ new Date();
-  const dateTime = now.toLocaleString("fr-CH");
-  const data = `${dateTime}	${logEntry}
-`;
-  appendDataToFile(fileObj, data);
-}
-async function appendDataToFile(fileObj, data) {
-  if (!fileObj.path.endsWith("/")) {
-    fileObj.path += "/";
-  }
-  try {
-    await import_fs.promises.mkdir(fileObj.path, { recursive: true });
-    const filename = fileObj.path + fileObj.file;
-    await import_fs.promises.appendFile(filename, data);
-    console.log(`Daten wurden erfolgreich an die Datei ${filename} angeh\xE4ngt.`);
-  } catch (error) {
-    if (error.code === "EACCES") {
-      console.log("Zugriffsfehler: Sie haben keine Berechtigung zum Anh\xE4ngen von Daten an die Datei.");
-    } else if (error.code === "ENOENT") {
-      console.log("Datei oder Verzeichnis nicht gefunden: " + error.path);
-    } else if (error.code === "ENOTDIR") {
-      console.log("Pfad ist kein Verzeichnis: " + error.path);
-    } else {
-      console.log("Ein unbekannter Fehler ist aufgetreten:");
-    }
-  }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

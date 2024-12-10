@@ -1,14 +1,6 @@
 'use strict';
 
 const baseUrl: string = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
-//
-import { promises as fs } from 'fs';
-//
-interface Logger {
-	path: string;
-	file: string;
-}
-const fileHandle = { path: './logs/airquality', file: 'logs.txt' };
 
 /**
  * Read in all active measuring stations
@@ -33,15 +25,6 @@ export async function getStations(): Promise<Stations> {
 		const data: any = await response.json();
 		for (const key in data.data) {
 			const stationId: number = data.data[key][0];
-			//const network: string = data.data[key][12];
-			//await writeLog(fileHandle, JSON.stringify(data.data[key]));
-			//
-			/*
-			if (network == 'BE') {
-				//await writeLog(fileHandle, String(stationId) + '#' + data.data[key][1]);
-				await writeLog(fileHandle, JSON.stringify(data.data[key]));
-			}
-			*/
 			//
 			_stations[stationId] = {
 				id: data.data[key][0],
@@ -204,42 +187,4 @@ function formatDate(d: Date): string {
 	const month = (d.getMonth() + 1).toString().padStart(2, '0');
 	const day = d.getDate().toString().padStart(2, '0');
 	return `${year}-${month}-${day}`;
-}
-
-async function writeLog(fileObj: Logger, logEntry: string): Promise<void> {
-	// Get the current date and time
-	const now = new Date();
-	const dateTime = now.toLocaleString('fr-CH'); // best format for log-entrys
-	// Format the log entry
-	const data = `${dateTime}\t${logEntry}\n`;
-	appendDataToFile(fileObj, data);
-}
-
-async function appendDataToFile(fileObj: Logger, data: string): Promise<void> {
-	//console.log(`(f) checkDirectory ${JSON.stringify(fileObj)}`);
-	if (!fileObj.path.endsWith('/')) {
-		fileObj.path += '/';
-		//console.log(`"/" wurde an ${fileObj.path} angefügt.`);
-	}
-	//
-	try {
-		// Überprüfen und Verzeichnis erstellen, falls es nicht existiert
-		await fs.mkdir(fileObj.path, { recursive: true });
-		// Daten an die Datei anhängen
-		//const filename = fileObj.path + dynFilename(fileObj); //fileObj.file;
-		const filename = fileObj.path + fileObj.file;
-		//console.log(`Filename: ${filename}`);
-		await fs.appendFile(filename, data);
-		console.log(`Daten wurden erfolgreich an die Datei ${filename} angehängt.`);
-	} catch (error: any) {
-		if (error.code === 'EACCES') {
-			console.log('Zugriffsfehler: Sie haben keine Berechtigung zum Anhängen von Daten an die Datei.');
-		} else if (error.code === 'ENOENT') {
-			console.log('Datei oder Verzeichnis nicht gefunden: ' + error.path);
-		} else if (error.code === 'ENOTDIR') {
-			console.log('Pfad ist kein Verzeichnis: ' + error.path);
-		} else {
-			console.log('Ein unbekannter Fehler ist aufgetreten:');
-		}
-	}
 }
