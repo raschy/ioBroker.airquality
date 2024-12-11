@@ -1,7 +1,6 @@
 'use strict';
 /*
  * Created with @iobroker/create-adapter v2.6.5
-	RENEWED:	2024-12-02
  */
 
 // The adapter-core module gives you access to the core ioBroker functions
@@ -32,10 +31,6 @@ class Airquality extends utils.Adapter {
 
 		// The adapters config (in the instance object everything under the attribute "native") is
 		// accessible via this.config:
-		this.log.debug(`Latitude: ${this.latitude}`);
-		this.log.debug(`Longitude: ${this.longitude}`);
-		this.log.debug(`config stations: ${this.config.stations}`);
-		//
 		this.stationList = await getStations();
 		//console.log(this.stationList[931].city); //> 'Lingen'
 		//
@@ -51,33 +46,33 @@ class Airquality extends utils.Adapter {
 				this.log.info(`[onReady] nearestStationIdx: ${nearestStationIdx}`);
 				await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
 			}
-		}
-		// start with delay
-		this.log.info('[onReady] may be loop');
-		await this.delay(Math.floor(Math.random() * 5000));
-		const selectedStations = this.config.stations;
-		this.log.info(`[onReady] selectedStations: ${selectedStations}`);
-		//
-		try {
-			for (const station of selectedStations) {
-				this.log.debug(`[onReady] fetches Data from : ${station}`);
-				await this.parseData(await getMeasurements(station));
-				await this.parseDataSingle(await getMeasurementsComp(station, 2));
-			}
+		} else {
+			this.log.info('[onReady] may be loop');
+			await this.delay(Math.floor(Math.random() * 5000));
+			const selectedStations = this.config.stations;
+			this.log.info(`[onReady] selectedStations: ${selectedStations}`);
 			//
-			await this.setState('info.lastUpdate', { val: Date.now(), ack: true });
-		} catch (error: unknown) {
-			await this.setState('info.connection', { val: false, ack: true });
-			if (error instanceof Error) {
-				this.log.error(`[loop] Error: ${error.message}`);
-			} else {
-				this.log.error(`[loop] Unknown error: ${JSON.stringify(error)}`);
+			try {
+				for (const station of selectedStations) {
+					this.log.debug(`[onReady] fetches data from : ${station}`);
+					await this.parseData(await getMeasurements(station));
+					await this.parseDataSingle(await getMeasurementsComp(station, 2));
+				}
+				//
+				await this.setState('info.lastUpdate', { val: Date.now(), ack: true });
+			} catch (error: unknown) {
+				await this.setState('info.connection', { val: false, ack: true });
+				if (error instanceof Error) {
+					this.log.error(`[onReady] Error: ${error.message}`);
+				} else {
+					this.log.error(`[onReady] Unknown error: ${JSON.stringify(error)}`);
+				}
+			} finally {
+				this.log.debug(`[onReady] finished - stopping instance`);
+				this.terminate
+					? this.terminate('Everything done. Going to terminate till next schedule', 11)
+					: process.exit(0);
 			}
-		} finally {
-			this.log.debug(`[onReady] finished - stopping instance`);
-			this.terminate
-				? this.terminate('Everything done. Going to terminate till next schedule', 11)
-				: process.exit(0);
 		}
 		// End onReady
 	}
@@ -181,7 +176,7 @@ class Airquality extends utils.Adapter {
 			this.components[typeMeasurement].desc,
 			innerData[2], // Value
 			this.components[typeMeasurement].unit,
-			'state',
+			'value',
 		);
 		this.numberOfElements++;
 		if (this.numberOfElements > 0) {
@@ -191,7 +186,7 @@ class Airquality extends utils.Adapter {
 				'Zeitspanne der letzten Messung',
 				timeEndAdjusted,
 				'',
-				'string',
+				'date.end',
 			);
 			await this.persistData(
 				this.stationList[stationId].code,
@@ -199,7 +194,7 @@ class Airquality extends utils.Adapter {
 				'Zahl der zuletzt gemessenen Typen',
 				this.numberOfElements,
 				'',
-				'number',
+				'value',
 			);
 		}
 		//}
@@ -250,7 +245,7 @@ class Airquality extends utils.Adapter {
 						this.components[typeMeasurement].desc,
 						innerData[element][1], // Value
 						this.components[typeMeasurement].unit,
-						'state',
+						'value',
 					);
 				}
 			}
@@ -262,7 +257,7 @@ class Airquality extends utils.Adapter {
 				'Zeitspanne der letzten Messung',
 				timeEndAdjusted,
 				'',
-				'string',
+				'date.end',
 			);
 			await this.persistData(
 				this.stationList[stationId].code,
@@ -270,7 +265,7 @@ class Airquality extends utils.Adapter {
 				'Zahl der zuletzt gemessenen Typen',
 				this.numberOfElements,
 				'',
-				'number',
+				'value',
 			);
 		}
 		this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
@@ -312,7 +307,6 @@ class Airquality extends utils.Adapter {
 				parseFloat(coordinates[key].lat),
 				parseFloat(coordinates[key].lon),
 			);
-			this.log.silly(`Distance: ${key} ${distance}`);
 			if (distance < minDistance) {
 				minDistance = distance;
 				nearestStation = parseInt(key);
@@ -351,9 +345,9 @@ class Airquality extends utils.Adapter {
 	/**
 	 * Create a folder für station
 	 *
-	 * @param station Station
-	 * @param description Description
-	 * @param location Location
+	 * @param station Station Code
+	 * @param description Station City
+	 * @param location Station Street
 	 */
 	async createObject(station: string, description: string, location: string): Promise<void> {
 		const dp_Folder = this.removeInvalidCharacters(station);

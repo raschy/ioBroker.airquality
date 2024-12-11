@@ -40,24 +40,40 @@ class Airquality extends utils.Adapter {
    * Is called when databases are connected and adapter received configuration.
    */
   async onReady() {
-    this.log.debug(`Latitude: ${this.latitude}`);
-    this.log.debug(`Longitude: ${this.longitude}`);
-    this.log.debug(`config stations: ${this.config.stations}`);
     this.stationList = await (0, import_api_calls.getStations)();
     this.components = await (0, import_api_calls.getComponents)();
     if (this.config.stations.length === 0) {
       this.log.info("[onReady] No stations specified");
-      const home = await this.getLocation();
+      const home = this.getLocation();
       if (home.lat > 0) {
-        const nearestStationIdx = await this.findNearestStation(home, this.stationList);
+        const nearestStationIdx = this.findNearestStation(home, this.stationList);
         this.log.info(`[onReady] nearestStationIdx: ${nearestStationIdx}`);
         await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
       }
+    } else {
+      this.log.info("[onReady] may be loop");
+      await this.delay(Math.floor(Math.random() * 5e3));
+      const selectedStations = this.config.stations;
+      this.log.info(`[onReady] selectedStations: ${selectedStations}`);
+      try {
+        for (const station of selectedStations) {
+          this.log.debug(`[onReady] fetches data from : ${station}`);
+          await this.parseData(await (0, import_api_calls.getMeasurements)(station));
+          await this.parseDataSingle(await (0, import_api_calls.getMeasurementsComp)(station, 2));
+        }
+        await this.setState("info.lastUpdate", { val: Date.now(), ack: true });
+      } catch (error) {
+        await this.setState("info.connection", { val: false, ack: true });
+        if (error instanceof Error) {
+          this.log.error(`[onReady] Error: ${error.message}`);
+        } else {
+          this.log.error(`[onReady] Unknown error: ${JSON.stringify(error)}`);
+        }
+      } finally {
+        this.log.debug(`[onReady] finished - stopping instance`);
+        this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
+      }
     }
-    this.log.info("[onReady] may be loop");
-    await this.delay(Math.floor(Math.random() * 5e3));
-    const selectedStations = this.config.stations;
-    this.log.info(`[onReady] selectedStations: ${selectedStations}`);
   }
   /**
    * Persist the measurements
@@ -140,25 +156,25 @@ class Airquality extends utils.Adapter {
       innerData[2],
       // Value
       this.components[typeMeasurement].unit,
-      "state"
+      "value"
     );
     this.numberOfElements++;
     if (this.numberOfElements > 0) {
-      this.persistData(
+      await this.persistData(
         this.stationList[stationId].code,
         "Letzte Messung",
         "Zeitspanne der letzten Messung",
         timeEndAdjusted,
         "",
-        "string"
+        "date.end"
       );
-      this.persistData(
+      await this.persistData(
         this.stationList[stationId].code,
         "Anzahl Messtypen",
         "Zahl der zuletzt gemessenen Typen",
         this.numberOfElements,
         "",
-        "number"
+        "value"
       );
     }
     this.log.debug(`[parseDataComp] Measured values from ${this.numberOfElements} sensors determined`);
@@ -203,42 +219,30 @@ class Airquality extends utils.Adapter {
             innerData[element2][1],
             // Value
             this.components[typeMeasurement].unit,
-            "state"
+            "value"
           );
         }
       }
     }
     if (this.numberOfElements > 0) {
-      this.persistData(
+      await this.persistData(
         this.stationList[stationId].code,
         "Letzte Messung",
         "Zeitspanne der letzten Messung",
         timeEndAdjusted,
         "",
-        "string"
+        "date.end"
       );
-      this.persistData(
+      await this.persistData(
         this.stationList[stationId].code,
         "Anzahl Messtypen",
         "Zahl der zuletzt gemessenen Typen",
         this.numberOfElements,
         "",
-        "number"
+        "value"
       );
     }
     this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
-  }
-  //
-  /**
-   * Checks if station in config available
-   *
-   * @returns selectedStations
-   */
-  async checkStationInput() {
-    const selectedStations = this.config.stations;
-    console.log(`Selected Stations: ${selectedStations}`);
-    console.log(Array.isArray(selectedStations));
-    return selectedStations;
   }
   //
   /**
@@ -246,7 +250,7 @@ class Airquality extends utils.Adapter {
    *
    * @returns Koordinates(lat, lon)
    */
-  async getLocation() {
+  getLocation() {
     this.log.debug("[getLocation] try to use the location from the system configuration");
     if (this.latitude == void 0 || this.latitude == 0 || this.longitude == void 0 || this.longitude == 0) {
       this.log.warn(
@@ -263,7 +267,7 @@ class Airquality extends utils.Adapter {
    *
    * @param localHome Koordinates from system
    * @param coordinates Koordinates from stations
-   * @returns stationId 
+   * @returns stationId
    */
   findNearestStation(localHome, coordinates) {
     let minDistance = Number.MAX_VALUE;
@@ -276,7 +280,6 @@ class Airquality extends utils.Adapter {
         parseFloat(coordinates[key].lat),
         parseFloat(coordinates[key].lon)
       );
-      this.log.silly(`Distance: ${key} ${distance}`);
       if (distance < minDistance) {
         minDistance = distance;
         nearestStation = parseInt(key);
@@ -293,7 +296,7 @@ class Airquality extends utils.Adapter {
    */
   async writeStationToConfig(localStation) {
     const _station = [];
-    this.getForeignObject(`system.adapter.${this.namespace}`, (err, obj) => {
+    await this.getForeignObject(`system.adapter.${this.namespace}`, (err, obj) => {
       if (err) {
         this.log.error(`[writeStationToConfig] ${err}`);
       } else {
@@ -315,9 +318,9 @@ class Airquality extends utils.Adapter {
   /**
    * Create a folder für station
    *
-   * @param station Station
-   * @param description Description
-   * @param location Location
+   * @param station Station Code
+   * @param description Station City
+   * @param location Station Street
    */
   async createObject(station, description, location) {
     const dp_Folder = this.removeInvalidCharacters(station);
@@ -404,7 +407,7 @@ class Airquality extends utils.Adapter {
     try {
       callback();
     } catch (e) {
-      this.log.debug(`[onUnload] e ${e}`);
+      this.log.debug(`[onUnload] ${JSON.stringify(e)}`);
       callback();
     }
   }
