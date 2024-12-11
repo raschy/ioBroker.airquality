@@ -57,35 +57,17 @@ class Airquality extends utils.Adapter {
     this.log.info("[onReady] may be loop");
     await this.delay(Math.floor(Math.random() * 5e3));
     const selectedStations = this.config.stations;
-    this.log.info("[onReady] selectedStations");
-    try {
-      for (const station of selectedStations) {
-        this.log.debug(`[onReady] fetches Data from : ${station}`);
-        await this.parseData(await (0, import_api_calls.getMeasurements)(station));
-        await this.parseDataSingle(await (0, import_api_calls.getMeasurementsComp)(station, 2));
-      }
-      this.setState("info.lastUpdate", { val: Date.now(), ack: true });
-    } catch (error) {
-      this.setState("info.connection", { val: false, ack: true });
-      if (error instanceof Error) {
-        this.log.error(`[loop] Error: ${error.message}`);
-      } else {
-        this.log.error(`[loop] Unknown error: ${error}`);
-      }
-    } finally {
-      this.log.debug(`[onReady] finished - stopping instance`);
-      this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
-    }
+    this.log.info(`[onReady] selectedStations: ${selectedStations}`);
   }
   /**
    * Persist the measurements
    *
-   * @param station
-   * @param sensor
-   * @param description
-   * @param value
-   * @param unit
-   * @param role
+   * @param station Station
+   * @param sensor Sensor
+   * @param description Description
+   * @param value Value
+   * @param unit Unit
+   * @param role Role
    */
   async persistData(station, sensor, description, value, unit, role) {
     const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
@@ -128,7 +110,7 @@ class Airquality extends utils.Adapter {
    * Retrieves the desired data from the payload and prepares data for storage
    *
    * @param {} payload Object from Response
-   * @returns
+   * @returns Data to persist
    */
   async parseDataSingle(payload) {
     this.log.debug(`[parseDataSingle] Payload: ${JSON.stringify(payload)}`);
@@ -186,7 +168,7 @@ class Airquality extends utils.Adapter {
    * Retrieves the desired data from the payload and prepares data for storage
    *
    * @param {} payload Object from Response
-   * @returns
+   * @returns Data to persist
    */
   async parseData(payload) {
     this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
@@ -279,11 +261,11 @@ class Airquality extends utils.Adapter {
   /**
    * search for the nearest station using coordinates
    *
-   * @param localHome
-   * @param coordinates
-   * @returns stationId
+   * @param localHome Koordinates from system
+   * @param coordinates Koordinates from stations
+   * @returns stationId 
    */
-  async findNearestStation(localHome, coordinates) {
+  findNearestStation(localHome, coordinates) {
     let minDistance = Number.MAX_VALUE;
     let nearestStation = 0;
     this.log.debug(`[findNearestStation]: Latitude: ${localHome.lat} Longitude: ${localHome.lon}`);
@@ -333,9 +315,9 @@ class Airquality extends utils.Adapter {
   /**
    * Create a folder für station
    *
-   * @param station
-   * @param description
-   * @param location
+   * @param station Station
+   * @param description Description
+   * @param location Location
    */
   async createObject(station, description, location) {
     const dp_Folder = this.removeInvalidCharacters(station);
@@ -400,9 +382,9 @@ class Airquality extends utils.Adapter {
   /**
    * correct datestring from datestring by adding x hours
    *
-   * @param s
-   * @param offset
-   * @returns
+   * @param s Datestring
+   * @param offset Offset
+   * @returns String with Date & Time
    */
   correctHour(s, offset) {
     const dateString = s.split(" ")[0].split("-");
@@ -416,7 +398,7 @@ class Airquality extends utils.Adapter {
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
    *
-   * @param callback
+   * @param callback Callback
    */
   onUnload(callback) {
     try {
