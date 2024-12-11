@@ -38,7 +38,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 	### **WORK IN PROGRESS**
 -->
 
-    ### **WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 
 - (raschy) Migration to ESLint 9 and @iobroker/eslint-config
 
