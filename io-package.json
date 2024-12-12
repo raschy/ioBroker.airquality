@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "airquality",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "inclusive deploy",
+        "de": "inklusive",
+        "ru": "инклюзивное развертывание",
+        "pt": "implantação inclusiva",
+        "nl": "inclusieve inzet",
+        "fr": "déploiement inclusif",
+        "it": "distribuzione inclusiva",
+        "es": "despliegue inclusivo",
+        "pl": "rozmieszczenie integracyjne",
+        "uk": "інклюзивне розгортання",
+        "zh-cn": "包容性部署"
+      },
       "0.1.2": {
         "en": "Ready for latest and tests",
         "de": "Bereit für neueste und Tests",
