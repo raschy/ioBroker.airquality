@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "airquality",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "news": {
+      "0.1.2": {
+        "en": "Ready for latest and tests",
+        "de": "Bereit für neueste und Tests",
+        "ru": "Готовы к последним и испытаниям",
+        "pt": "Pronto para testes mais recentes",
+        "nl": "Klaar voor laatste tests",
+        "fr": "Prêt pour les derniers essais",
+        "it": "Pronti per gli ultimi e i test",
+        "es": "Listo para las últimas y pruebas",
+        "pl": "Gotowy do najnowszych badań",
+        "uk": "Готовий для останніх і тестів",
+        "zh-cn": "准备进行最新测试"
+      },
       "0.1.1": {
         "en": "Migration to ESLint 9 and @iobroker/eslint-config",
         "de": "Migration auf ESLint 9 und @iobroker/eslint-config",

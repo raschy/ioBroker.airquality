@@ -37,8 +37,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 0.1.2 (2024-12-12)
 
 - (raschy) Ready for latest and tests
 
