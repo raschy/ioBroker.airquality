@@ -37,6 +37,11 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+
+- (raschy) Ready for latest and tests
+
 ### 0.1.1 (2024-12-11)
 
 - (raschy) Migration to ESLint 9 and @iobroker/eslint-config

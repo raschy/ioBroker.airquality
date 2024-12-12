@@ -144,7 +144,6 @@ class Airquality extends utils.Adapter {
     const innerObject = payload[stationId];
     const dateTimeStart = Object.keys(innerObject)[0];
     const dateTimeEnd = innerObject[dateTimeStart][3];
-    console.log(`dateTimeEnd: ${dateTimeEnd}`);
     const timeEndAdjusted = this.correctHour(dateTimeEnd, summerOffset * -1 - 1);
     const innerData = innerObject[dateTimeStart];
     console.log(innerData);
@@ -166,7 +165,7 @@ class Airquality extends utils.Adapter {
         "Zeitspanne der letzten Messung",
         timeEndAdjusted,
         "",
-        "date.end"
+        "text"
       );
       await this.persistData(
         this.stationList[stationId].code,
@@ -179,7 +178,6 @@ class Airquality extends utils.Adapter {
     }
     this.log.debug(`[parseDataComp] Measured values from ${this.numberOfElements} sensors determined`);
   }
-  //
   /**
    * Retrieves the desired data from the payload and prepares data for storage
    *
@@ -231,7 +229,7 @@ class Airquality extends utils.Adapter {
         "Zeitspanne der letzten Messung",
         timeEndAdjusted,
         "",
-        "date.end"
+        "text"
       );
       await this.persistData(
         this.stationList[stationId].code,
@@ -244,7 +242,6 @@ class Airquality extends utils.Adapter {
     }
     this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
   }
-  //
   /**
    * Use the specified coordinates from the configuration
    *
@@ -261,7 +258,6 @@ class Airquality extends utils.Adapter {
     this.log.debug(`[getLocation] using Latitude: ${this.latitude} and Longitude: ${this.longitude}`);
     return { lat: this.latitude, lon: this.longitude };
   }
-  //
   /**
    * search for the nearest station using coordinates
    *
@@ -288,7 +284,6 @@ class Airquality extends utils.Adapter {
     this.log.debug(`[findNearestStation]: >>> Station ID: ${nearestStation}`);
     return nearestStation;
   }
-  //
   /**
    * write code of Station in UI-config
    *
@@ -314,7 +309,6 @@ class Airquality extends utils.Adapter {
       }
     });
   }
-  //
   /**
    * Create a folder für station
    *
