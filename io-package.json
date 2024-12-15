@@ -1,206 +1,193 @@
 {
-  "common": {
-    "name": "airquality",
-    "version": "0.1.3",
-    "news": {
-      "0.1.3": {
-        "en": "inclusive deploy",
-        "de": "inklusive",
-        "ru": "инклюзивное развертывание",
-        "pt": "implantação inclusiva",
-        "nl": "inclusieve inzet",
-        "fr": "déploiement inclusif",
-        "it": "distribuzione inclusiva",
-        "es": "despliegue inclusivo",
-        "pl": "rozmieszczenie integracyjne",
-        "uk": "інклюзивне розгортання",
-        "zh-cn": "包容性部署"
-      },
-      "0.1.2": {
-        "en": "Ready for latest and tests",
-        "de": "Bereit für neueste und Tests",
-        "ru": "Готовы к последним и испытаниям",
-        "pt": "Pronto para testes mais recentes",
-        "nl": "Klaar voor laatste tests",
-        "fr": "Prêt pour les derniers essais",
-        "it": "Pronti per gli ultimi e i test",
-        "es": "Listo para las últimas y pruebas",
-        "pl": "Gotowy do najnowszych badań",
-        "uk": "Готовий для останніх і тестів",
-        "zh-cn": "准备进行最新测试"
-      },
-      "0.1.1": {
-        "en": "Migration to ESLint 9 and @iobroker/eslint-config",
-        "de": "Migration auf ESLint 9 und @iobroker/eslint-config",
-        "ru": "Migration to ESLint 9 and @iobroker/eslint-config",
-        "pt": "Migração para ESLint 9 e @iobroker/eslint-config",
-        "nl": "Migratie naar ESLint 9 en @iobroker/eslint-config",
-        "fr": "Migration vers ESLint 9 et @iobroker/eslint-config",
-        "it": "Migrazione a ESLint 9 e @iobroker/eslint-config",
-        "es": "Migración a ESLint 9 y @iobroker/eslint-config",
-        "pl": "Migracja do ESLint 9 i @ iobroker / eslint- config",
-        "uk": "Міграція на ESLint 9 і @iobroker/eslint-config",
-        "zh-cn": "迁移到 ESLint 9 和 @iobroster/eslint- config"
-      },
-      "0.1.0": {
-        "en": "CO data retrieval added\nConversion as scheduled adapter",
-        "de": "CO-Datenabruf hinzugefügt\nUmbau als geplanter Adapter",
-        "ru": "Добавлен поиск данных CO\nКонверсия как плановый адаптер",
-        "pt": "Recuperação de dados de CO adicionada\nConversão como adaptador agendado",
-        "nl": "CO-gegevensverzameling toegevoegd\nConversie als geplande adapter",
-        "fr": "Récupération de données CO ajoutée\nConversion comme adaptateur programmé",
-        "it": "CO data retrival aggiunto\nConversione come adattatore programmato",
-        "es": "Recuperación de datos de CO\nConversión como adaptador programado",
-        "pl": "Dodano pobieranie danych CO\nKonwersja jako planowany adapter",
-        "uk": "Додано дані CO\nПеретворення як плановий адаптер",
-        "zh-cn": "增加了CO数据检索\n转换为预定适配器"
-      },
-      "0.0.4": {
-        "en": "Readme text expanded\nIssue 1 [E254] and [W040] corrected",
-        "de": "Text erweitert\nLieferung 1 [E254] und [W040] korrigiert",
-        "ru": "Текст чтения расширен\nВопрос 1 [E254] и [W040] исправить",
-        "pt": "Texto de leitura expandido\nEdição 1 [E254] e [W040] corrigido",
-        "nl": "Leestekst uitgebreid\nNummer 1 [E254] en [W040] gecorrigeerd",
-        "fr": "Lire le texte élargi\nNuméro 1 [E254] et [W040] corrigés",
-        "it": "Testo Readme ampliato\nFascicolo 1 [E254] e [W040] corretto",
-        "es": "Texto del texto ampliado\nNúmero 1 [E254] y [W040] corregido",
-        "pl": "Tekst readme rozszerzony\nWydanie 1 [E254] i [W040] poprawione",
-        "uk": "Розширений текст\nВипуск 1 [E254] і [W040] виправлено",
-        "zh-cn": "扩充文本\n问题1[E254]和[W040]更正"
-      },
-      "0.0.3": {
-        "en": "Auto detection for location activated",
-        "de": "Autoerkennung für Standort aktiviert",
-        "ru": "Автоматическое обнаружение места включения",
-        "pt": "Detecção automática para localização activada",
-        "nl": "Autodetectie voor geactiveerde locatie",
-        "fr": "Détection automatique pour l'emplacement activé",
-        "it": "Rilevamento automatico per la posizione attivata",
-        "es": "Detección automática para la ubicación activada",
-        "pl": "Automatyczne wykrywanie aktywowanej lokalizacji",
-        "uk": "Автоматичне виявлення місця розташування активованого",
-        "zh-cn": "启动位置自动检测"
-      }
-    },
-    "titleLang": {
-      "en": "Airquality",
-      "de": "Luftqualität",
-      "ru": "Качество воздуха",
-      "pt": "Qualidade do ar",
-      "nl": "Luchtkwaliteit",
-      "fr": "Qualité de l'air",
-      "it": "Qualità dell'aria",
-      "es": "Calidad del aire",
-      "pl": "Jakość powietrza",
-      "uk": "Якість повітря",
-      "zh-cn": "空气质量"
-    },
-    "desc": {
-      "en": "Fetch data from German UBA",
-      "de": "Daten vom deutschen UBA abrufen",
-      "ru": "Получить данные из немецкого UBA",
-      "pt": "Buscar dados do UBA alemão",
-      "nl": "Haal gegevens op van de Duitse UBA",
-      "fr": "Récupérer des données depuis l'UBA allemande",
-      "it": "Recupera i dati dall'UBA tedesca",
-      "es": "Obtener datos de la UBA alemana",
-      "pl": "Pobierz dane z niemieckiego UBA",
-      "uk": "Отримати дані з німецького UBA",
-      "zh-cn": "从德国UBA获取数据"
-    },
-    "authors": [
-      "raschy <raschy@gmx.de>"
-    ],
-    "keywords": [
-      "UBA",
-      "particles",
-      "NOx",
-      "CO",
-      "O3"
-    ],
-    "licenseInformation": {
-      "type": "free",
-      "license": "MIT"
-    },
-    "platform": "Javascript/Node.js",
-    "icon": "airquality.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/raschy/ioBroker.airquality/main/admin/airquality.png",
-    "readme": "https://github.com/raschy/ioBroker.airquality/blob/main/README.md",
-    "loglevel": "info",
-    "tier": 3,
-    "mode": "schedule",
-    "allowInit": true,
-    "schedule": "9 * * * *",
-    "type": "weather",
-    "compact": true,
-    "connectionType": "cloud",
-    "dataSource": "poll",
-    "stopBeforeUpdate": true,
-    "stopTimeout": 1000,
-    "adminUI": {
-      "config": "json"
-    },
-    "dependencies": [
-      {
-        "js-controller": ">=5.0.19"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=6.17.14"
-      }
-    ]
-  },
-  "native": {
-    "stations": ""
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": {
-          "en": "Information",
-          "de": "Informationen",
-          "ru": "Информация",
-          "pt": "Informação",
-          "nl": "Informatie",
-          "fr": "Informations",
-          "it": "Informazioni",
-          "es": "Información",
-          "pl": "Informacje",
-          "uk": "Інформація",
-          "zh-cn": "资料"
-        }
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.lastUpdate",
-      "type": "state",
-      "common": {
-        "role": "date.end",
-        "name": {
-          "en": "Last update",
-          "de": "Letzte Aktualisierung",
-          "ru": "Последнее обновление",
-          "pt": "Última atualização",
-          "nl": "Laatste update",
-          "fr": "Dernière mise à jour",
-          "it": "Ultimo aggiornamento",
-          "es": "Última actualización",
-          "pl": "Ostatnia aktualizacja",
-          "uk": "Останнє оновлення",
-          "zh-cn": "上次更新"
-        },
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    }
-  ]
+	"common": {
+		"name": "airquality",
+		"version": "0.1.3",
+		"news": {
+			"0.1.3": {
+				"en": "inclusive deploy",
+				"de": "inklusive",
+				"ru": "инклюзивное развертывание",
+				"pt": "implantação inclusiva",
+				"nl": "inclusieve inzet",
+				"fr": "déploiement inclusif",
+				"it": "distribuzione inclusiva",
+				"es": "despliegue inclusivo",
+				"pl": "rozmieszczenie integracyjne",
+				"uk": "інклюзивне розгортання",
+				"zh-cn": "包容性部署"
+			},
+			"0.1.2": {
+				"en": "Ready for latest and tests",
+				"de": "Bereit für neueste und Tests",
+				"ru": "Готовы к последним и испытаниям",
+				"pt": "Pronto para testes mais recentes",
+				"nl": "Klaar voor laatste tests",
+				"fr": "Prêt pour les derniers essais",
+				"it": "Pronti per gli ultimi e i test",
+				"es": "Listo para las últimas y pruebas",
+				"pl": "Gotowy do najnowszych badań",
+				"uk": "Готовий для останніх і тестів",
+				"zh-cn": "准备进行最新测试"
+			},
+			"0.1.1": {
+				"en": "Migration to ESLint 9 and @iobroker/eslint-config",
+				"de": "Migration auf ESLint 9 und @iobroker/eslint-config",
+				"ru": "Migration to ESLint 9 and @iobroker/eslint-config",
+				"pt": "Migração para ESLint 9 e @iobroker/eslint-config",
+				"nl": "Migratie naar ESLint 9 en @iobroker/eslint-config",
+				"fr": "Migration vers ESLint 9 et @iobroker/eslint-config",
+				"it": "Migrazione a ESLint 9 e @iobroker/eslint-config",
+				"es": "Migración a ESLint 9 y @iobroker/eslint-config",
+				"pl": "Migracja do ESLint 9 i @ iobroker / eslint- config",
+				"uk": "Міграція на ESLint 9 і @iobroker/eslint-config",
+				"zh-cn": "迁移到 ESLint 9 和 @iobroster/eslint- config"
+			},
+			"0.0.4": {
+				"en": "Readme text expanded\nIssue 1 [E254] and [W040] corrected",
+				"de": "Text erweitert\nLieferung 1 [E254] und [W040] korrigiert",
+				"ru": "Текст чтения расширен\nВопрос 1 [E254] и [W040] исправить",
+				"pt": "Texto de leitura expandido\nEdição 1 [E254] e [W040] corrigido",
+				"nl": "Leestekst uitgebreid\nNummer 1 [E254] en [W040] gecorrigeerd",
+				"fr": "Lire le texte élargi\nNuméro 1 [E254] et [W040] corrigés",
+				"it": "Testo Readme ampliato\nFascicolo 1 [E254] e [W040] corretto",
+				"es": "Texto del texto ampliado\nNúmero 1 [E254] y [W040] corregido",
+				"pl": "Tekst readme rozszerzony\nWydanie 1 [E254] i [W040] poprawione",
+				"uk": "Розширений текст\nВипуск 1 [E254] і [W040] виправлено",
+				"zh-cn": "扩充文本\n问题1[E254]和[W040]更正"
+			},
+			"0.0.3": {
+				"en": "Auto detection for location activated",
+				"de": "Autoerkennung für Standort aktiviert",
+				"ru": "Автоматическое обнаружение места включения",
+				"pt": "Detecção automática para localização activada",
+				"nl": "Autodetectie voor geactiveerde locatie",
+				"fr": "Détection automatique pour l'emplacement activé",
+				"it": "Rilevamento automatico per la posizione attivata",
+				"es": "Detección automática para la ubicación activada",
+				"pl": "Automatyczne wykrywanie aktywowanej lokalizacji",
+				"uk": "Автоматичне виявлення місця розташування активованого",
+				"zh-cn": "启动位置自动检测"
+			}
+		},
+		"titleLang": {
+			"en": "Airquality",
+			"de": "Luftqualität",
+			"ru": "Качество воздуха",
+			"pt": "Qualidade do ar",
+			"nl": "Luchtkwaliteit",
+			"fr": "Qualité de l'air",
+			"it": "Qualità dell'aria",
+			"es": "Calidad del aire",
+			"pl": "Jakość powietrza",
+			"uk": "Якість повітря",
+			"zh-cn": "空气质量"
+		},
+		"desc": {
+			"en": "Fetch data from German UBA",
+			"de": "Daten vom deutschen UBA abrufen",
+			"ru": "Получить данные из немецкого UBA",
+			"pt": "Buscar dados do UBA alemão",
+			"nl": "Haal gegevens op van de Duitse UBA",
+			"fr": "Récupérer des données depuis l'UBA allemande",
+			"it": "Recupera i dati dall'UBA tedesca",
+			"es": "Obtener datos de la UBA alemana",
+			"pl": "Pobierz dane z niemieckiego UBA",
+			"uk": "Отримати дані з німецького UBA",
+			"zh-cn": "从德国UBA获取数据"
+		},
+		"authors": [
+			"raschy <raschy@gmx.de>"
+		],
+		"keywords": [
+			"UBA",
+			"particles",
+			"NOx",
+			"CO",
+			"O3"
+		],
+		"licenseInformation": {
+			"type": "free",
+			"license": "MIT"
+		},
+		"platform": "Javascript/Node.js",
+		"icon": "airquality.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/raschy/ioBroker.airquality/main/admin/airquality.png",
+		"readme": "https://github.com/raschy/ioBroker.airquality/blob/main/README.md",
+		"loglevel": "info",
+		"tier": 3,
+		"mode": "schedule",
+		"allowInit": true,
+		"schedule": "9 * * * *",
+		"type": "weather",
+		"compact": true,
+		"connectionType": "cloud",
+		"dataSource": "poll",
+		"stopBeforeUpdate": true,
+		"stopTimeout": 1000,
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=5.0.19"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=6.17.14"
+			}
+		]
+	},
+	"native": {
+		"stations": ""
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": {
+					"en": "Information",
+					"de": "Informationen",
+					"ru": "Информация",
+					"pt": "Informação",
+					"nl": "Informatie",
+					"fr": "Informations",
+					"it": "Informazioni",
+					"es": "Información",
+					"pl": "Informacje",
+					"uk": "Інформація",
+					"zh-cn": "资料"
+				}
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.lastUpdate",
+			"type": "state",
+			"common": {
+				"role": "date.end",
+				"name": {
+					"en": "Last update",
+					"de": "Letzte Aktualisierung",
+					"ru": "Последнее обновление",
+					"pt": "Última atualização",
+					"nl": "Laatste update",
+					"fr": "Dernière mise à jour",
+					"it": "Ultimo aggiornamento",
+					"es": "Última actualización",
+					"pl": "Ostatnia aktualizacja",
+					"uk": "Останнє оновлення",
+					"zh-cn": "上次更新"
+				},
+				"type": "number",
+				"read": true,
+				"write": false,
+				"def": 0
+			},
+			"native": {}
+		}
+	]
 }
