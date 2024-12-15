@@ -30,6 +30,21 @@
 			"md": 6,
 			"lg": 4,
 			"xl": 4
+		},
+		"operatingInstructions": {
+			"newLine": true,
+			"type": "staticText",
+			"label": "multi-language text",
+			"text": "instructionManual",
+			"style": {
+				"color": "green",
+				"fontSize": 16
+			},
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4
 		}
 	}
 }
