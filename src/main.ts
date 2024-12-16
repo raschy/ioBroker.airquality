@@ -70,10 +70,8 @@ class Airquality extends utils.Adapter {
 			}
 		}
 		this.log.debug('[onReady] finished - stopping instance');
-		this.terminate
-			? this.terminate('Everything done. Going to terminate till next schedule', 11)
-			: process.exit(0);
-	// End onReady
+		this.terminate ? this.terminate('Everything done. Going to terminate till next schedule', 11) : process.exit(0);
+		//End onReady
 	}
 
 	/**
@@ -91,7 +89,7 @@ class Airquality extends utils.Adapter {
 		sensor: string,
 		name: string,
 		value: number | string,
-		unit: string, 
+		unit: string,
 		role: string,
 	): Promise<void> {
 		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
@@ -136,27 +134,26 @@ class Airquality extends utils.Adapter {
 		}
 	}
 
-	async storeData_TLM(station: string, value: number | string,): Promise<void> {
+	async storeData_TLM(station: string, value: number | string): Promise<void> {
 		const sensor = 'Time of the last measurement';
 		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
-		this.log.silly(`[storeData_TLM] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}" `,
-		);
+		this.log.silly(`[storeData_TLM] Station "${station}" Sensor "${sensor}" [${dp_Sensor}] with value: "${value}"`);
 		await this.setObjectNotExistsAsync(dp_Sensor, {
 			type: 'state',
 			common: {
 				name: {
-					"en": "Time of the last measurement",
-					"de": "Zeit der letzten Messung",
-					"ru": "Время последнего измерения",
-					"pt": "Tempo da última medição",
-					"nl": "Tijd van de laatste meting",
-					"fr": "Durée de la dernière mesure",
-					"it": "Tempo dell'ultima misura",
-					"es": "Tiempo de la última medición",
-					"pl": "Czas ostatniego pomiaru",
-					"uk": "Час останнього вимірювання",
-					"zh-cn": "上次测量的时间"
-				  },
+					en: 'Time of the last measurement',
+					de: 'Zeit der letzten Messung',
+					ru: 'Время последнего измерения',
+					pt: 'Tempo da última medição',
+					nl: 'Tijd van de laatste meting',
+					fr: 'Durée de la dernière mesure',
+					it: 'Tempo dell´ ultima misura',
+					es: 'Tiempo de la última medición',
+					pl: 'Czas ostatniego pomiaru',
+					uk: 'Час останнього вимірювання',
+					'zh-cn': '上次测量的时间',
+				},
 				type: 'string',
 				role: 'text',
 				unit: '',
@@ -169,27 +166,26 @@ class Airquality extends utils.Adapter {
 		await this.setState(dp_Sensor, { val: value, ack: true, q: 0x00 });
 	}
 
-	async storeData_NMT(station: string, value: number | string,): Promise<void> {
+	async storeData_NMT(station: string, value: number | string): Promise<void> {
 		const sensor = 'Number of measurement types';
 		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
-		this.log.silly(`[storeData_NMT] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}" `,
-		);
+		this.log.silly(`[storeData_NMT] Station "${station}" Sensor "${sensor}" [${dp_Sensor}] with value: "${value}"`);
 		await this.setObjectNotExistsAsync(dp_Sensor, {
 			type: 'state',
 			common: {
 				name: {
-					"en": "Number of measurement types",
-					"de": "Anzahl der Messarten",
-					"ru": "Количество типов измерений",
-					"pt": "Número de tipos de medida",
-					"nl": "Aantal metingstypen",
-					"fr": "Nombre de types de mesures",
-					"it": "Numero di tipi di misura",
-					"es": "Número de tipos de medidas",
-					"pl": "Liczba rodzajów środków",
-					"uk": "Кількість видів заходів",
-					"zh-cn": "措施类型的数量"
-				  },
+					en: 'Number of measurement types',
+					de: 'Anzahl der Messarten',
+					ru: 'Количество типов измерений',
+					pt: 'Número de tipos de medida',
+					nl: 'Aantal metingstypen',
+					fr: 'Nombre de types de mesures',
+					it: 'Numero di tipi di misura',
+					es: 'Número de tipos de medidas',
+					pl: 'Liczba rodzajów środkó',
+					uk: 'Кількість видів заходів',
+					'zh-cn': '措施类型的数量',
+				},
 				type: 'string',
 				role: 'text',
 				unit: '',
