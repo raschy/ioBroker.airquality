@@ -77,7 +77,7 @@ class Airquality extends utils.Adapter {
 	/**
 	 * Persist the measurements
 	 *
-	 * @param station Station
+	 * @param station Station Code
 	 * @param sensor Sensor
 	 * @param name Description
 	 * @param value Value
@@ -134,6 +134,11 @@ class Airquality extends utils.Adapter {
 		}
 	}
 
+	/**
+	 * 
+	 * @param station Station Code
+	 * @param value Time of the last measurement
+	 */
 	async storeData_TLM(station: string, value: number | string): Promise<void> {
 		const sensor = 'Time of the last measurement';
 		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
@@ -166,6 +171,11 @@ class Airquality extends utils.Adapter {
 		await this.setState(dp_Sensor, { val: value, ack: true, q: 0x00 });
 	}
 
+	/**
+	 * 
+	 * @param station Station Code
+	 * @param value Number of measurement types
+	 */
 	async storeData_NMT(station: string, value: number | string): Promise<void> {
 		const sensor = 'Number of measurement types';
 		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
@@ -186,8 +196,8 @@ class Airquality extends utils.Adapter {
 					uk: 'Кількість видів заходів',
 					'zh-cn': '措施类型的数量',
 				},
-				type: 'string',
-				role: 'text',
+				type: 'number',
+				role: 'value',
 				unit: '',
 				read: true,
 				write: false,
@@ -343,7 +353,7 @@ class Airquality extends utils.Adapter {
 				nearestStation = parseInt(key);
 			}
 		}
-		this.log.debug(`[findNearestStation]: >>> Station ID: ${nearestStation}`);
+		this.log.debug(`[findNearestStation]: >>> Station Idx: ${nearestStation}`);
 		return nearestStation;
 	}
 
