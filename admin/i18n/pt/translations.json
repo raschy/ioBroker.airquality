@@ -3,5 +3,9 @@
     "stations": "estações",
     "stations_to_be_monitored": "estações a serem monitoradas",
     "station_nonvalid_text": "texto inválido da estação",
-    "wrong_item_in_stations": "item errado nas estações"
+    "wrong_item_in_stations": "item errado nas estações",
+    "operatingInstructions": "Instruções de operação",
+    "instructionManual": "Neste adaptador, deve ser inserida na configuração pelo menos uma estação ambiental da qual os valores medidos serão coletados. Os nomes das estações podem ser selecionados no site da Agência Federal do Meio Ambiente em https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten (clique em 'Estação mais próxima') usando o mapa exibido. As estações sempre começam com 'DE', seguido do estado federal 'BW' e um número de série de três dígitos. Este identificador, por ex. 'DEBW052', deve então ser inserido na página de configuração do adaptador (confirme com Enter). Outras estações também podem ser adicionadas aqui.",
+    "operatingInstructions2": "Instruções de Operação Parte 2",
+    "instructionAutodetekt": "Se as coordenadas forem mantidas na configuração principal do ioBroker, o adaptador tentará encontrar a estação mais próxima quando for iniciado pela primeira vez."
 }

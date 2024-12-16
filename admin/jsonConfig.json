@@ -11,13 +11,37 @@
 			"md": 6,
 			"lg": 4,
 			"xl": 4,
-			"newLine": false,
-			"validator": "data.stations.every(station => /^DE[A-Z]{2}[0-9]{3}$/.test(station))",
-			"validatorErrorText": "station_nonvalid_text",
-			"validatorNoSaveOnError": true
+			"newLine": false
+		},
+		"operatingInstructions": {
+			"type": "staticText",
+			"label": "instructionManual",
+			"style": {
+				"color": "green",
+				"fontSize": 16
+			},
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4,
+			"newLine": true
+		},
+		"operatingInstructions2": {
+			"type": "staticText",
+			"label": "instructionAutodetekt",
+			"style": {
+				"color": "green",
+				"fontSize": 16
+			},
+			"xs": 12,
+			"sm": 12,
+			"md": 6,
+			"lg": 4,
+			"xl": 4,
+			"newLine": true
 		},
 		"_stationsError": {
-			"newLine": true,
 			"type": "staticText",
 			"text": "wrong_item_in_stations",
 			"style": {
@@ -29,22 +53,8 @@
 			"sm": 12,
 			"md": 6,
 			"lg": 4,
-			"xl": 4
-		},
-		"operatingInstructions": {
-			"newLine": true,
-			"type": "staticText",
-			"label": "multi-language text",
-			"text": "instructionManual",
-			"style": {
-				"color": "green",
-				"fontSize": 16
-			},
-			"xs": 12,
-			"sm": 12,
-			"md": 6,
-			"lg": 4,
-			"xl": 4
+			"xl": 4,
+			"newLine": true
 		}
 	}
 }

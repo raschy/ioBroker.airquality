@@ -42,7 +42,7 @@ class Airquality extends utils.Adapter {
   async onReady() {
     this.stationList = await (0, import_api_calls.getStations)();
     this.components = await (0, import_api_calls.getComponents)();
-    if (this.config.stations.length === 0) {
+    if (this.config.stations.length == 0) {
       this.log.info("[onReady] No stations specified");
       const home = this.getLocation();
       if (home.lat > 0) {
@@ -69,32 +69,31 @@ class Airquality extends utils.Adapter {
         } else {
           this.log.error(`[onReady] Unknown error: ${JSON.stringify(error)}`);
         }
-      } finally {
-        this.log.debug(`[onReady] finished - stopping instance`);
-        this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
       }
     }
+    this.log.debug("[onReady] finished - stopping instance");
+    this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
   }
   /**
    * Persist the measurements
    *
    * @param station Station
    * @param sensor Sensor
-   * @param description Description
+   * @param name Description
    * @param value Value
    * @param unit Unit
    * @param role Role
    */
-  async persistData(station, sensor, description, value, unit, role) {
+  async persistData(station, sensor, name, value, unit, role) {
     const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
     this.log.silly(
-      `[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${description}" with value: "${value}" and unit "${unit}" as role "${role}`
+      `[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${name}" with value: "${value}" and unit "${unit}" as role "${role}`
     );
     if (isNumber(value)) {
       await this.setObjectNotExistsAsync(dp_Sensor, {
         type: "state",
         common: {
-          name: description,
+          name,
           type: "number",
           role,
           unit,
@@ -107,7 +106,7 @@ class Airquality extends utils.Adapter {
       await this.setObjectNotExistsAsync(dp_Sensor, {
         type: "state",
         common: {
-          name: description,
+          name,
           type: "string",
           role,
           unit,
@@ -121,6 +120,70 @@ class Airquality extends utils.Adapter {
     function isNumber(n) {
       return !isNaN(parseFloat(n)) && !isNaN(n - 0);
     }
+  }
+  async storeData_TLM(station, value) {
+    const sensor = "Time of the last measurement";
+    const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
+    this.log.silly(
+      `[storeData_TLM] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}" `
+    );
+    await this.setObjectNotExistsAsync(dp_Sensor, {
+      type: "state",
+      common: {
+        name: {
+          "en": "Time of the last measurement",
+          "de": "Zeit der letzten Messung",
+          "ru": "\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0433\u043E \u0438\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u044F",
+          "pt": "Tempo da \xFAltima medi\xE7\xE3o",
+          "nl": "Tijd van de laatste meting",
+          "fr": "Dur\xE9e de la derni\xE8re mesure",
+          "it": "Tempo dell'ultima misura",
+          "es": "Tiempo de la \xFAltima medici\xF3n",
+          "pl": "Czas ostatniego pomiaru",
+          "uk": "\u0427\u0430\u0441 \u043E\u0441\u0442\u0430\u043D\u043D\u044C\u043E\u0433\u043E \u0432\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F",
+          "zh-cn": "\u4E0A\u6B21\u6D4B\u91CF\u7684\u65F6\u95F4"
+        },
+        type: "string",
+        role: "text",
+        unit: "",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    await this.setState(dp_Sensor, { val: value, ack: true, q: 0 });
+  }
+  async storeData_NMT(station, value) {
+    const sensor = "Number of measurement types";
+    const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
+    this.log.silly(
+      `[storeData_NMT] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}" `
+    );
+    await this.setObjectNotExistsAsync(dp_Sensor, {
+      type: "state",
+      common: {
+        name: {
+          "en": "Number of measurement types",
+          "de": "Anzahl der Messarten",
+          "ru": "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0442\u0438\u043F\u043E\u0432 \u0438\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u0439",
+          "pt": "N\xFAmero de tipos de medida",
+          "nl": "Aantal metingstypen",
+          "fr": "Nombre de types de mesures",
+          "it": "Numero di tipi di misura",
+          "es": "N\xFAmero de tipos de medidas",
+          "pl": "Liczba rodzaj\xF3w \u015Brodk\xF3w",
+          "uk": "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0432\u0438\u0434\u0456\u0432 \u0437\u0430\u0445\u043E\u0434\u0456\u0432",
+          "zh-cn": "\u63AA\u65BD\u7C7B\u578B\u7684\u6570\u91CF"
+        },
+        type: "string",
+        role: "text",
+        unit: "",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    await this.setState(dp_Sensor, { val: value, ack: true, q: 0 });
   }
   /**
    * Retrieves the desired data from the payload and prepares data for storage
@@ -146,7 +209,6 @@ class Airquality extends utils.Adapter {
     const dateTimeEnd = innerObject[dateTimeStart][3];
     const timeEndAdjusted = this.correctHour(dateTimeEnd, summerOffset * -1 - 1);
     const innerData = innerObject[dateTimeStart];
-    console.log(innerData);
     const typeMeasurement = innerData[0];
     await this.persistData(
       this.stationList[stationId].code,
@@ -159,22 +221,8 @@ class Airquality extends utils.Adapter {
     );
     this.numberOfElements++;
     if (this.numberOfElements > 0) {
-      await this.persistData(
-        this.stationList[stationId].code,
-        "Letzte Messung",
-        "Zeitspanne der letzten Messung",
-        timeEndAdjusted,
-        "",
-        "text"
-      );
-      await this.persistData(
-        this.stationList[stationId].code,
-        "Anzahl Messtypen",
-        "Zahl der zuletzt gemessenen Typen",
-        this.numberOfElements,
-        "",
-        "value"
-      );
+      await this.storeData_TLM(this.stationList[stationId].code, timeEndAdjusted);
+      await this.storeData_NMT(this.stationList[stationId].code, this.numberOfElements);
     }
     this.log.debug(`[parseDataComp] Measured values from ${this.numberOfElements} sensors determined`);
   }
@@ -223,22 +271,8 @@ class Airquality extends utils.Adapter {
       }
     }
     if (this.numberOfElements > 0) {
-      await this.persistData(
-        this.stationList[stationId].code,
-        "Letzte Messung",
-        "Zeitspanne der letzten Messung",
-        timeEndAdjusted,
-        "",
-        "text"
-      );
-      await this.persistData(
-        this.stationList[stationId].code,
-        "Anzahl Messtypen",
-        "Zahl der zuletzt gemessenen Typen",
-        this.numberOfElements,
-        "",
-        "value"
-      );
+      await this.storeData_TLM(this.stationList[stationId].code, timeEndAdjusted);
+      await this.storeData_NMT(this.stationList[stationId].code, this.numberOfElements);
     }
     this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
   }

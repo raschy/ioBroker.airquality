@@ -40,7 +40,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 
 ### **WORK IN PROGRESS**
 
-- (raschy) Instruction manual addet
+- (raschy) Instructions for use in GUI added
 
 ### 0.1.3 (2024-12-12)
 

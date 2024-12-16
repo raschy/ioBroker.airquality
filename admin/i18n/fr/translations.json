@@ -3,5 +3,9 @@
     "stations": "gares",
     "stations_to_be_monitored": "stations à surveiller",
     "station_nonvalid_text": "texte non valide de la station",
-    "wrong_item_in_stations": "mauvais article dans les stations"
+    "wrong_item_in_stations": "mauvais article dans les stations",
+    "operatingInstructions": "Mode d'emploi",
+    "instructionManual": "Dans cet adaptateur, au moins une station environnementale à partir de laquelle les valeurs mesurées doivent être collectées doit être saisie dans la configuration. Les noms des stations peuvent être sélectionnés sur le site Internet de l'Agence fédérale de l'environnement à l'adresse https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten (puis cliquez sur « Station la plus proche ») à l'aide de la carte affichée. Les stations commencent toujours par « DE », suivi du nom de l'État fédéral « BW » et d'un numéro de série à trois chiffres. Cet identifiant, par ex. 'DEBW052', doit ensuite être saisi dans la page de configuration de l'adaptateur (confirmer par Entrée). D'autres stations peuvent également être ajoutées ici.",
+    "operatingInstructions2": "Mode d'emploi Partie 2",
+    "instructionAutodetekt": "Si les coordonnées sont conservées dans la configuration principale de l'ioBroker, l'adaptateur tente de trouver lui-même la station la plus proche lors de son premier démarrage."
 }

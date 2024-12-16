@@ -3,5 +3,9 @@
     "stations": "stacje",
     "stations_to_be_monitored": "stacje, które mają być monitorowane",
     "station_nonvalid_text": "Nieprawidłowy tekst stacji",
-    "wrong_item_in_stations": "zły element na stacjach"
+    "wrong_item_in_stations": "zły element na stacjach",
+    "operatingInstructions": "Instrukcja obsługi",
+    "instructionManual": "W tym adapterze w konfiguracji należy wpisać przynajmniej jedną stację środowiskową, z której mają być pobierane wartości pomiarowe. Nazwy stacji można wybrać na stronie internetowej Federalnej Agencji Środowiska pod adresem https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten (następnie kliknąć „Najbliższa stacja”), korzystając z wyświetlonej mapy. Stacje zawsze zaczynają się od „DE”, po którym następuje nazwa kraju związkowego „BW” i trzycyfrowy numer seryjny. Identyfikator ten, np. Następnie na stronie konfiguracyjnej adaptera należy wpisać „DEBW052” (potwierdzić klawiszem Enter). Można tu także dodać kolejne stacje.",
+    "operatingInstructions2": "Instrukcja obsługi Część 2",
+    "instructionAutodetekt": "Jeśli współrzędne są zachowane w głównej konfiguracji ioBrokera, adapter przy pierwszym uruchomieniu sam próbuje znaleźć najbliższą stację."
 }

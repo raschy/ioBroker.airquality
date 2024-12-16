@@ -1,9 +1,11 @@
 {
-	"airquality adapter settings": "Adaptereinstellungen für Luftqualität",
-	"stations": "Stationen",
-	"stations_to_be_monitored": "zu überwachende Stationen",
-	"station_nonvalid_text": "Station ungültiger Text",
-	"wrong_item_in_stations": "Falsche Bezeichnung in den Stationen",
-	"operatingInstructions": "Gebrauchsanweisung",
-	"instructionManual": "Damit Ihr indess erkennt, woher dieser ganze Irrthum gekommen ist, und weshalb man die Lust anklagt und den Schmerz lobet, so will ich Euch Alles eröffnen und auseinander setzen, was jener Begründer der Wahrheit und gleichsam Baumeister des glücklichen Lebens selbst darüber gesagt hat. Niemand, sagt er, verschmähe, oder hasse, oder fliehe die Lust als solche, sondern weil grosse Schmerzen ihr folgen, wenn man nicht mit Vernunft ihr nachzugehen verstehe. Ebenso werde der Schmerz als solcher von Niemand geliebt, gesucht und verlangt, sondern weil mitunter solche Zeiten eintreten, dass man mittelst Arbeiten und Schmerzen eine grosse Lust sich zu verschaften suchen müsse."
+    "airquality adapter settings": "Adaptereinstellungen für Luftqualität",
+    "stations": "Stationen",
+    "stations_to_be_monitored": "zu überwachende Stationen",
+    "station_nonvalid_text": "Station ungültiger Text",
+    "wrong_item_in_stations": "Falsche Bezeichnung in den Stationen",
+    "operatingInstructions": "Gebrauchsanweisung",
+    "operatingInstructions2": "Gebrauchsanweisung Geoautomatik",
+    "instructionManual": "In diesem Adapter muss mindestens eine Umweltstation, von der Messwerte erfasst werden sollen, in die Konfiguration eingetragen werden. Die Stationsnamen können auf der Internetseite des Umweltbundesamtes unter https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten anhand der angezeigten Karte ausgewählt werden. Die Stationen beginnen immer mit „DE“, gefolgt von dem Bundesland „BW“ und einer dreistelligen laufenden Nummer. Diese Kennung, z.B. „DEBW052“, muss dann auf der Konfigurationsseite des Adapters eingetragen werden (mit Enter bestätigen). Hier können auch weitere Stationen hinzugefügt werden.",
+    "instructionAutodetekt": "Wenn die Koordinaten in der Hauptkonfiguration des ioBrokers gepflegt sind, versucht der Adapter beim ersten Start die nächstgelegene Station selbst zu finden."
 }

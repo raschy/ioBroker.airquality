@@ -3,5 +3,9 @@
     "stations": "车站",
     "stations_to_be_monitored": "待监测站",
     "station_nonvalid_text": "电台无效文本",
-    "wrong_item_in_stations": "车站内的物品有误"
+    "wrong_item_in_stations": "车站内的物品有误",
+    "operatingInstructions": "操作说明",
+    "instructionManual": "在此适配器中，必须在配置中输入至少一个要从中收集测量值的环境站。可以使用显示的地图在联邦环境局网站 https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten 上选择车站名称（然后单击“最近的车站”）。这些电台始终以“DE”开头，后跟联邦州“BW”和一个三位数的序列号。该标识符，例如然后必须在适配器的配置页面中输入“DEBW052”（按 Enter 键确认）。还可以在此处添加更多站点。",
+    "operatingInstructions2": "操作说明第 2 部分",
+    "instructionAutodetekt": "如果在 ioBroker 的主配置中维护坐​​标，则适配器在首次启动时会尝试自行查找最近的站。"
 }

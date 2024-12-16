@@ -37,7 +37,7 @@ class Airquality extends utils.Adapter {
 		this.components = await getComponents();
 		//console.log(this.components[6].desc); //> 'Blei im Feinstaub'
 		//
-		if (this.config.stations.length === 0) {
+		if (this.config.stations.length == 0) {
 			this.log.info('[onReady] No stations specified');
 			// if no station is selected in config
 			const home: Home = this.getLocation();
@@ -67,14 +67,13 @@ class Airquality extends utils.Adapter {
 				} else {
 					this.log.error(`[onReady] Unknown error: ${JSON.stringify(error)}`);
 				}
-			} finally {
-				this.log.debug(`[onReady] finished - stopping instance`);
-				this.terminate
-					? this.terminate('Everything done. Going to terminate till next schedule', 11)
-					: process.exit(0);
 			}
 		}
-		// End onReady
+		this.log.debug('[onReady] finished - stopping instance');
+		this.terminate
+			? this.terminate('Everything done. Going to terminate till next schedule', 11)
+			: process.exit(0);
+	// End onReady
 	}
 
 	/**
@@ -82,7 +81,7 @@ class Airquality extends utils.Adapter {
 	 *
 	 * @param station Station
 	 * @param sensor Sensor
-	 * @param description Description
+	 * @param name Description
 	 * @param value Value
 	 * @param unit Unit
 	 * @param role Role
@@ -90,14 +89,14 @@ class Airquality extends utils.Adapter {
 	async persistData(
 		station: string,
 		sensor: string,
-		description: string,
+		name: string,
 		value: number | string,
-		unit: string,
+		unit: string, 
 		role: string,
 	): Promise<void> {
 		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
 		this.log.silly(
-			`[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${description}" with value: "${value}" and unit "${unit}" as role "${role}`,
+			`[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${name}" with value: "${value}" and unit "${unit}" as role "${role}`,
 		);
 		//
 		if (isNumber(value)) {
@@ -105,7 +104,7 @@ class Airquality extends utils.Adapter {
 			await this.setObjectNotExistsAsync(dp_Sensor, {
 				type: 'state',
 				common: {
-					name: description,
+					name: name,
 					type: 'number',
 					role: role,
 					unit: unit,
@@ -119,7 +118,7 @@ class Airquality extends utils.Adapter {
 			await this.setObjectNotExistsAsync(dp_Sensor, {
 				type: 'state',
 				common: {
-					name: description,
+					name: name,
 					type: 'string',
 					role: role,
 					unit: unit,
@@ -135,6 +134,72 @@ class Airquality extends utils.Adapter {
 		function isNumber(n: any): boolean {
 			return !isNaN(parseFloat(n)) && !isNaN(n - 0);
 		}
+	}
+
+	async storeData_TLM(station: string, value: number | string,): Promise<void> {
+		const sensor = 'Time of the last measurement';
+		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
+		this.log.silly(`[storeData_TLM] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}" `,
+		);
+		await this.setObjectNotExistsAsync(dp_Sensor, {
+			type: 'state',
+			common: {
+				name: {
+					"en": "Time of the last measurement",
+					"de": "Zeit der letzten Messung",
+					"ru": "Время последнего измерения",
+					"pt": "Tempo da última medição",
+					"nl": "Tijd van de laatste meting",
+					"fr": "Durée de la dernière mesure",
+					"it": "Tempo dell'ultima misura",
+					"es": "Tiempo de la última medición",
+					"pl": "Czas ostatniego pomiaru",
+					"uk": "Час останнього вимірювання",
+					"zh-cn": "上次测量的时间"
+				  },
+				type: 'string',
+				role: 'text',
+				unit: '',
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
+		//
+		await this.setState(dp_Sensor, { val: value, ack: true, q: 0x00 });
+	}
+
+	async storeData_NMT(station: string, value: number | string,): Promise<void> {
+		const sensor = 'Number of measurement types';
+		const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
+		this.log.silly(`[storeData_NMT] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}" `,
+		);
+		await this.setObjectNotExistsAsync(dp_Sensor, {
+			type: 'state',
+			common: {
+				name: {
+					"en": "Number of measurement types",
+					"de": "Anzahl der Messarten",
+					"ru": "Количество типов измерений",
+					"pt": "Número de tipos de medida",
+					"nl": "Aantal metingstypen",
+					"fr": "Nombre de types de mesures",
+					"it": "Numero di tipi di misura",
+					"es": "Número de tipos de medidas",
+					"pl": "Liczba rodzajów środków",
+					"uk": "Кількість видів заходів",
+					"zh-cn": "措施类型的数量"
+				  },
+				type: 'string',
+				role: 'text',
+				unit: '',
+				read: true,
+				write: false,
+			},
+			native: {},
+		});
+		//
+		await this.setState(dp_Sensor, { val: value, ack: true, q: 0x00 });
 	}
 
 	/**
@@ -167,7 +232,7 @@ class Airquality extends utils.Adapter {
 		//
 		const innerData = innerObject[dateTimeStart];
 		//
-		console.log(innerData);
+		//console.log(innerData);
 		const typeMeasurement = innerData[0];
 		await this.persistData(
 			this.stationList[stationId].code,
@@ -179,22 +244,8 @@ class Airquality extends utils.Adapter {
 		);
 		this.numberOfElements++;
 		if (this.numberOfElements > 0) {
-			await this.persistData(
-				this.stationList[stationId].code,
-				'Letzte Messung',
-				'Zeitspanne der letzten Messung',
-				timeEndAdjusted,
-				'',
-				'text',
-			);
-			await this.persistData(
-				this.stationList[stationId].code,
-				'Anzahl Messtypen',
-				'Zahl der zuletzt gemessenen Typen',
-				this.numberOfElements,
-				'',
-				'value',
-			);
+			await this.storeData_TLM(this.stationList[stationId].code, timeEndAdjusted);
+			await this.storeData_NMT(this.stationList[stationId].code, this.numberOfElements);
 		}
 		//}
 		this.log.debug(`[parseDataComp] Measured values from ${this.numberOfElements} sensors determined`);
@@ -249,22 +300,8 @@ class Airquality extends utils.Adapter {
 			}
 		}
 		if (this.numberOfElements > 0) {
-			await this.persistData(
-				this.stationList[stationId].code,
-				'Letzte Messung',
-				'Zeitspanne der letzten Messung',
-				timeEndAdjusted,
-				'',
-				'text',
-			);
-			await this.persistData(
-				this.stationList[stationId].code,
-				'Anzahl Messtypen',
-				'Zahl der zuletzt gemessenen Typen',
-				this.numberOfElements,
-				'',
-				'value',
-			);
+			await this.storeData_TLM(this.stationList[stationId].code, timeEndAdjusted);
+			await this.storeData_NMT(this.stationList[stationId].code, this.numberOfElements);
 		}
 		this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
 	}

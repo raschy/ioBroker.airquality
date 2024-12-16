@@ -3,5 +3,9 @@
     "stations": "stations",
     "stations_to_be_monitored": "te monitoren stations",
     "station_nonvalid_text": "station ongeldige tekst",
-    "wrong_item_in_stations": "verkeerd item in stations"
+    "wrong_item_in_stations": "verkeerd item in stations",
+    "operatingInstructions": "Gebruiksaanwijzing",
+    "instructionManual": "In deze adapter moet in de configuratie minimaal één milieustation worden ingevoerd waarvan de meetwaarden moeten worden verzameld. De stationsnamen kunnen worden geselecteerd op de website van het Federale Milieuagentschap op https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten (klik vervolgens op 'Dichtstbijzijnde station') met behulp van de weergegeven kaart. De stations beginnen altijd met 'DE', gevolgd door de deelstaat 'BW' en een driecijferig serienummer. Deze identificatie, b.v. 'DEBW052' moet dan op de configuratiepagina van de adapter worden ingevoerd (bevestig met Enter). Hier kunnen ook nog meer stations worden toegevoegd.",
+    "operatingInstructions2": "Gebruiksaanwijzing deel 2",
+    "instructionAutodetekt": "Als de coördinaten behouden blijven in de hoofdconfiguratie van de ioBroker, probeert de adapter bij de eerste start zelf het dichtstbijzijnde station te vinden."
 }
