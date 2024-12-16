@@ -129,7 +129,9 @@ class Airquality extends utils.Adapter {
   async storeData_TLM(station, value) {
     const sensor = "Time of the last measurement";
     const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
-    this.log.silly(`[storeData_TLM] Station "${station}" Sensor "${sensor}" [${dp_Sensor}] with value: "${value}"`);
+    this.log.silly(
+      `[storeData_TLM] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}"`
+    );
     await this.setObjectNotExistsAsync(dp_Sensor, {
       type: "state",
       common: {
