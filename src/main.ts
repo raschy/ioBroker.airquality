@@ -153,7 +153,7 @@ class Airquality extends utils.Adapter {
 					pt: 'Tempo da última medição',
 					nl: 'Tijd van de laatste meting',
 					fr: 'Durée de la dernière mesure',
-					it: 'Tempo dell\' ultima misura',
+					it: "Tempo dell' ultima misura",
 					es: 'Tiempo de la última medición',
 					pl: 'Czas ostatniego pomiaru',
 					uk: 'Час останнього вимірювання',
