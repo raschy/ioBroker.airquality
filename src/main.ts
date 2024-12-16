@@ -135,7 +135,7 @@ class Airquality extends utils.Adapter {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param station Station Code
 	 * @param value Time of the last measurement
 	 */
@@ -153,7 +153,7 @@ class Airquality extends utils.Adapter {
 					pt: 'Tempo da última medição',
 					nl: 'Tijd van de laatste meting',
 					fr: 'Durée de la dernière mesure',
-					it: 'Tempo dell´ ultima misura',
+					it: 'Tempo dell\' ultima misura',
 					es: 'Tiempo de la última medición',
 					pl: 'Czas ostatniego pomiaru',
 					uk: 'Час останнього вимірювання',
@@ -172,7 +172,7 @@ class Airquality extends utils.Adapter {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param station Station Code
 	 * @param value Number of measurement types
 	 */
@@ -186,15 +186,15 @@ class Airquality extends utils.Adapter {
 				name: {
 					en: 'Number of measurement types',
 					de: 'Anzahl der Messarten',
-					ru: 'Количество типов измерений',
-					pt: 'Número de tipos de medida',
-					nl: 'Aantal metingstypen',
-					fr: 'Nombre de types de mesures',
+					ru: 'Число типов измерений',
+					pt: 'Número de tipos de medição',
+					nl: 'Aantal meettypes',
+					fr: 'Nombre de types de mesure',
 					it: 'Numero di tipi di misura',
-					es: 'Número de tipos de medidas',
-					pl: 'Liczba rodzajów środkó',
-					uk: 'Кількість видів заходів',
-					'zh-cn': '措施类型的数量',
+					es: 'Número de tipos de medición',
+					pl: 'Liczba typów pomiarów',
+					uk: 'Кількість типів вимірювання',
+					'zh-cn': '计量类型数目',
 				},
 				type: 'number',
 				role: 'value',

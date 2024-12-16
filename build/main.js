@@ -77,7 +77,7 @@ class Airquality extends utils.Adapter {
   /**
    * Persist the measurements
    *
-   * @param station Station
+   * @param station Station Code
    * @param sensor Sensor
    * @param name Description
    * @param value Value
@@ -121,6 +121,11 @@ class Airquality extends utils.Adapter {
       return !isNaN(parseFloat(n)) && !isNaN(n - 0);
     }
   }
+  /**
+   *
+   * @param station Station Code
+   * @param value Time of the last measurement
+   */
   async storeData_TLM(station, value) {
     const sensor = "Time of the last measurement";
     const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
@@ -135,7 +140,7 @@ class Airquality extends utils.Adapter {
           pt: "Tempo da \xFAltima medi\xE7\xE3o",
           nl: "Tijd van de laatste meting",
           fr: "Dur\xE9e de la derni\xE8re mesure",
-          it: "Tempo dell\xB4 ultima misura",
+          it: "Tempo dell' ultima misura",
           es: "Tiempo de la \xFAltima medici\xF3n",
           pl: "Czas ostatniego pomiaru",
           uk: "\u0427\u0430\u0441 \u043E\u0441\u0442\u0430\u043D\u043D\u044C\u043E\u0433\u043E \u0432\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F",
@@ -151,6 +156,11 @@ class Airquality extends utils.Adapter {
     });
     await this.setState(dp_Sensor, { val: value, ack: true, q: 0 });
   }
+  /**
+   *
+   * @param station Station Code
+   * @param value Number of measurement types
+   */
   async storeData_NMT(station, value) {
     const sensor = "Number of measurement types";
     const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
@@ -161,18 +171,18 @@ class Airquality extends utils.Adapter {
         name: {
           en: "Number of measurement types",
           de: "Anzahl der Messarten",
-          ru: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u0442\u0438\u043F\u043E\u0432 \u0438\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u0439",
-          pt: "N\xFAmero de tipos de medida",
-          nl: "Aantal metingstypen",
-          fr: "Nombre de types de mesures",
+          ru: "\u0427\u0438\u0441\u043B\u043E \u0442\u0438\u043F\u043E\u0432 \u0438\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u0439",
+          pt: "N\xFAmero de tipos de medi\xE7\xE3o",
+          nl: "Aantal meettypes",
+          fr: "Nombre de types de mesure",
           it: "Numero di tipi di misura",
-          es: "N\xFAmero de tipos de medidas",
-          pl: "Liczba rodzaj\xF3w \u015Brodk\xF3",
-          uk: "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0432\u0438\u0434\u0456\u0432 \u0437\u0430\u0445\u043E\u0434\u0456\u0432",
-          "zh-cn": "\u63AA\u65BD\u7C7B\u578B\u7684\u6570\u91CF"
+          es: "N\xFAmero de tipos de medici\xF3n",
+          pl: "Liczba typ\xF3w pomiar\xF3w",
+          uk: "\u041A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0442\u0438\u043F\u0456\u0432 \u0432\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F",
+          "zh-cn": "\u8BA1\u91CF\u7C7B\u578B\u6570\u76EE"
         },
-        type: "string",
-        role: "text",
+        type: "number",
+        role: "value",
         unit: "",
         read: true,
         write: false
@@ -311,7 +321,7 @@ class Airquality extends utils.Adapter {
         nearestStation = parseInt(key);
       }
     }
-    this.log.debug(`[findNearestStation]: >>> Station ID: ${nearestStation}`);
+    this.log.debug(`[findNearestStation]: >>> Station Idx: ${nearestStation}`);
     return nearestStation;
   }
   /**
