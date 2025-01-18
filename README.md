@@ -41,6 +41,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 
 - (raschy) Supplementary data points i18n
 - (raschy) Data point type corrected 
+- (raschy) @iobroker/adapter-core 3.2.3 is recommended 
 
 ### 0.1.4 (2024-12-16)
 
@@ -80,7 +81,7 @@ You can check other adapters for examples or ask in the developer community. Usi
 
 MIT License
 
-Copyright (c) 2024 raschy <raschy@gmx.de>
+Copyright (c) 2024-2025 raschy <raschy@gmx.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
