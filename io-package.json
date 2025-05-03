@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "airquality",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "news": {
+      "0.1.5": {
+        "en": "Supplementary data points i18n\nData point type corrected \n@iobroker/adapter-core 3.2.3 is recommended",
+        "de": "Zusätzliche Datenpunkte i18n\nDatenpunkt korrigiert\n@iobroker/adapter-core 3.2.3 wird empfohlen",
+        "ru": "Дополнительные данные i18n\nИсправлен тип точки данных\n@iobroker/adapter-core 3.2.3 рекомендуется",
+        "pt": "Pontos complementares de dados i18n\nTipo de ponto de dados corrigido\n@iobroker/adapter-core 3.2.3 é recomendado",
+        "nl": "Aanvullende gegevenspunten i18n\nType gegevenspunt gecorrigeerd\n@iobroker/adapter-core 3.2.3 wordt aanbevolen",
+        "fr": "Données supplémentaires i18n\nType de point de données corrigé\n@iobroker/adaptateur-core 3.2.3 est recommandé",
+        "it": "Punti di dati supplementari i18n\nTipo del punto di dati corretto\n@iobroker/adapter-core 3.2.3 è raccomandato",
+        "es": "Puntos de datos suplementarios i18n\nTipo de punto de datos corregido\n@iobroker/adapter-core 3.2.3 se recomienda",
+        "pl": "Dodatkowe punkty danych i18n\nTyp danych skorygowany\n@ iobroker / adapter- core 3.2.3 jest zalecane",
+        "uk": "Додаткові точки даних i18n\nТип точки даних виправлено\n@iobroker/adapter-core 3.2.3 рекомендується",
+        "zh-cn": "补充数据点i18n\n数据点类型已更正\n@iobor/适应器核心 3.2.3 建议"
+      },
       "0.1.4": {
         "en": "Instructions for use in GUI added",
         "de": "Gebrauchsanweisung in GUI hinzugefügt",
