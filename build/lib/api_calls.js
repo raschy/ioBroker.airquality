@@ -26,103 +26,202 @@ __export(api_calls_exports, {
 module.exports = __toCommonJS(api_calls_exports);
 const baseUrl = "https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/";
 async function getStations() {
-  const urlStation = prepareQueryParameters("");
-  const url = [baseUrl, "stations/json?use=airquality&lang", urlStation].join("");
-  const _stations = {};
-  return fetch(url, {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
-    }
-  }).then(async (response) => {
+  const stations = {};
+  try {
+    const url = `${baseUrl}stations/json?lang=de`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+      }
+    });
     if (!response.ok) {
-      throw new Error("[getStations] failed to retrieve data");
+      throw new Error(`[getStations] HTTP-Fehler: ${response.status}`);
     }
-    const data = await response.json();
-    for (const key in data.data) {
-      const stationId = data.data[key][0];
-      _stations[stationId] = {
-        id: data.data[key][0],
-        code: data.data[key][1],
-        city: data.data[key][3],
-        network: data.data[key][12],
-        street: data.data[key][17],
-        number: data.data[key][18],
-        zipcode: data.data[key][19],
-        lon: data.data[key][7],
-        lat: data.data[key][8]
-        //
+    const raw = await response.json();
+    if (!raw || typeof raw !== "object" || !raw.data || typeof raw.data !== "object" || raw.count < 1) {
+      throw new Error("[getStations] Invalid or empty response structure from the server");
+    }
+    for (const key in raw.data) {
+      const entry = raw.data[key];
+      if (!isValidStationEntry(entry)) {
+        console.warn(`[getStations] Invalid entry for key "${key}":`, entry);
+        continue;
+      }
+      const id = entry[0];
+      stations[id] = {
+        id,
+        code: entry[1],
+        city: entry[3],
+        lon: entry[7],
+        lat: entry[8],
+        network: entry[12],
+        street: entry[17],
+        number: entry[18],
+        zipcode: entry[19]
       };
     }
-    return _stations;
-  });
+    if (Object.keys(stations).length === 0) {
+      throw new Error("No valid stations found");
+    }
+    return stations;
+  } catch (error) {
+    console.error("Error when calling up station data: ", error);
+    throw error;
+  }
+  function isValidStationEntry(entry) {
+    if (!Array.isArray(entry) || entry.length < 20) {
+      return false;
+    }
+    const expectedStrings = [0, 1, 3, 7, 8, 12, 17, 18, 19];
+    return expectedStrings.every((index) => typeof entry[index] === "string");
+  }
 }
 async function getComponents() {
-  const url = `${baseUrl}components/json?lang=de&index=id`;
-  const _components = {};
-  return fetch(url, {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
-    }
-  }).then(async (response) => {
+  const url = `${baseUrl}components/json?lang=de`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
     if (!response.ok) {
-      throw new Error("[getComponents] failed to retrieve data");
+      throw new Error(`[getComponents] HTTP Error: ${response.status}`);
     }
-    const data = await response.json();
-    for (const key in data) {
-      if (!isNaN(parseInt(key))) {
-        _components[key] = { name: data[key][1], unit: data[key][3], desc: data[key][4] };
+    const raw = await response.json();
+    if (!raw || typeof raw !== "object") {
+      throw new Error("[getComponents] Unexpected response format");
+    }
+    const components = {};
+    for (const key of Object.keys(raw)) {
+      if (key === "count" || key === "indices") {
+        continue;
+      }
+      const entry = raw[key];
+      if (Array.isArray(entry) && entry.length >= 5) {
+        const [id, code, symbol, unit, desc] = entry;
+        components[id] = {
+          id,
+          code,
+          symbol,
+          unit,
+          desc
+        };
+      } else {
+        console.warn(`[getComponents] Invalid entry for key "${key}":`, entry);
       }
     }
-    return _components;
-  });
+    if (Object.keys(components).length === 0) {
+      throw new Error("No valid components found");
+    }
+    return components;
+  } catch (error) {
+    console.error("Error when calling up the components:", error);
+    throw error;
+  }
 }
 async function getMeasurements(stationCode) {
-  const urlSpec = "airquality/json?";
-  const urlStation = prepareQueryParameters(stationCode);
-  const url = [baseUrl, urlSpec, urlStation].join("");
-  let _measurements = {};
-  return fetch(url, {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
-    }
-  }).then(async (response) => {
+  try {
+    const urlSpec = "airquality/json?";
+    const urlStation = prepareQueryParameters(stationCode);
+    const url = [baseUrl, urlSpec, urlStation].join("");
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+      }
+    });
     if (!response.ok) {
-      throw new Error("[getMeasurements] failed to retrieve data");
+      throw new Error(`[getMeasurements] HTTP-Fehler: ${response.status}`);
     }
-    const data = await response.json();
-    _measurements = data.data;
-    return _measurements;
-  });
+    const measuresResponse = await response.json();
+    if (!measuresResponse || typeof measuresResponse !== "object" || !measuresResponse.data || typeof measuresResponse.data !== "object") {
+      throw new Error("Invalid or empty response");
+    }
+    for (const stationId of Object.keys(measuresResponse.data)) {
+      const airQualityData = measuresResponse.data[stationId];
+      if (typeof airQualityData !== "object" || !airQualityData) {
+        continue;
+      }
+      if (measuresResponse.count < 1) {
+        console.log("[#getMeasurements] NoData, empty");
+        return { success: false };
+      }
+      for (const datetime of Object.keys(airQualityData)) {
+        const entry = airQualityData[datetime];
+        if (!Array.isArray(entry) || entry.length < 4) {
+          console.warn(`[getMeasurements] Invalid entry for ${stationId} @ ${datetime}`);
+          continue;
+        }
+        const [endTime, , , ...componentArrays] = entry;
+        const result = {
+          success: true,
+          stationId,
+          measurementTime: endTime,
+          measurementValues: componentArrays
+        };
+        return result;
+      }
+    }
+    return { success: false };
+  } catch (error) {
+    console.error("Error when calling up the measured values:", error);
+    throw error;
+  }
 }
 async function getMeasurementsComp(stationCode, component) {
-  const urlSpec = "measures/json?";
-  const urlStation = prepareQueryParameters(stationCode);
-  const url = [baseUrl, urlSpec, urlStation, "&component=", component].join("");
-  let _measurements = {};
-  return fetch(url, {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
-    }
-  }).then(async (response) => {
+  try {
+    const urlSpec = "measures/json?";
+    const urlStation = prepareQueryParameters(stationCode);
+    const url = [baseUrl, urlSpec, urlStation, "&component=", component, "&scope=4"].join("");
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+      }
+    });
     if (!response.ok) {
-      throw new Error("[getMeasurements] failed to retrieve data");
+      throw new Error(`[getMeasurementsComp] HTTP-Fehler: ${response.status}`);
     }
-    const data = await response.json();
-    _measurements = data.data;
-    return _measurements;
-  });
+    const measuresResponse = await response.json();
+    if (!measuresResponse || typeof measuresResponse !== "object" || !measuresResponse.data || typeof measuresResponse.data !== "object") {
+      throw new Error("Invalid or empty response");
+    }
+    for (const stationId of Object.keys(measuresResponse.data)) {
+      const airQualityData = measuresResponse.data[stationId];
+      if (typeof airQualityData !== "object" || !airQualityData) {
+        continue;
+      }
+      for (const datetime of Object.keys(airQualityData)) {
+        const entry = airQualityData[datetime];
+        if (!Array.isArray(entry) || entry.length < 4) {
+          console.warn(`[#getMeasurementsComp] Ung\xFCltiger Eintrag f\xFCr ${stationId} @ ${datetime}`);
+          continue;
+        }
+        const [componentId, scopeId, value, endTime, index] = entry;
+        const componentArray = [Number(componentId), value, scopeId, String(index)];
+        const result = {
+          success: true,
+          stationId,
+          measurementTime: String(endTime),
+          measurementValues: [componentArray]
+        };
+        return result;
+      }
+    }
+    return { success: false };
+  } catch (error) {
+    console.error("Error when calling up the measured values: ", error);
+    throw error;
+  }
 }
 function prepareQueryParameters(stationCode) {
   const parameters = [];
@@ -139,7 +238,6 @@ function prepareQueryParameters(stationCode) {
   parameters.push(timeTo);
   if (stationCode != "") {
     parameters.push(`station=${stationCode}`);
-    parameters.push("lang=de");
   }
   const preparedQueryParameter = parameters.join("&");
   return preparedQueryParameter;

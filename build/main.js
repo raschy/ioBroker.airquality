@@ -30,49 +30,98 @@ class Airquality extends utils.Adapter {
       name: "airquality",
       useFormatDate: true
     });
+    this.stationList = {};
+    this.components = {};
+    this.numberOfElements = 0;
+    this.retryCount = 0;
+    this.retryDelay = 2;
+    this.maxRetries = 3;
     this.on("ready", this.onReady.bind(this));
     this.on("unload", this.onUnload.bind(this));
   }
-  stationList = {};
-  components = {};
-  numberOfElements = 0;
   /**
    * Is called when databases are connected and adapter received configuration.
    */
   async onReady() {
-    this.stationList = await (0, import_api_calls.getStations)();
-    this.components = await (0, import_api_calls.getComponents)();
+    await this.delay(Math.floor(Math.random() * 1e4));
+    try {
+      this.stationList = await (0, import_api_calls.getStations)();
+    } catch (err) {
+      console.error("[onReady:Stations] Error when calling getStations: ", err);
+    }
+    try {
+      this.components = await (0, import_api_calls.getComponents)();
+    } catch (err) {
+      console.error("[onReady:components] Error when calling getComponents: ", err);
+    }
     if (this.config.stations.length == 0) {
       this.log.info("[onReady] No stations specified");
       const home = this.getLocation();
       if (home.lat > 0) {
         const nearestStationIdx = this.findNearestStation(home, this.stationList);
-        this.log.info(`[onReady] nearestStationIdx: ${nearestStationIdx}`);
+        this.log.info(`[onReady] nearest Station Index: ${nearestStationIdx}`);
         await this.writeStationToConfig(this.stationList[nearestStationIdx].code);
       }
-    } else {
-      this.log.info("[onReady] may be loop");
-      await this.delay(Math.floor(Math.random() * 5e3));
-      const selectedStations = this.config.stations;
-      this.log.info(`[onReady] selectedStations: ${selectedStations}`);
-      try {
-        for (const station of selectedStations) {
-          this.log.debug(`[onReady] fetches data from : ${station}`);
-          await this.parseData(await (0, import_api_calls.getMeasurements)(station));
-          await this.parseDataSingle(await (0, import_api_calls.getMeasurementsComp)(station, 2));
-        }
+    }
+    await this.controller();
+  }
+  /**
+   * controller
+   */
+  async controller() {
+    try {
+      const data = await this.worker();
+      if (data) {
+        this.log.info("[controller] Data retrieved successfully.");
         await this.setState("info.lastUpdate", { val: Date.now(), ack: true });
-      } catch (error) {
-        await this.setState("info.connection", { val: false, ack: true });
-        if (error instanceof Error) {
-          this.log.error(`[onReady] Error: ${error.message}`);
-        } else {
-          this.log.error(`[onReady] Unknown error: ${JSON.stringify(error)}`);
-        }
+        this.stopAdapter();
+      } else {
+        throw new Error("No data received.");
+      }
+    } catch (err) {
+      this.retryCount++;
+      this.log.warn(`
+				[controller] Retrieval failed (attempt ${this.retryCount}/${this.maxRetries}): ${String(err)}`);
+      if (this.retryCount < this.maxRetries) {
+        this.log.info(`[controller] New attempt in ${this.retryDelay} minutes...`);
+        setTimeout(() => this.controller(), this.retryDelay * 6e4);
+      } else {
+        this.log.error("[controller] Maximum number of attempts reached. Adapter will terminated.");
+        this.stopAdapter();
       }
     }
-    this.log.debug("[onReady] finished - stopping instance");
-    this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
+  }
+  /**
+   * worker function to call data from the selected stations
+   */
+  async worker() {
+    const selectedStations = this.config.stations;
+    this.log.info(`[worker] Attempting to call data from the selected stations: ${selectedStations}`);
+    let success = false;
+    try {
+      for (const station of selectedStations) {
+        await this.delay(Math.floor(Math.random() * 1e3));
+        this.log.debug(`[worker] fetches data from ${station}`);
+        this.numberOfElements = 0;
+        const measurement = await (0, import_api_calls.getMeasurements)(station);
+        if (measurement.success) {
+          await this.parseData(measurement);
+          success = measurement.success;
+        }
+        const measurementComp = await (0, import_api_calls.getMeasurementsComp)(station, 2);
+        if (measurementComp.success) {
+          await this.parseData(measurementComp);
+        }
+      }
+      return success;
+    } catch (error) {
+      if (error instanceof Error) {
+        this.log.error(`[worker] Error: ${error.message}`);
+      } else {
+        this.log.error(`[worker] Unknown error: ${JSON.stringify(error)}`);
+      }
+      return false;
+    }
   }
   /**
    * Persist the measurements
@@ -87,7 +136,7 @@ class Airquality extends utils.Adapter {
   async persistData(station, sensor, name, value, unit, role) {
     const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
     this.log.silly(
-      `[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${name}" with value: "${value}" and unit "${unit}" as role "${role}`
+      `[persistData] Station "${station}"  Sensor "${sensor}"  Desc "${name}" with value: "${value}" and unit "${unit}" as role "${role}"`
     );
     if (isNumber(value)) {
       await this.setObjectNotExistsAsync(dp_Sensor, {
@@ -122,52 +171,17 @@ class Airquality extends utils.Adapter {
     }
   }
   /**
+   *	Store metadata for the station
    *
    * @param station Station Code
-   * @param value Time of the last measurement
+   * @param valueNMT Number of measurement types
+   * @param valueTLM Time of the last measurement
    */
-  async storeData_TLM(station, value) {
-    const sensor = "Time of the last measurement";
-    const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
-    this.log.silly(
-      `[storeData_TLM] Station "${station}"  Sensor "${sensor}" [${dp_Sensor}] with value: "${value}"`
-    );
-    await this.setObjectNotExistsAsync(dp_Sensor, {
-      type: "state",
-      common: {
-        name: {
-          en: "Time of the last measurement",
-          de: "Zeit der letzten Messung",
-          ru: "\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0433\u043E \u0438\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u044F",
-          pt: "Tempo da \xFAltima medi\xE7\xE3o",
-          nl: "Tijd van de laatste meting",
-          fr: "Dur\xE9e de la derni\xE8re mesure",
-          it: "Tempo dell' ultima misura",
-          es: "Tiempo de la \xFAltima medici\xF3n",
-          pl: "Czas ostatniego pomiaru",
-          uk: "\u0427\u0430\u0441 \u043E\u0441\u0442\u0430\u043D\u043D\u044C\u043E\u0433\u043E \u0432\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F",
-          "zh-cn": "\u4E0A\u6B21\u6D4B\u91CF\u7684\u65F6\u95F4"
-        },
-        type: "string",
-        role: "text",
-        unit: "",
-        read: true,
-        write: false
-      },
-      native: {}
-    });
-    await this.setState(dp_Sensor, { val: value, ack: true, q: 0 });
-  }
-  /**
-   *
-   * @param station Station Code
-   * @param value Number of measurement types
-   */
-  async storeData_NMT(station, value) {
-    const sensor = "Number of measurement types";
-    const dp_Sensor = `${this.removeInvalidCharacters(station)}.${this.removeInvalidCharacters(sensor)}`;
-    this.log.silly(`[storeData_NMT] Station "${station}" Sensor "${sensor}" [${dp_Sensor}] with value: "${value}"`);
-    await this.setObjectNotExistsAsync(dp_Sensor, {
+  async storeData(station, valueNMT, valueTLM) {
+    const dp_Station = this.removeInvalidCharacters(station);
+    const dp_SensorNMT = `${dp_Station}._NMT`;
+    this.log.silly(`[storeData] Station "${station}", Sensor "_NMT" with value: "${valueNMT}"`);
+    await this.setObjectNotExistsAsync(dp_SensorNMT, {
       type: "state",
       common: {
         name: {
@@ -191,98 +205,69 @@ class Airquality extends utils.Adapter {
       },
       native: {}
     });
-    await this.setState(dp_Sensor, { val: value, ack: true, q: 0 });
+    await this.setState(dp_SensorNMT, { val: valueNMT, ack: true, q: 0 });
+    const dp_SensorTLM = `${dp_Station}._TLM`;
+    this.log.silly(`[storeData] Station "${station}", Sensor "_TLM" with value: "${valueTLM}"`);
+    await this.setObjectNotExistsAsync(dp_SensorTLM, {
+      type: "state",
+      common: {
+        name: {
+          en: "Time of the last measurement",
+          de: "Zeit der letzten Messung",
+          ru: "\u0412\u0440\u0435\u043C\u044F \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0433\u043E \u0438\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u044F",
+          pt: "Tempo da \xFAltima medi\xE7\xE3o",
+          nl: "Tijd van de laatste meting",
+          fr: "Dur\xE9e de la derni\xE8re mesure",
+          it: "Tempo dell' ultima misura",
+          es: "Tiempo de la \xFAltima medici\xF3n",
+          pl: "Czas ostatniego pomiaru",
+          uk: "\u0427\u0430\u0441 \u043E\u0441\u0442\u0430\u043D\u043D\u044C\u043E\u0433\u043E \u0432\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F",
+          "zh-cn": "\u4E0A\u6B21\u6D4B\u91CF\u7684\u65F6\u95F4"
+        },
+        type: "string",
+        role: "text",
+        unit: "",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    await this.setState(dp_SensorTLM, { val: valueTLM, ack: true, q: 0 });
   }
   /**
    * Retrieves the desired data from the payload and prepares data for storage
    *
    * @param {} payload Object from Response
-   * @returns Data to persist
-   */
-  async parseDataSingle(payload) {
-    this.log.debug(`[parseDataSingle] Payload: ${JSON.stringify(payload)}`);
-    if (Object.keys(payload).length === 0) {
-      return;
-    }
-    const localDate = /* @__PURE__ */ new Date();
-    const summerOffset = localDate.getTimezoneOffset() / 60;
-    const stationId = parseInt(Object.keys(payload)[0]);
-    await this.createObject(
-      this.stationList[stationId].code,
-      this.stationList[stationId].city,
-      this.stationList[stationId].street
-    );
-    const innerObject = payload[stationId];
-    const dateTimeStart = Object.keys(innerObject)[0];
-    const dateTimeEnd = innerObject[dateTimeStart][3];
-    const timeEndAdjusted = this.correctHour(dateTimeEnd, summerOffset * -1 - 1);
-    const innerData = innerObject[dateTimeStart];
-    const typeMeasurement = innerData[0];
-    await this.persistData(
-      this.stationList[stationId].code,
-      this.components[typeMeasurement].name,
-      this.components[typeMeasurement].desc,
-      innerData[2],
-      // Value
-      this.components[typeMeasurement].unit,
-      "value"
-    );
-    this.numberOfElements++;
-    if (this.numberOfElements > 0) {
-      await this.storeData_TLM(this.stationList[stationId].code, timeEndAdjusted);
-      await this.storeData_NMT(this.stationList[stationId].code, this.numberOfElements);
-    }
-    this.log.debug(`[parseDataComp] Measured values from ${this.numberOfElements} sensors determined`);
-  }
-  /**
-   * Retrieves the desired data from the payload and prepares data for storage
-   *
-   * @param {} payload Object from Response
-   * @returns Data to persist
+   //* @returns Data to persist
    */
   async parseData(payload) {
     this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
     if (Object.keys(payload).length === 0) {
-      this.log.warn("No data received");
+      this.log.debug("[#parseData] Payload ist leer");
       return;
     }
     const localDate = /* @__PURE__ */ new Date();
     const summerOffset = localDate.getTimezoneOffset() / 60;
-    const stationId = parseInt(Object.keys(payload)[0]);
-    await this.createObject(
-      this.stationList[stationId].code,
-      this.stationList[stationId].city,
-      this.stationList[stationId].street
-    );
-    const innerObject = payload[stationId];
-    const dateTimeStart = Object.keys(innerObject)[0];
-    const dateTimeEnd = innerObject[dateTimeStart][0];
-    const timeEndAdjusted = this.correctHour(dateTimeEnd, summerOffset * -1 - 1);
-    let innerData;
-    this.numberOfElements = 0;
-    for (const element in innerObject) {
-      innerData = innerObject[element];
-      for (const element2 in innerData) {
-        if (Array.isArray(innerData[element2])) {
-          this.numberOfElements++;
-          const typeMeasurement = innerData[element2][0];
-          await this.persistData(
-            this.stationList[stationId].code,
-            this.components[typeMeasurement].name,
-            this.components[typeMeasurement].desc,
-            innerData[element2][1],
-            // Value
-            this.components[typeMeasurement].unit,
-            "value"
-          );
-        }
-      }
+    const stationId = payload.stationId;
+    const timeEndAdjusted = this.correctHour(payload.measurementTime, summerOffset * -1 - 1);
+    for (const item of Object.keys(payload.measurementValues)) {
+      const measurement = payload.measurementValues[item];
+      await this.persistData(
+        this.stationList[stationId].code,
+        this.components[measurement[0]].code,
+        this.components[measurement[0]].desc,
+        measurement[1],
+        // Value
+        this.components[measurement[0]].unit,
+        "value"
+      );
+      this.numberOfElements++;
     }
     if (this.numberOfElements > 0) {
-      await this.storeData_TLM(this.stationList[stationId].code, timeEndAdjusted);
-      await this.storeData_NMT(this.stationList[stationId].code, this.numberOfElements);
+      await this.storeData(this.stationList[stationId].code, this.numberOfElements, timeEndAdjusted);
     }
     this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
+    return;
   }
   /**
    * Use the specified coordinates from the configuration
@@ -352,41 +337,6 @@ class Airquality extends utils.Adapter {
     });
   }
   /**
-   * Create a folder für station
-   *
-   * @param station Station Code
-   * @param description Station City
-   * @param location Station Street
-   */
-  async createObject(station, description, location) {
-    const dp_Folder = this.removeInvalidCharacters(station);
-    if (await this.objectExists(dp_Folder)) {
-      return;
-    }
-    await this.setObjectNotExists(dp_Folder, {
-      type: "folder",
-      common: {
-        name: {
-          en: "Measurements from station",
-          de: "Messungen von Station",
-          ru: "\u0418\u0437\u043C\u0435\u0440\u0435\u043D\u0438\u044F \u043D\u0430 \u0441\u0442\u0430\u043D\u0446\u0438\u0438",
-          pt: "Medi\xE7\xF5es da esta\xE7\xE3o",
-          nl: "Metingen vanaf het station",
-          fr: "Mesures de la station",
-          it: "Misure dalla stazione",
-          es: "Medidas desde la estaci\xF3n",
-          pl: "Pomiary ze stacji",
-          uk: "\u0412\u0438\u043C\u0456\u0440\u044E\u0432\u0430\u043D\u043D\u044F \u0437 \u0441\u0442\u0430\u043D\u0446\u0456\u0457",
-          "zh-cn": "\u4ECE\u8F66\u7AD9\u6D4B\u91CF"
-        },
-        desc: `${description}> ${location}`,
-        role: "info"
-      },
-      native: {}
-    });
-    this.log.debug(`[createObject] Station "${station}" City "${description}"`);
-  }
-  /**
    * calculates the distance between two coordinates using the Haversine formula
    *
    * @param lat1 Latitude of the place of residence
@@ -419,7 +369,7 @@ class Airquality extends utils.Adapter {
     return inputString.replace(regex, "_");
   }
   /**
-   * correct datestring from datestring by adding x hours
+   * correct datestring from datestring by adding x hours (offset)
    *
    * @param s Datestring
    * @param offset Offset
@@ -433,6 +383,13 @@ class Airquality extends utils.Adapter {
     const sHour = hour.toString().padStart(2, "0");
     const sTime = `${sHour}:${timeString[1]}`;
     return `${sDate} ${sTime}`;
+  }
+  /**
+   * my own methode to stop an adapter
+   */
+  stopAdapter() {
+    this.log.silly("[stopAdapter] finished - stopping instance");
+    this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!

@@ -37,6 +37,12 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+
+- (raschy) Removal of an unused state
+- (raschy) improved error messages
+- (raschy) improved retrieval logic
+
 ### 0.1.5 (2025-05-03)
 
 - (raschy) Supplementary data points i18n

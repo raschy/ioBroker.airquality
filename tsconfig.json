@@ -19,6 +19,16 @@
 		// This is necessary for the automatic typing of the adapter config
 		"resolveJsonModule": true,
 
+		"declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["es2017", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        //"outDir": "../build",
+        "target": "es2016",
+
+        //"typeRoots": ["../node_modules/@types"],
 		// If you want to disable the stricter type checks (not recommended), uncomment the following line
 		// "strict": false,
 		// And enable some of those features for more fine-grained control

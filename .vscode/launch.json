@@ -1,0 +1,40 @@
+{
+    // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+    // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+    // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+		{
+            "name": "Launch ioBroker Adapter for TypeScript",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/main.ts",
+            //"args": ["--debug", "0"],
+			//"args": ["--instance", "0", "--force", "--logs", "--debug"],
+			"args": ["${workspaceFolder}/src/main.ts"],
+            "skipFiles": ["<node_internals>/**"],
+			"preLaunchTask": "tsc: build - tsconfig.json",
+            "cwd": "${workspaceFolder}/.dev-server/default",
+            "stopOnEntry": true,
+            "sourceMaps": true,
+            "console": "internalConsole",
+            "outputCapture": "std",
+            "resolveSourceMapLocations": ["${workspaceFolder}/**", "**/node_modules/**"],
+            "env": {"NODE_PATH":"${workspaceFolder}/.dev-server/default/node_modules"},
+        },
+		{
+      		"command": "dev-server watch default",
+      		"name": "Start Dev Server",
+      		"request": "launch",
+      		"type": "node-terminal"
+    	},
+    	{
+      		"name": "Launch Edge",
+      		"request": "launch",
+      		"type": "msedge",
+      		"url": "http://localhost:20426",
+      		"webRoot": "${workspaceFolder}"
+    }        
+    ]
+}
