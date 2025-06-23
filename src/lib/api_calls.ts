@@ -27,7 +27,7 @@ export async function getStations(): Promise<Stations> {
 		}
 
 		const raw = (await response.json()) as ApiResponseStations;
-		//con sole.log('[getStations] Count:', raw.count);
+		//con_sole.log('[getStations] Count:', raw.count);
 		//raw.count = 0; // Setze count auf 0, um leere Antwort zu simulieren
 
 		// Überprüfe, ob die Antwortstruktur gültig ist
@@ -103,18 +103,12 @@ export async function getComponents(): Promise<Components> {
 		const components: Components = {};
 
 		for (const key of Object.keys(raw)) {
-			/*
-			// numerische Einträge filtern (nicht: "count", "indices")
-			if (!/^\d+$/.test(key)) {
-				continue;
-			}
-			*/
-			// Überspringe Metafelder wie "count" und "indices"
+			// skip Metadata like "count" and "indices"
 			if (key === 'count' || key === 'indices') {
 				continue;
 			}
 			const entry = raw[key];
-			//con sole.log('[getComponents] Entry ', entry);
+			//con_sole.log('[getComponents] Entry ', entry);
 
 			if (Array.isArray(entry) && entry.length >= 5) {
 				const [id, code, symbol, unit, desc] = entry;
@@ -178,16 +172,16 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 			throw new Error('Invalid or empty response');
 		}
 		//
-		//con sole.log('[#getMeasurements] Request:', measuresResponse.request);
-		//con sole.log('[#getMeasurements] Indices:', measuresResponse.indices);
-		//con sole.log('[#getMeasurements] Count:', measuresResponse.count);
-		//con sole.log('[#getMeasurements##] data:', measuresResponse.data);
+		//con_sole.log('[#getMeasurements] Request:', measuresResponse.request);
+		//con_sole.log('[#getMeasurements] Indices:', measuresResponse.indices);
+		//con_sole.log('[#getMeasurements] Count:', measuresResponse.count);
+		//con_sole.log('[#getMeasurements##] data:', measuresResponse.data);
 		//
 		// Iteriere über die Messwerte
 		for (const stationId of Object.keys(measuresResponse.data)) {
 			const airQualityData = measuresResponse.data[stationId];
-			//con sole.log('[#getMeasurements] airQualityData: ', airQualityData);
-			//con sole.log(`[#getMeasurements] Verarbeite Station: ${stationId}`);
+			//con_sole.log('[#getMeasurements] airQualityData: ', airQualityData);
+			//con_sole.log(`[#getMeasurements] Verarbeite Station: ${stationId}`);
 
 			if (typeof airQualityData !== 'object' || !airQualityData) {
 				continue;
@@ -200,8 +194,8 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 			//
 			for (const datetime of Object.keys(airQualityData)) {
 				const entry = airQualityData[datetime];
-				//con sole.log('[#getMeasurements] Entry ', JSON.stringify(entry));
-				//con sole.log(`[#getMeasurements] Verarbeite Messwert für ${stationId} @ ${datetime}`);
+				//con_sole.log('[#getMeasurements] Entry ', JSON.stringify(entry));
+				//con_sole.log(`[#getMeasurements] Verarbeite Messwert für ${stationId} @ ${datetime}`);
 
 				if (!Array.isArray(entry) || entry.length < 4) {
 					console.warn(`[getMeasurements] Invalid entry for ${stationId} @ ${datetime}`);
@@ -209,8 +203,8 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 				}
 
 				const [endTime, , , ...componentArrays] = entry;
-				//con sole.log('[#getMeasurements] EndTime ', endTime); //Date of measure end  in CET - string
-				//con sole.log('[#getMeasurements] Array ', componentArrays);
+				//con_sole.log('[#getMeasurements] EndTime ', endTime); //Date of measure end  in CET - string
+				//con_sole.log('[#getMeasurements] Array ', componentArrays);
 
 				const result: AirQualityResult = {
 					success: true,
@@ -239,6 +233,7 @@ export async function getMeasurementsComp(stationCode: string, component: number
 		const urlSpec = 'measures/json?';
 		const urlStation: string = prepareQueryParameters(stationCode);
 		const url = [baseUrl, urlSpec, urlStation, '&component=', component, '&scope=4'].join('');
+		// scope=2 ==>  "Ein-Stunden-Mittelwert"; scope=4 ==> "Acht-Stunden-Mittelwert"
 		//
 		const response = await fetch(url, {
 			method: 'GET',
@@ -333,7 +328,7 @@ function prepareQueryParameters(stationCode: string): string {
 	}
 	//
 	const preparedQueryParameter: string = parameters.join('&');
-	//con sole.log(`Parameter: ${preparedQueryParameter}`);
+	//con_sole.log(`Parameter: ${preparedQueryParameter}`);
 
 	return preparedQueryParameter;
 }

@@ -34,7 +34,7 @@ class Airquality extends utils.Adapter {
 		//
 		try {
 			this.stationList = await getStations();
-			//cons ole.log(this.stationList[931].city); //> 'Lingen'
+			//cons_ole.log(this.stationList[931].city); //> 'Lingen'
 		} catch (err) {
 			console.error('[onReady:Stations] Error when calling getStations: ', err);
 			//this.log.warn(`[onReady:Stations] Error when calling getStations: ${err}`); //??
@@ -42,7 +42,7 @@ class Airquality extends utils.Adapter {
 		//
 		try {
 			this.components = await getComponents();
-			//cons ole.log(this.components[6].desc); //> 'Blei im Feinstaub'
+			//cons_ole.log(this.components[6].desc); //> 'Blei im Feinstaub'
 		} catch (err) {
 			console.error('[onReady:components] Error when calling getComponents: ', err);
 		}
@@ -78,8 +78,9 @@ class Airquality extends utils.Adapter {
 			}
 		} catch (err) {
 			this.retryCount++;
-			this.log.warn(`
-				[controller] Retrieval failed (attempt ${this.retryCount}/${this.maxRetries}): ${String(err)}`);
+			this.log.warn(
+				`[controller] Retrieval failed (attempt ${this.retryCount}/${this.maxRetries}): ${String(err)}`,
+			);
 			if (this.retryCount < this.maxRetries) {
 				this.log.info(`[controller] New attempt in ${this.retryDelay} minutes...`);
 				setTimeout(() => this.controller(), this.retryDelay * 60000);
@@ -111,7 +112,7 @@ class Airquality extends utils.Adapter {
 					success = measurement.success;
 				}
 				// only specified component
-				const measurementComp = await getMeasurementsComp(station, 2);
+				const measurementComp = await getMeasurementsComp(station, 2); // 2 = CO
 				if (measurementComp.success) {
 					await this.parseData(measurementComp);
 				}

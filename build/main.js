@@ -80,8 +80,9 @@ class Airquality extends utils.Adapter {
       }
     } catch (err) {
       this.retryCount++;
-      this.log.warn(`
-				[controller] Retrieval failed (attempt ${this.retryCount}/${this.maxRetries}): ${String(err)}`);
+      this.log.warn(
+        `[controller] Retrieval failed (attempt ${this.retryCount}/${this.maxRetries}): ${String(err)}`
+      );
       if (this.retryCount < this.maxRetries) {
         this.log.info(`[controller] New attempt in ${this.retryDelay} minutes...`);
         setTimeout(() => this.controller(), this.retryDelay * 6e4);
