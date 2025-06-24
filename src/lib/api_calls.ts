@@ -234,6 +234,7 @@ export async function getMeasurementsComp(stationCode: string, component: number
 		const urlStation: string = prepareQueryParameters(stationCode);
 		const url = [baseUrl, urlSpec, urlStation, '&component=', component, '&scope=4'].join('');
 		// scope=2 ==>  "Ein-Stunden-Mittelwert"; scope=4 ==> "Acht-Stunden-Mittelwert"
+		//	CO (component=2) only works with scope 4!
 		//
 		const response = await fetch(url, {
 			method: 'GET',
@@ -270,7 +271,7 @@ export async function getMeasurementsComp(stationCode: string, component: number
 				const entry = airQualityData[datetime];
 
 				if (!Array.isArray(entry) || entry.length < 4) {
-					console.warn(`[#getMeasurementsComp] Ungültiger Eintrag für ${stationId} @ ${datetime}`);
+					console.warn(`[#getMeasurementsComp] Invalid entry for ${stationId} @ ${datetime}`);
 					continue;
 				}
 				/*

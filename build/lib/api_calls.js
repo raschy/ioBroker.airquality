@@ -203,7 +203,7 @@ async function getMeasurementsComp(stationCode, component) {
       for (const datetime of Object.keys(airQualityData)) {
         const entry = airQualityData[datetime];
         if (!Array.isArray(entry) || entry.length < 4) {
-          console.warn(`[#getMeasurementsComp] Ung\xFCltiger Eintrag f\xFCr ${stationId} @ ${datetime}`);
+          console.warn(`[#getMeasurementsComp] Invalid entry for ${stationId} @ ${datetime}`);
           continue;
         }
         const [componentId, scopeId, value, endTime, index] = entry;
