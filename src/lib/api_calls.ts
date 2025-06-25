@@ -1,16 +1,19 @@
 'use strict';
 
-const baseUrl = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
-// 	  baseUrl = 'https://www.umweltbundesamt.de/api/air_data/v3/';
+//const baseUrl = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
+const baseUrl = 'https://www.umweltbundesamt.de/api/air_data/v3/';
 
 /**
  *
  * @returns Stations with airquality
  */
 export async function getStations(): Promise<Stations> {
+	// "https://www.umweltbundesamt.de/api/air_data/v3/stations/json?use=measure&lang=de&date_from=2025-06-24&date_to=2025-06-24&time_from=14&time_to=14"
+
 	const stations: Stations = {};
 	try {
-		const url = `${baseUrl}stations/json?lang=de`;
+		//const url = `${baseUrl}stations/json?lang=de`;
+		const url = `${baseUrl}stations/json?use=measure&lang=de`; // Stations that also provide measured values
 
 		const response = await fetch(url, {
 			method: 'GET',
@@ -146,6 +149,7 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 		const urlSpec = 'airquality/json?';
 		const urlStation: string = prepareQueryParameters(stationCode);
 		const url = [baseUrl, urlSpec, urlStation].join('');
+		console.log('[getMeasurements] URL ', url);
 		//
 		const response = await fetch(url, {
 			method: 'GET',

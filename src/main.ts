@@ -25,6 +25,7 @@ class Airquality extends utils.Adapter {
 	private retryCount: number = 0;
 	private readonly retryDelay: number = 2;
 	private readonly maxRetries: number = 3;
+	private timeoutId: any;
 	/**
 	 * Is called when databases are connected and adapter received configuration.
 	 */
@@ -34,17 +35,14 @@ class Airquality extends utils.Adapter {
 		//
 		try {
 			this.stationList = await getStations();
-			//cons_ole.log(this.stationList[931].city); //> 'Lingen'
-		} catch (err) {
-			console.error('[onReady:Stations] Error when calling getStations: ', err);
-			//this.log.warn(`[onReady:Stations] Error when calling getStations: ${err}`); //??
+		} catch (err: unknown) {
+			this.log.error(`[onReady] Error when calling getStations: ${JSON.stringify(err)}`);
 		}
 		//
 		try {
 			this.components = await getComponents();
-			//cons_ole.log(this.components[6].desc); //> 'Blei im Feinstaub'
-		} catch (err) {
-			console.error('[onReady:components] Error when calling getComponents: ', err);
+		} catch (err: unknown) {
+			this.log.error(`[onReady] Error when calling getComponents: ${JSON.stringify(err)}`);
 		}
 		//
 		if (this.config.stations.length == 0) {
@@ -83,9 +81,9 @@ class Airquality extends utils.Adapter {
 			);
 			if (this.retryCount < this.maxRetries) {
 				this.log.info(`[controller] New attempt in ${this.retryDelay} minutes...`);
-				setTimeout(() => this.controller(), this.retryDelay * 60000);
+				this.timeoutId = setTimeout(() => this.controller(), this.retryDelay * 60000);
 			} else {
-				this.log.error('[controller] Maximum number of attempts reached. Adapter will terminated.');
+				this.log.silly('[controller] Maximum number of attempts reached. Adapter will terminated.');
 				this.stopAdapter();
 			}
 		}
@@ -309,7 +307,6 @@ class Airquality extends utils.Adapter {
 	 * @returns Koordinates(lat, lon)
 	 */
 	getLocation(): Home {
-		this.log.debug('[getLocation] try to use the location from the system configuration');
 		if (this.latitude == undefined || this.latitude == 0 || this.longitude == undefined || this.longitude == 0) {
 			this.log.warn(
 				'longitude/latitude not set in system-config - please check instance configuration of "System settings"',
@@ -432,8 +429,7 @@ class Airquality extends utils.Adapter {
 	 * my own methode to stop an adapter
 	 */
 	private stopAdapter(): void {
-		this.log.silly('[stopAdapter] finished - stopping instance');
-		this.terminate ? this.terminate('Everything done. Going to terminate till next schedule', 11) : process.exit(0);
+		this.terminate ? this.terminate('Everything done. Finished till next schedule', 11) : process.exit(0);
 		/*
 		if (typeof this.stop === 'function') {
 			await this.stop();
@@ -453,7 +449,11 @@ class Airquality extends utils.Adapter {
 	private onUnload(callback: () => void): void {
 		try {
 			// Here you must clear all timeouts or intervals that may still be active
-			//setTimeout ??
+			//clear setTimeout
+			if (this.timeoutId != undefined) {
+				clearTimeout(this.timeoutId); // Cancels the timeout
+				this.timeoutId = undefined;
+			}
 			callback();
 		} catch (e) {
 			this.log.debug(`[onUnload] ${JSON.stringify(e)}`);

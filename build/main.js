@@ -47,12 +47,12 @@ class Airquality extends utils.Adapter {
     try {
       this.stationList = await (0, import_api_calls.getStations)();
     } catch (err) {
-      console.error("[onReady:Stations] Error when calling getStations: ", err);
+      this.log.error(`[onReady] Error when calling getStations: ${JSON.stringify(err)}`);
     }
     try {
       this.components = await (0, import_api_calls.getComponents)();
     } catch (err) {
-      console.error("[onReady:components] Error when calling getComponents: ", err);
+      this.log.error(`[onReady] Error when calling getComponents: ${JSON.stringify(err)}`);
     }
     if (this.config.stations.length == 0) {
       this.log.info("[onReady] No stations specified");
@@ -85,9 +85,9 @@ class Airquality extends utils.Adapter {
       );
       if (this.retryCount < this.maxRetries) {
         this.log.info(`[controller] New attempt in ${this.retryDelay} minutes...`);
-        setTimeout(() => this.controller(), this.retryDelay * 6e4);
+        this.timeoutId = setTimeout(() => this.controller(), this.retryDelay * 6e4);
       } else {
-        this.log.error("[controller] Maximum number of attempts reached. Adapter will terminated.");
+        this.log.silly("[controller] Maximum number of attempts reached. Adapter will terminated.");
         this.stopAdapter();
       }
     }
@@ -276,7 +276,6 @@ class Airquality extends utils.Adapter {
    * @returns Koordinates(lat, lon)
    */
   getLocation() {
-    this.log.debug("[getLocation] try to use the location from the system configuration");
     if (this.latitude == void 0 || this.latitude == 0 || this.longitude == void 0 || this.longitude == 0) {
       this.log.warn(
         'longitude/latitude not set in system-config - please check instance configuration of "System settings"'
@@ -389,8 +388,7 @@ class Airquality extends utils.Adapter {
    * my own methode to stop an adapter
    */
   stopAdapter() {
-    this.log.silly("[stopAdapter] finished - stopping instance");
-    this.terminate ? this.terminate("Everything done. Going to terminate till next schedule", 11) : process.exit(0);
+    this.terminate ? this.terminate("Everything done. Finished till next schedule", 11) : process.exit(0);
   }
   /**
    * Is called when adapter shuts down - callback has to be called under any circumstances!
@@ -399,6 +397,10 @@ class Airquality extends utils.Adapter {
    */
   onUnload(callback) {
     try {
+      if (this.timeoutId != void 0) {
+        clearTimeout(this.timeoutId);
+        this.timeoutId = void 0;
+      }
       callback();
     } catch (e) {
       this.log.debug(`[onUnload] ${JSON.stringify(e)}`);

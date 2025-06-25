@@ -24,11 +24,11 @@ __export(api_calls_exports, {
   getStations: () => getStations
 });
 module.exports = __toCommonJS(api_calls_exports);
-const baseUrl = "https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/";
+const baseUrl = "https://www.umweltbundesamt.de/api/air_data/v3/";
 async function getStations() {
   const stations = {};
   try {
-    const url = `${baseUrl}stations/json?lang=de`;
+    const url = `${baseUrl}stations/json?use=measure&lang=de`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -129,6 +129,7 @@ async function getMeasurements(stationCode) {
     const urlSpec = "airquality/json?";
     const urlStation = prepareQueryParameters(stationCode);
     const url = [baseUrl, urlSpec, urlStation].join("");
+    console.log("[getMeasurements] URL ", url);
     const response = await fetch(url, {
       method: "GET",
       headers: {
