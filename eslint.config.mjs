@@ -4,7 +4,6 @@ import config from '@iobroker/eslint-config';
 
 export default [
 	...config,
-
 	{
 		// specify files to exclude from linting here
 		ignores: [
@@ -20,7 +19,6 @@ export default [
 			'**/adapter-config.d.ts'
 		]
 	},
-
 	{
 		// you may disable some 'jsdoc' warnings - but using jsdoc is highly recommended
 		// as this improves maintainability. jsdoc warnings will not block buiuld process.
@@ -28,5 +26,4 @@ export default [
 			// 'jsdoc/require-jsdoc': 'off',
 		},
 	},
-
 ];
