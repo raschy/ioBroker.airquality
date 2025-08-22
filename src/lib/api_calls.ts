@@ -149,7 +149,7 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 		const urlSpec = 'airquality/json?';
 		const urlStation: string = prepareQueryParameters(stationCode);
 		const url = [baseUrl, urlSpec, urlStation].join('');
-		console.log('[getMeasurements] URL ', url);
+		//console.log('[getMeasurements] URL ', url);
 		//
 		const response = await fetch(url, {
 			method: 'GET',
@@ -192,7 +192,7 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 			}
 			// Wenn keine Daten empfangen wurden, leeres Objekt
 			if (measuresResponse.count < 1) {
-				console.log('[#getMeasurements] NoData, empty');
+				//console.log('[#getMeasurements] NoData, empty');
 				return { success: false };
 			}
 			//

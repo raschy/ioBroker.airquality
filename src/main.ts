@@ -273,7 +273,7 @@ class Airquality extends utils.Adapter {
 		]}
   		*/
 		if (Object.keys(payload).length === 0) {
-			this.log.debug('[#parseData] Payload ist leer');
+			this.log.debug('[parseData] No data received');
 			return;
 		}
 		const localDate = new Date();
@@ -281,6 +281,12 @@ class Airquality extends utils.Adapter {
 		//
 		const stationId: number = payload.stationId;
 		const timeEndAdjusted: string = this.correctHour(payload.measurementTime, summerOffset * -1 - 1);
+		//
+		await this.createObject(
+			this.stationList[stationId].code,
+			this.stationList[stationId].city,
+			this.stationList[stationId].street,
+		);
 		//
 		for (const item of Object.keys(payload.measurementValues)) {
 			const measurement = payload.measurementValues[item];
@@ -299,6 +305,43 @@ class Airquality extends utils.Adapter {
 		}
 		this.log.debug(`[parseData] Measured values from ${this.numberOfElements} sensors determined`);
 		return;
+	}
+
+	/**
+	 * Create a folder for station
+	 *
+	 * @param station Station Code
+	 * @param description Station City
+	 * @param location Station Street
+	 */
+	async createObject(station: string, description: string, location: string): Promise<void> {
+		const dp_Folder = this.removeInvalidCharacters(station);
+		if (await this.objectExists(dp_Folder)) {
+			return;
+		}
+		//
+		await this.setObjectNotExists(dp_Folder, {
+			type: 'folder',
+			common: {
+				name: {
+					en: 'Measurements from station',
+					de: 'Messungen von Station',
+					ru: 'Ð˜Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ñ Ð½Ð° ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸',
+					pt: 'MediÃ§Ãµes da estaÃ§Ã£o',
+					nl: 'Metingen vanaf het station',
+					fr: 'Mesures de la station',
+					it: 'Misure dalla stazione',
+					es: 'Medidas desde la estaciÃ³n',
+					pl: 'Pomiary ze stacji',
+					uk: 'Ð’Ð¸Ð¼Ñ–Ñ€ÑŽÐ²Ð°Ð½Ð½Ñ Ð· ÑÑ‚Ð°Ð½Ñ†Ñ–Ñ—',
+					'zh-cn': 'ä»Žè½¦ç«™æµ‹é‡',
+				},
+				desc: `${description}> ${location}`,
+				role: 'info',
+			},
+			native: {},
+		});
+		this.log.debug(`[createObject] Station "${station}" City "${description}"`);
 	}
 
 	/**
