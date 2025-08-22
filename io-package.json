@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "airquality",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "news": {
+      "0.1.7": {
+        "en": "Station names visible again",
+        "de": "Stationsnamen wieder sichtbar",
+        "ru": "Названия станций снова видны",
+        "pt": "Nomes das estações visíveis novamente",
+        "nl": "Stationnamen weer zichtbaar",
+        "fr": "Noms de stations visibles à nouveau",
+        "it": "Nome stazione visibile di nuovo",
+        "es": "Nombres visibles de nuevo",
+        "pl": "Nazwy programów ponownie widoczne",
+        "uk": "Назва станції дивиться знову",
+        "zh-cn": "站名再次可见"
+      },
       "0.1.6": {
         "en": "Removal of an unused state\nimproved error messages\nimproved retrieval logic",
         "de": "Beseitigung eines ungenutzten Zustands\nverbesserte fehlermeldungen\nverbesserte retrievallogik",
@@ -80,19 +93,6 @@
         "pl": "Migracja do ESLint 9 i @ iobroker / eslint- config",
         "uk": "Міграція на ESLint 9 і @iobroker/eslint-config",
         "zh-cn": "迁移到 ESLint 9 和 @iobroster/eslint- config"
-      },
-      "0.0.4": {
-        "en": "Readme text expanded\nIssue 1 [E254] and [W040] corrected",
-        "de": "Text erweitert\nLieferung 1 [E254] und [W040] korrigiert",
-        "ru": "Текст чтения расширен\nВопрос 1 [E254] и [W040] исправить",
-        "pt": "Texto de leitura expandido\nEdição 1 [E254] e [W040] corrigido",
-        "nl": "Leestekst uitgebreid\nNummer 1 [E254] en [W040] gecorrigeerd",
-        "fr": "Lire le texte élargi\nNuméro 1 [E254] et [W040] corrigés",
-        "it": "Testo Readme ampliato\nFascicolo 1 [E254] e [W040] corretto",
-        "es": "Texto del texto ampliado\nNúmero 1 [E254] y [W040] corregido",
-        "pl": "Tekst readme rozszerzony\nWydanie 1 [E254] i [W040] poprawione",
-        "uk": "Розширений текст\nВипуск 1 [E254] і [W040] виправлено",
-        "zh-cn": "扩充文本\n问题1[E254]和[W040]更正"
       }
     },
     "titleLang": {
