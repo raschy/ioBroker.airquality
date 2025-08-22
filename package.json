@@ -1,6 +1,6 @@
 {
   "name": "iobroker.airquality",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Fetch data from German UBA",
   "author": {
     "name": "raschy",
@@ -69,8 +69,8 @@
     "prebuild": "rimraf build",
     "build": "tsc -p tsconfig.build.json ",
     "prebuild:ts": "rimraf build",
-	"build:ts": "tsc -p tsconfig.build.json",
-	"watch:ts": "tsc -p tsconfig.build.json --watch",
+    "build:ts": "tsc -p tsconfig.build.json",
+    "watch:ts": "tsc -p tsconfig.build.json --watch",
     "test:ts": "mocha --config test/mocharc.custom.json src/**/*.test.ts",
     "test:package": "mocha test/package --exit",
     "test:integration": "mocha test/integration --exit",

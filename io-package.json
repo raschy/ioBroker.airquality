@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "airquality",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "news": {
+      "0.1.6": {
+        "en": "Removal of an unused state\nimproved error messages\nimproved retrieval logic",
+        "de": "Beseitigung eines ungenutzten Zustands\nverbesserte fehlermeldungen\nverbesserte retrievallogik",
+        "ru": "Удаление неиспользованного состояния\nулучшенные сообщения об ошибках\nулучшенная логика поиска",
+        "pt": "Remoção de um estado não utilizado\nmensagens de erro melhoradas\nlógica de recuperação melhorada",
+        "nl": "Verwijdering van een ongebruikte staat\nverbeterde foutmeldingen\nverbeterde ophaallogica",
+        "fr": "Retrait d'un état inutilisé\nmessages d'erreur améliorés\namélioration de la logique de récupération",
+        "it": "Rimozione di uno stato inutilizzato\nmessaggi di errore migliorati\nmigliore logica di recupero",
+        "es": "Eliminación de un estado no utilizado\nmensajes de error mejorados\nlógica de recuperación mejorada",
+        "pl": "Usuwanie niewykorzystanego stanu\nulepszone komunikaty błędów\npoprawiona logika pobierania",
+        "uk": "Видалення невикористаного стану\nпокращені повідомлення про помилки\nполіпшення ретриевальної логіки",
+        "zh-cn": "删除未使用状态\n改进错误消息\n改进检索逻辑"
+      },
       "0.1.5": {
         "en": "Supplementary data points i18n\nData point type corrected \n@iobroker/adapter-core 3.2.3 is recommended",
         "de": "Zusätzliche Datenpunkte i18n\nDatenpunkt korrigiert\n@iobroker/adapter-core 3.2.3 wird empfohlen",
@@ -80,19 +93,6 @@
         "pl": "Tekst readme rozszerzony\nWydanie 1 [E254] i [W040] poprawione",
         "uk": "Розширений текст\nВипуск 1 [E254] і [W040] виправлено",
         "zh-cn": "扩充文本\n问题1[E254]和[W040]更正"
-      },
-      "0.0.3": {
-        "en": "Auto detection for location activated",
-        "de": "Autoerkennung für Standort aktiviert",
-        "ru": "Автоматическое обнаружение места включения",
-        "pt": "Detecção automática para localização activada",
-        "nl": "Autodetectie voor geactiveerde locatie",
-        "fr": "Détection automatique pour l'emplacement activé",
-        "it": "Rilevamento automatico per la posizione attivata",
-        "es": "Detección automática para la ubicación activada",
-        "pl": "Automatyczne wykrywanie aktywowanej lokalizacji",
-        "uk": "Автоматичне виявлення місця розташування активованого",
-        "zh-cn": "启动位置自动检测"
       }
     },
     "titleLang": {
