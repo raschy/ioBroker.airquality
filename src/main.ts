@@ -31,7 +31,6 @@ class Airquality extends utils.Adapter {
 	 */
 	private async onReady(): Promise<void> {
 		console.log('Adapter startet ...');
-		debugger;
 		await this.delay(Math.floor(Math.random() * 10000)); // delay start for 0-10 seconds
 		//
 		try {
