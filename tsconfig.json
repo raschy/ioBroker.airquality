@@ -2,35 +2,39 @@
 {
 	// To update the compilation target, install a different version of @tsconfig/node... and reference it here
 	// https://github.com/tsconfig/bases#node-20-tsconfigjson
-	"extends": "@tsconfig/node20/tsconfig.json",
+	//#"extends": "@tsconfig/node20/tsconfig.json",
 	"compilerOptions": {
 		// do not compile anything, this file is just to configure type checking
 		// the compilation is configured in tsconfig.build.json
-		"noEmit": true,
+		//#"noEmit": true,
 
 		// check JS files, but do not compile them => tsconfig.build.json
-		"allowJs": true,
-		"checkJs": true,
+		//#"allowJs": true,
+		//"checkJs": true,
 
 		"noEmitOnError": true,
-		"outDir": "./build/",
+	    "rootDir": "./src",
+    	"outDir": "./build",
+		"sourceMap": true,
+		//"inlineSourceMap": true
+		//"inlineSources": true,
 		"removeComments": false,
 
 		// This is necessary for the automatic typing of the adapter config
-		"resolveJsonModule": true,
+		//#"resolveJsonModule": true,
 
-		"declaration": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "lib": ["es2017", "dom"],
+		//#"declaration": false,
+        //#"emitDecoratorMetadata": true,
+        //#"experimentalDecorators": true,
+        "target": "es2020",
         "module": "commonjs",
+        "lib": ["es2020"],
         "moduleResolution": "node",
         //"outDir": "../build",
-        "target": "es2016",
 
         //"typeRoots": ["../node_modules/@types"],
 		// If you want to disable the stricter type checks (not recommended), uncomment the following line
-		// "strict": false,
+		"strict": true,
 		// And enable some of those features for more fine-grained control
 		// "strictNullChecks": true,
 		// "strictPropertyInitialization": true,
@@ -40,10 +44,11 @@
 		// "noUnusedParameters": true,
 		// Uncomment this if you want the old behavior of catch variables being `any`
 		// "useUnknownInCatchVariables": false,
-
-		"sourceMap": true,
-		"inlineSourceMap": false
+		"esModuleInterop": true,
+    	"forceConsistentCasingInFileNames": true,
+    	"skipLibCheck": true,
 	},
-	"include": ["src/**/*.ts", "test/**/*.ts"],
-	"exclude": ["build/**", "node_modules/**", "widgets/**"]
+	"include": ["src/**/*.ts"]
+	//"include": ["src/**/*.ts", "test/**/*.ts"],
+	//"exclude": ["build/**", "node_modules/**", "widgets/**"]
 }

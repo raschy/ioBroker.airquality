@@ -165,7 +165,7 @@ export async function getMeasurements(stationCode: string): Promise<AirQualityRe
 			throw new Error(`[getMeasurements] HTTP-Fehler: ${response.status}`);
 		}
 		//
-		const measuresResponse: AirDataApiResponse<AirQualityData> = await response.json();
+		const measuresResponse = await response.json() as AirDataApiResponse<AirQualityData>;
 		//
 		if (
 			!measuresResponse ||
@@ -254,7 +254,7 @@ export async function getMeasurementsComp(stationCode: string, component: number
 			throw new Error(`[getMeasurementsComp] HTTP-Fehler: ${response.status}`);
 		}
 
-		const measuresResponse: AirDataApiResponse<AirQualityData> = await response.json();
+		const measuresResponse = await response.json() as AirDataApiResponse<AirQualityData>;
 		if (
 			!measuresResponse ||
 			typeof measuresResponse !== 'object' ||

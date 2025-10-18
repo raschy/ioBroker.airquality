@@ -53,7 +53,7 @@
     "io-package.json",
     "LICENSE"
   ],
-  "scripts": {
+ "scripts": {
     "prebuild": "rimraf build",
     "build": "tsc -p tsconfig.build.json ",
     "prebuild:ts": "rimraf build",
@@ -65,6 +65,7 @@
     "test": "npm run test:ts && npm run test:package",
     "check": "tsc --noEmit",
     "lint": "eslint -c eslint.config.mjs .",
+    "lint:fix": "eslint -c eslint.config.mjs . --fix",
     "translate": "translate-adapter",
     "release": "release-script"
   },

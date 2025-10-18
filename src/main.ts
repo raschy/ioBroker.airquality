@@ -30,7 +30,8 @@ class Airquality extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
-		//
+		console.log('Adapter startet ...');
+		debugger;
 		await this.delay(Math.floor(Math.random() * 10000)); // delay start for 0-10 seconds
 		//
 		try {
@@ -316,6 +317,7 @@ class Airquality extends utils.Adapter {
 	 */
 	async createObject(station: string, description: string, location: string): Promise<void> {
 		const dp_Folder = this.removeInvalidCharacters(station);
+		//
 		if (await this.objectExists(dp_Folder)) {
 			return;
 		}
