@@ -150,7 +150,7 @@ async function getMeasurements(stationCode) {
             throw new Error(`[getMeasurements] HTTP-Fehler: ${response.status}`);
         }
         //
-        const measuresResponse = await response.json();
+        const measuresResponse = (await response.json());
         //
         if (!measuresResponse ||
             typeof measuresResponse !== 'object' ||
@@ -230,7 +230,7 @@ async function getMeasurementsComp(stationCode, component) {
         if (!response.ok) {
             throw new Error(`[getMeasurementsComp] HTTP-Fehler: ${response.status}`);
         }
-        const measuresResponse = await response.json();
+        const measuresResponse = (await response.json());
         if (!measuresResponse ||
             typeof measuresResponse !== 'object' ||
             !measuresResponse.data ||
