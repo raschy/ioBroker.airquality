@@ -37,7 +37,7 @@
     "@iobroker/testing": "^5.1.1",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^24.6.1",
-    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.45.0",
     "rimraf": "^6.1.0",
     "source-map-support": "^0.5.21",
