@@ -236,7 +236,7 @@ class Airquality extends utils.Adapter {
 			common: {
 				name: {
 					en: 'Time of the last measurement',
-					de: 'Zeit der letzten Messung',
+					de: 'Zeitpunkt der letzten Messung',
 					ru: 'Время последнего измерения',
 					pt: 'Tempo da última medição',
 					nl: 'Tijd van de laatste meting',
@@ -327,15 +327,15 @@ class Airquality extends utils.Adapter {
 				name: {
 					en: 'Measurements from station',
 					de: 'Messungen von Station',
-					ru: 'Ð˜Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ñ Ð½Ð° ÑÑ‚Ð°Ð½Ñ†Ð¸Ð¸',
+					ru: 'Измерение со станции',
 					pt: 'MediÃ§Ãµes da estaÃ§Ã£o',
 					nl: 'Metingen vanaf het station',
 					fr: 'Mesures de la station',
 					it: 'Misure dalla stazione',
 					es: 'Medidas desde la estaciÃ³n',
 					pl: 'Pomiary ze stacji',
-					uk: 'Ð’Ð¸Ð¼Ñ–Ñ€ÑŽÐ²Ð°Ð½Ð½Ñ Ð· ÑÑ‚Ð°Ð½Ñ†Ñ–Ñ—',
-					'zh-cn': 'ä»Žè½¦ç«™æµ‹é‡',
+					uk: 'Вимірювання зі станції',
+					'zh-cn': '来自该站点的测量数据',
 				},
 				desc: `${description}> ${location}`,
 				role: 'info',
