@@ -37,6 +37,9 @@ You can check other adapters for examples or ask in the developer community. Usi
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (copilot) Adapter requires node.js >= 22 now
+
 ### 0.1.7 (2025-08-22)
 
 - (raschy) Station names visible again
