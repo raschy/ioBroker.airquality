@@ -263,7 +263,7 @@ class Airquality extends utils.Adapter {
 	 * Retrieves the desired data from the payload and prepares data for storage
 	 *
 	 * @param {} payload Object from Response
-	 //* @returns Data to persist
+	 * @returns void
 	 */
 	async parseData(payload: any): Promise<void> {
 		this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
@@ -469,7 +469,7 @@ class Airquality extends utils.Adapter {
 		const sTime = `${sHour}:${timeString[1]}`;
 		return `${sDate} ${sTime}`;
 	}
-	
+
 	/**
 	 * my own methode to stop an adapter
 	 */

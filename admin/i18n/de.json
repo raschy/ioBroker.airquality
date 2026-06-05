@@ -1,0 +1,11 @@
+{
+    "airquality adapter settings": "Adaptereinstellungen für Luftqualität",
+    "instructionAutodetekt": "Wenn die Koordinaten in der Hauptkonfiguration des ioBrokers gepflegt sind, versucht der Adapter beim ersten Start die nächstgelegene Station selbst zu finden.",
+    "instructionManual": "In diesem Adapter muss mindestens eine Umweltstation, von der Messwerte erfasst werden sollen, in die Konfiguration eingetragen werden. Die Stationsnamen können auf der Internetseite des Umweltbundesamtes unter https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten anhand der angezeigten Karte ausgewählt werden. Die Stationen beginnen immer mit „DE“, gefolgt von dem Bundesland „BW“ und einer dreistelligen laufenden Nummer. Diese Kennung, z.B. „DEBW052“, muss dann auf der Konfigurationsseite des Adapters eingetragen werden (mit Enter bestätigen). Hier können auch weitere Stationen hinzugefügt werden.",
+    "operatingInstructions": "Gebrauchsanweisung",
+    "operatingInstructions2": "Gebrauchsanweisung Geoautomatik",
+    "station_nonvalid_text": "Station ungültiger Text",
+    "stations": "Stationen",
+    "stations_to_be_monitored": "zu überwachende Stationen",
+    "wrong_item_in_stations": "Falsche Bezeichnung in den Stationen"
+}
