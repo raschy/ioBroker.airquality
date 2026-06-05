@@ -469,6 +469,7 @@ class Airquality extends utils.Adapter {
 		const sTime = `${sHour}:${timeString[1]}`;
 		return `${sDate} ${sTime}`;
 	}
+	
 	/**
 	 * my own methode to stop an adapter
 	 */
