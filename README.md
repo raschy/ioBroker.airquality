@@ -20,6 +20,8 @@ Fetch data from German UBA
 In this adapter, at least one environmental station from which measured values are to be collected must be entered in the configuration. The station names can be selected on the website of the Federal Environment Agency at https://www.umweltbundesamt.de/themen/luft/luftqualitaet#luftdaten (then click on 'Nearest station') using the map displayed.
 The stations always begin with 'DE', followed by the federal state 'BW' and a three-digit serial number. This identifier, e.g. 'DEBW052', must then be entered in the configuration page of the adapter (confirm with Enter). Further stations can also be added here.
 
+The Air Quality Data API is currently available in version 4 (v4). The previous version (v3) will continue to be operated in parallel for the time being. The main difference between the versions is the switch to generally hourly data for the Air Quality Index (AQI) and a new classification of index categories
+
 If the coordinates are maintained in the main configuration of the ioBroker, the adapter attempts to find the nearest station itself when it is first started.
 
 ## Hint

@@ -61,7 +61,7 @@ class Airquality extends utils.Adapter {
      * Is called when databases are connected and adapter received configuration.
      */
     async onReady() {
-        console.log('Adapter startet ...');
+        this.log.debug('Adapter startet ...');
         await this.delay(Math.floor(Math.random() * 10000)); // delay start for 0-10 seconds
         //
         try {
@@ -90,7 +90,6 @@ class Airquality extends utils.Adapter {
         }
         //
         await this.controller();
-        //End onReady
     }
     /**
      * controller
@@ -113,7 +112,7 @@ class Airquality extends utils.Adapter {
             this.log.warn(`[controller] Retrieval failed (attempt ${this.retryCount}/${this.maxRetries}): ${String(err)}`);
             if (this.retryCount < this.maxRetries) {
                 this.log.info(`[controller] New attempt in ${this.retryDelay} minutes...`);
-                this.timeoutId = setTimeout(() => this.controller(), this.retryDelay * 60000);
+                this.timeoutId = this.setTimeout(() => this.controller(), this.retryDelay * 60000);
             }
             else {
                 this.log.silly('[controller] Maximum number of attempts reached. Adapter will terminated.');
@@ -286,7 +285,7 @@ class Airquality extends utils.Adapter {
      * Retrieves the desired data from the payload and prepares data for storage
      *
      * @param {} payload Object from Response
-     //* @returns Data to persist
+     * @returns void
      */
     async parseData(payload) {
         this.log.debug(`[parseData] Payload: ${JSON.stringify(payload)}`);
@@ -473,7 +472,9 @@ class Airquality extends utils.Adapter {
      * my own methode to stop an adapter
      */
     stopAdapter() {
-        this.terminate ? this.terminate('Everything done. Finished till next schedule', 11) : process.exit(0);
+        this.log.debug('[stopAdapter] Adapter will be stopped');
+        this.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+        //this.terminate ? this.terminate('Everything done. Finished till next schedule', 11) : process.exit(0);
         /*
         if (typeof this.stop === 'function') {
             await this.stop();
@@ -494,7 +495,8 @@ class Airquality extends utils.Adapter {
             // Here you must clear all timeouts or intervals that may still be active
             //clear setTimeout
             if (this.timeoutId != undefined) {
-                clearTimeout(this.timeoutId); // Cancels the timeout
+                this.log.debug('[onUnload] Clear timeout with id: ' + this.timeoutId);
+                this.clearTimeout(this.timeoutId); // Cancels the timeout
                 this.timeoutId = undefined;
             }
             callback();
