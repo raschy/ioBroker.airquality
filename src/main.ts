@@ -475,16 +475,6 @@ class Airquality extends utils.Adapter {
 	private stopAdapter(): void {
 		this.log.debug('[stopAdapter] Adapter will be stopped');
 		this.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-		//this.terminate ? this.terminate('Everything done. Finished till next schedule', 11) : process.exit(0);
-		/*
-		if (typeof this.stop === 'function') {
-			await this.stop();
-		} else {
-			this.log.warn(
-				'this.stop ist nicht verfügbar – Adapter konnte möglicherweise nicht korrekt beendet werden.',
-			);
-		}
-		*/
 	}
 
 	/**
