@@ -487,7 +487,7 @@ class Airquality extends utils.Adapter {
 			// Here you must clear all timeouts or intervals that may still be active
 			//clear setTimeout
 			if (this.timeoutId != undefined) {
-				this.log.debug('[onUnload] Clear timeout with id: ' + this.timeoutId);
+				this.log.debug(`[onUnload] Clear timeout with id: ${this.timeoutId}`);
 				this.clearTimeout(this.timeoutId); // Cancels the timeout
 				this.timeoutId = undefined;
 			}
