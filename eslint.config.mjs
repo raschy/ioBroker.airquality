@@ -16,14 +16,21 @@ export default [
 			'admin/build',
 			'admin/words.js',
 			'admin/admin.d.ts',
-			'**/adapter-config.d.ts'
+			'**/adapter-config.d.ts',
+			'img',
+			'script',
+			'node_modules',
+			'.dev-data',
 		]
 	},
 	{
 		// you may disable some 'jsdoc' warnings - but using jsdoc is highly recommended
 		// as this improves maintainability. jsdoc warnings will not block buiuld process.
 		rules: {
-			// 'jsdoc/require-jsdoc': 'off',
-		},
+			'jsdoc/require-jsdoc': 'off',
+			'require-await': 'off',
+			'@typescript-eslint/require-await': 'off',
+			'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+        },
 	},
 ];

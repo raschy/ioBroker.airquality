@@ -17,6 +17,16 @@
             "console": "internalConsole",
             "outputCapture": "std",
             "resolveSourceMapLocations": ["${workspaceFolder}/**" /* , "!*node_modules/**" */]
-        }
+        },
+		{
+            "type": "node",
+            "name": "Attach to remote",
+            "port": 9229,
+            "request": "attach",
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/.dev-server/default/node_modules/**/*.js"
+            ],
+            "restart": true
+        },
     ]
 }

@@ -3,10 +3,10 @@
 	"type": "panel",
 	"items": {
 		"_header": {
-            "type": "header",
-            "text": "stations",
-            "size": 1
-        },
+			"type": "header",
+			"text": "stations",
+			"size": 1
+		},
 		"stations": {
 			"type": "chips",
 			"help": "stations_to_be_monitored",
