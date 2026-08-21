@@ -48,15 +48,16 @@ class Airquality extends utils.Adapter {
             name: 'airquality',
             useFormatDate: true,
         });
-        this.stationList = {};
-        this.components = {};
-        this.numberOfElements = 0;
-        this.retryCount = 0;
-        this.retryDelay = 2;
-        this.maxRetries = 3;
         this.on('ready', this.onReady.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
+    stationList = {};
+    components = {};
+    numberOfElements = 0;
+    retryCount = 0;
+    retryDelay = 2;
+    maxRetries = 3;
+    timeoutId;
     /**
      * Is called when databases are connected and adapter received configuration.
      */
@@ -474,16 +475,6 @@ class Airquality extends utils.Adapter {
     stopAdapter() {
         this.log.debug('[stopAdapter] Adapter will be stopped');
         this.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-        //this.terminate ? this.terminate('Everything done. Finished till next schedule', 11) : process.exit(0);
-        /*
-        if (typeof this.stop === 'function') {
-            await this.stop();
-        } else {
-            this.log.warn(
-                'this.stop ist nicht verfügbar – Adapter konnte möglicherweise nicht korrekt beendet werden.',
-            );
-        }
-        */
     }
     /**
      * Is called when adapter shuts down - callback has to be called under any circumstances!
@@ -495,7 +486,7 @@ class Airquality extends utils.Adapter {
             // Here you must clear all timeouts or intervals that may still be active
             //clear setTimeout
             if (this.timeoutId != undefined) {
-                this.log.debug('[onUnload] Clear timeout with id: ' + this.timeoutId);
+                this.log.debug(`[onUnload] Clear timeout with id: ${this.timeoutId}`);
                 this.clearTimeout(this.timeoutId); // Cancels the timeout
                 this.timeoutId = undefined;
             }

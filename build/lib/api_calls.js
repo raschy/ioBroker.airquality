@@ -5,7 +5,7 @@ exports.getComponents = getComponents;
 exports.getMeasurements = getMeasurements;
 exports.getMeasurementsComp = getMeasurementsComp;
 //const baseUrl = 'https://umweltbundesamt.api.proxy.bund.dev/api/air_data/v3/';
-const baseUrl_V3 = 'https://www.umweltbundesamt.de/api/air_data/v3/';
+//const baseUrl_V3 = 'https://www.umweltbundesamt.de/api/air_data/v3/';
 const baseUrl = 'https://luftdaten.umweltbundesamt.de/api/air-data/v4/';
 /**
  *
@@ -15,7 +15,6 @@ async function getStations() {
     // "https://www.umweltbundesamt.de/api/air_data/v3/stations/json?use=measure&lang=de&date_from=2025-06-24&date_to=2025-06-24&time_from=14&time_to=14"
     const stations = {};
     try {
-        const _url = `${baseUrl}stations/json?use=measure&lang=de`; // Stations that also provide measured values
         const url = `${baseUrl}stations/json?use=measure&lang=de`; // Stations that also provide measured values
         const response = await fetch(url, {
             method: 'GET',
